@@ -17,11 +17,11 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 	unsigned char	*p;
 
 	p = (unsigned char *)ft_memchr(src, c, n);
-	if (p != nullptr)
+	if (p != NULLPTR)
 	{
 		ft_memcpy(dst, src, p - (unsigned char *)src + 1);
 		return (p - (size_t)src + (size_t)dst + 1);
 	}
 	ft_memcpy(dst, src, n);
-	return (nullptr);
+	return (NULLPTR);
 }

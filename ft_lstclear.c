@@ -16,7 +16,7 @@ void	ft_lstfree(t_list *lst)
 {
 	t_list	*next;
 
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
 	while (lst)
 	{
@@ -31,7 +31,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
 	t_list	*next;
 
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
 	while (*lst)
 	{

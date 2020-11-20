@@ -16,7 +16,7 @@ void	ft_lstpushfront(t_list **lst, void *content)
 {
 	t_list	*root;
 
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
 	root = ft_lstnew(content);
 	root->next = *lst;
@@ -25,7 +25,7 @@ void	ft_lstpushfront(t_list **lst, void *content)
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
 	new->next = *lst;
 	*lst = new;

@@ -14,9 +14,9 @@
 
 void	ft_lstpushback(t_list **lst, void *content)
 {
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
-	if (*lst == nullptr)
+	if (*lst == NULLPTR)
 	{
 		*lst = ft_lstnew(content);
 		return ;
@@ -26,9 +26,9 @@ void	ft_lstpushback(t_list **lst, void *content)
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (lst == nullptr)
+	if (lst == NULLPTR)
 		return ;
-	if (*lst == nullptr)
+	if (*lst == NULLPTR)
 		*lst = new;
 	else
 		ft_lstend(*lst)->next = new;

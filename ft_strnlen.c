@@ -16,7 +16,7 @@ size_t	ft_strnlen(const char *s, size_t maxlen)
 {
 	void	*ret;
 
-	if ((ret = ft_memchr(s, 0, maxlen)) == nullptr)
+	if ((ret = ft_memchr(s, 0, maxlen)) == NULLPTR)
 		return (maxlen);
 	return ((size_t)ret - (size_t)s);
 }

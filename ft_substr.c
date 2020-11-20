@@ -17,15 +17,15 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*new_s;
 	size_t	size;
 
-	if (s == nullptr)
-		return (nullptr);
+	if (s == NULLPTR)
+		return (NULLPTR);
 	if (ft_strnlen(s, start) < start)
-		size = 0;
+		size = 1;
 	else
 		size = ft_strnlen(s + start, len) + 1;
 	new_s = (char *)malloc(size);
-	if (new_s == nullptr)
-		return (nullptr);
+	if (new_s == NULLPTR)
+		return (NULLPTR);
 	ft_strlcpy(new_s, s + start, size);
 	return (new_s);
 }

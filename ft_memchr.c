@@ -27,14 +27,14 @@ void	*ft_memchr(const void *s, int c, size_t n)
 				return (ptr - 1);
 			else
 				n--;
-		if ((ret = ft_memchr_fast(&ptr, ch, n / 8)) != nullptr)
+		if ((ret = ft_memchr_fast(&ptr, ch, n / 8)) != NULLPTR)
 			return (ret);
 		n %= 8;
 	}
 	while (n--)
 		if (*ptr++ == ch)
 			return (ptr - 1);
-	return (nullptr);
+	return (NULLPTR);
 }
 
 void	*ft_memchr_fast(unsigned char **ptr, unsigned char ch, size_t xlen)

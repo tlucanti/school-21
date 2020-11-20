@@ -19,8 +19,8 @@ char	*ft_itoa(int n)
 
 	dn = ft_digit_num(n);
 	ans = (char *)malloc(dn + (n < 0 ? 1 : 0) + 1);
-	if (ans == nullptr)
-		return (nullptr);
+	if (ans == NULLPTR)
+		return (NULLPTR);
 	if (n == 0)
 		ans[0] = '0';
 	ans[dn + (n < 0 ? 1 : 0)] = 0;

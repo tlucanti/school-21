@@ -1,12 +1,13 @@
 COMPILER = gcc
 CFLAGS = -Wall -Wextra -Werror
 OPTIONS = -c -Ofast
-SRCS =	  ft_strnlen     ft_minmax     ft_issmth1     ft_issmth2              \
+SRCS =	  ft_strnlen     ft_minmax     ft_issmth1                             \
           \
           ft_memset      ft_bzero      ft_memcpy      ft_memccpy  ft_memmove  \
           ft_memchr      ft_memcmp     ft_strlen      ft_strlcpy  ft_strlcat  \
           ft_strchr      ft_strrchr    ft_strnstr     ft_strncmp  ft_atoi     \
-          ft_calloc      ft_strdup                                            \
+          ft_calloc      ft_strdup     ft_isalpha     ft_isdigit  ft_isalnum  \
+          ft_isascii     ft_isprint    ft_toupper     ft_tolower              \
           \
           ft_substr      ft_strjoin    ft_strtrim     ft_split                \
           ft_itoa        ft_strmapi    ft_putchar_fd  ft_putstr_fd            \
@@ -52,7 +53,7 @@ fclean: clean
 
 rs: fclean ${NAME} clean
 
-re: fclen clean all
+re: fclean all
 
 test:
 	./test.sh
@@ -65,4 +66,6 @@ f:
 	rm -rf libft.h.gch main.o
 	g++ -std=c++17 mainpp ${SRCS:=.c} libft.h
 
-  
+.PHONY: all bonus clean fclean re
+
+

@@ -14,8 +14,8 @@
 
 t_list	*ft_lstend(t_list *lst)
 {
-	if (lst == nullptr)
-		return (nullptr);
+	if (lst == NULLPTR)
+		return (NULLPTR);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);

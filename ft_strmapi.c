@@ -17,12 +17,12 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	char	*new_s;
 	size_t	strlen;
 
-	if (s == nullptr)
-		return (nullptr);
+	if (s == NULLPTR)
+		return (NULLPTR);
 	strlen = ft_strlen(s);
 	new_s = ft_strdup(s);
-	if (new_s == nullptr)
-		return (nullptr);
+	if (new_s == NULLPTR)
+		return (NULLPTR);
 	while (strlen--)
 		new_s[strlen] = f(strlen, s[strlen]);
 	return (new_s);

@@ -17,7 +17,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void *ret;
 
 	ret = malloc(nmemb * size);
-	if (ret != nullptr)
+	if (ret != NULLPTR)
 		return (ft_memset(ret, 0, nmemb * size));
 	return (ret);
 }
