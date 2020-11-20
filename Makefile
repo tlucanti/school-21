@@ -1,6 +1,8 @@
+NAME = libft
+DIR = .
 COMPILER = gcc
-CFLAGS = -Wall -Wextra -Werror
-OPTIONS = -c -Ofast
+CFLAGS = -Wall -Wextra -Werror -I${DIR}
+OPTIONS = -c
 SRCS =	  ft_strnlen     ft_minmax     ft_issmth1                             \
           \
           ft_memset      ft_bzero      ft_memcpy      ft_memccpy  ft_memmove  \
@@ -17,39 +19,42 @@ BONUS_SRCS = ft_lstnew       ft_lstadd_front  ft_lstsize   ft_lstlast         \
              ft_lstadd_back  ft_lstdelone     ft_lstclear  ft_lstiter         \
              ft_lstmap
 
-NAME = libft
+OBJECTS = ${SRCS:=.o}
+BONUS_OBJECTS = ${BONUS_SRCS:=.o}
+
+LIBFT_A = libft.a
+DEPS = libft.h
 RM = rm -rf
 LIB_INIT = ar rc
 LIB_NAME = libft
-RUN_LIB = ranlib
 BUILD_FLAGS = -L. -l
 
-${NAME}:
-	${COMPILER} ${CFLAGS} ${OPTIONS} ${SRCS:=.c}
-	${LIB_INIT} ${LIB_NAME}.a ${SRCS:=.o}
-	${RUN_LIB} ${LIB_NAME}.a
+
+.c.o: ${DEPS}
+	${COMPILER} ${CFLAGS} ${OPTIONS} $< -o ${<:.c=.o}
+
+$(NAME): ${OBJECTS}
+	${LIB_INIT} ${NAME}.a ${OBJECTS}
 
 all: ${NAME}
 
-bonus:
-	${COMPILER} ${CFLAGS} ${OPTIONS} ${SRCS:=.c} ${BONUS_SRCS:=.c}
-	${LIB_INIT} ${LIB_NAME}.a ${SRCS:=.o} ${BONUS_SRCS:=.o}
-	${RUN_LIB} ${LIB_NAME}.a
+
+bonus: ${BONUS_OBJECTS}
+	${LIB_INIT} ${NAME}.a ${BONUS_OBJECTS}
 
 so:
-	${COMPILER} -fPIC ${CFLAGS} ${OPTIONS} ${SRCS:=.c} ${BONUS_SRCS:=.c}
-	${COMPILER} -shared -o ${NAME}.so ${SRCS:=.o} ${BONUS_SRCS:=.o} ${NAME}.h
+	${COMPILER} -fPIC ${CFLAGS} ${OPTIONS} ${OBJECTS} ${BONUS_OBJECTS}
+	${COMPILER} -shared -o ${NAME}.so ${OBJECTS} ${BONUS_OBJECTS} ${DEPS}
 
 clean:
-	${RM} ${SRCS:=.o}
-	${RM} ${BONUS_SRCS:=.o}
-	${RM} ${LIB_NAME}.a
+	${RM} ${OBJECTS}
+	${RM} ${BONUS_OBJECTS}
+	${RM} ${NAME}.a
 
 fclean: clean
 	${RM} ${LIB_NAME}.h.gch
 	${RM} a.out
-	${RM}
-	${RM} ${NAME}
+	${RM} ${NAME}.a
 
 rs: fclean ${NAME} clean
 
