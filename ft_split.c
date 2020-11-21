@@ -35,6 +35,8 @@ char	**ft_split(char const *s, char c)
 			s++;
 		}
 		ret = ft_str_append_sized(ret, (char *)(s - size), size, arrlen++);
+		if (ret == NULLPTR)
+			return (NULLPTR);
 	}
 	return (ft_error_test_ft_split(ret));
 }
@@ -56,7 +58,7 @@ char	**ft_str_append_sized(char **arr, char *str, size_t size, size_t arrlen)
 
 	new_s = (char *)malloc(size + 1);
 	if (new_s == NULLPTR)
-		return (0);
+		return ((char **)ft_arr_clear(arr));
 	ft_memcpy(new_s, str, size + 1);
 	new_s[size] = 0;
 	return (ft_push_back_char_ss(arr, new_s, arrlen));
@@ -70,8 +72,7 @@ char	**ft_push_back_char_ss(char **arr, char *new_s, size_t arrlen)
 
 	if (arr == NULLPTR)
 	{
-		new_arr = (char **)malloc(sizeof(char *) * 2);
-		if (new_arr == NULLPTR)
+		if ((new_arr = (char **)malloc(sizeof(char *) * 2)) == NULLPTR)
 			return (NULLPTR);
 		new_arr[0] = new_s;
 		new_arr[1] = NULLPTR;
@@ -80,6 +81,8 @@ char	**ft_push_back_char_ss(char **arr, char *new_s, size_t arrlen)
 	{
 		old_arr_ptr = arr;
 		new_arr = (char **)malloc(sizeof(char *) * (arrlen + 2));
+		if (new_arr == NULLPTR)
+			return ((char **)ft_arr_clear(arr));
 		new_arr_ptr = new_arr;
 		while (*arr)
 			*new_arr_ptr++ = *arr++;
@@ -88,4 +91,11 @@ char	**ft_push_back_char_ss(char **arr, char *new_s, size_t arrlen)
 		free(old_arr_ptr);
 	}
 	return (new_arr);
+}
+
+void	*ft_arr_clear(char **arr)
+{
+	while (*arr)
+		free(*arr++);
+	return (0);
 }

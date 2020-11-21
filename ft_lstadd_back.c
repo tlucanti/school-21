@@ -12,24 +12,32 @@
 
 #include "libft.h"
 
-void	ft_lstpushback(t_list **lst, void *content)
+int		ft_lstpushback(t_list **lst, void *content)
 {
+	t_list	*list_new;
+
 	if (lst == NULLPTR)
-		return ;
+		return (1);
 	if (*lst == NULLPTR)
 	{
 		*lst = ft_lstnew(content);
-		return ;
+		if (*lst == NULLPTR)
+			return (1);
+		return (0);
 	}
-	ft_lstend(*lst)->next = ft_lstnew(content);
+	list_new = ft_lstnew(content);
+	if (list_new == NULLPTR)
+		return (1);
+	ft_lstend(*lst)->next = list_new;
+	return (0);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new_)
 {
 	if (lst == NULLPTR)
 		return ;
 	if (*lst == NULLPTR)
-		*lst = new;
+		*lst = new_;
 	else
-		ft_lstend(*lst)->next = new;
+		ft_lstend(*lst)->next = new_;
 }

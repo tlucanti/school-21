@@ -12,15 +12,18 @@
 
 #include "libft.h"
 
-void	ft_lstpushfront(t_list **lst, void *content)
+int		ft_lstpushfront(t_list **lst, void *content)
 {
 	t_list	*root;
 
 	if (lst == NULLPTR)
-		return ;
+		return (1);
 	root = ft_lstnew(content);
+	if (root == NULLPTR)
+		return (1);
 	root->next = *lst;
 	*lst = root;
+	return (0);
 }
 
 void	ft_lstadd_front(t_list **lst, t_list *new)

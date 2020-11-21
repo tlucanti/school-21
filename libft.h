@@ -55,13 +55,14 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 long long		ft_atol(const char *str);
 char			**ft_str_append_sized(char **arr, char *str, size_t size,
-	size_t arrlen);
+		size_t arrlen);
 char			**ft_push_back_char_ss(char **arr, char *new_s, size_t arrlen);
 char			**ft_error_test_ft_split(char **ret);
+void			*ft_arr_clear(char **arr);
 int				ft_digit_num(int n);
-void			ft_lstpushfront(t_list **lst, void *content);
+int				ft_lstpushfront(t_list **lst, void *content);
 t_list			*ft_lstend(t_list *lst);
-void			ft_lstpushback(t_list **lst, void *content);
+int				ft_lstpushback(t_list **lst, void *content);
 void			ft_lstfree(t_list *lst);
 
 void			*ft_memset(void *s, int c, size_t n);
@@ -76,7 +77,7 @@ size_t			ft_strlcpy (char *dst, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *haystack, const char *needle,
-	size_t len);
+		size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlcat(char *dst, const char *src, size_t maxlen);
 int				ft_atoi(const char *str);
@@ -103,6 +104,6 @@ void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
-	void (*del)(void *));
+		void (*del)(void *));
 
 #endif
