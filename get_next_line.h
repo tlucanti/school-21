@@ -28,9 +28,9 @@ typedef struct		s_buffer
 
 int		get_next_line(int fd, char **line);
 size_t	ft_find_end(char *str, size_t size);
-int		ft_lstpushfront(t_deque **list, const char *str, size_t size);
-int		ft_lstclear(t_deque *lst, t_buffer **tbuff, int fd);
-int		ft_listmerge(t_deque *list, char **line, int fd, t_buffer **tbuff);
+int		ft_lpf(t_deque **list, const char *str, size_t size);
+int		ft_c(t_deque *lst, t_buffer **tbuff, int fd);
+int		ft_lm(t_deque *list, char **line, int fd, t_buffer **tbuff);
 void	*ft_memcpy_fwd(void *dst, void *src, size_t size);
 void	*ft_calloc(size_t nmeb, size_t size);
 
