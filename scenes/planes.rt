@@ -1,0 +1,27 @@
+
+#		resolution
+R		1500		1000
+
+# cameras
+#		position	view vector		pov
+c		0,0,0		0,0,1			90
+
+# lights
+# ambient
+a		0.2
+
+# direct
+# d		0,-1,0		0.2
+
+# point
+l		0,5,0		0.6
+
+# planes
+# 		center		normal vector	color			specular	reflective
+# pl		0,-1,0		0,-1,0,			255,255,0,		500,
+pl		0,-1,0		0,1,0,			255,255,0,		500,
+pl		0,0,5		0,0,-5			0,0,255			200,		0.5
+pl		0,0,-5		0,0,5			255,0,0			200,
+pl		5,0,0		-5,0,0,			0,255,0			200,
+pl		-5,0,0,		5,0,0			255,0,255		200,
+pl		0,5,0		0,-1,0			0,255,255		500,

@@ -1,0 +1,49 @@
+
+#		resolution
+R		1500		1000
+
+#		position	view vector		pov
+c		0,2,-2		0,0,1			80
+
+# lights
+
+# ambient light
+a		0.1
+
+# point	light
+# 		position	intencity	color
+# l		2,2,0		0.6			
+
+# direct light
+		# direction	intncity	color
+# d		1,4,4		0.6			255,255,255
+d		0.2,-1,0.3		0.6			255,255,255
+
+# squares
+sq		0,-2,0		0,1,0	20	150,150,150	200	0.4
+
+# spheres
+#		center		radius		color		specular	reflective
+sp		4,6,2		0.1			255,0,0		0
+sp		8,4,10		0.1			255,0,0		0
+sp		1,4,6		0.1			255,0,0		0
+
+sp		-3,0,2		0.1			0,255,0		0
+sp		0,0,8		0.1			0,255,0		0
+sp		3,0,2		0.1			0,255,0		0
+
+sp		-2,3,5		0.1			0,255,255	0
+sp		0,5,5		0.1			0,255,255	0
+sp		2,3,5		0.1			0,255,255	0
+
+# triangles
+		# point1		point2		point3		color		specular	reflective
+tr		4,6,2		8,4,10		1,4,6		255,0,0		100,		0.3
+# tr		1,4,6		4,6,2		8,4,10		255,0,0		100,		0.3
+# tr		1,4,6		8,4,10		4,6,2		255,0,0		100,		0.3
+
+tr		-3,0,2		0,0,8		3,0,2		0,255,0		100			0.3
+# tr		0,0,8		3,0,2		-3,0,2		0,255,0		100			0.3
+# tr		3,0,2		0,0,8		-3,0,2		0,255,0		100			0.3
+
+tr		-2,3,5		0,5,5		2,3,5		0,255,255	100			0.5

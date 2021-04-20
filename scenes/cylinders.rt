@@ -1,0 +1,38 @@
+
+#		resolution
+R		1500		1000
+
+# cameras
+#		position	view vector		pov
+c		0,3,-2		0,0,1			80
+
+
+# lights
+
+# ambient light
+a		0.2
+
+# point	light
+# 		position	intencity	color
+# l		0,1,3		0.6			
+# l		0,5,0		0.6			
+l		0.5,6,3		0.6
+
+# direct light
+#		direction	intncity	color
+d		-1,-4,4		0.5			255,255,255
+# d	0,-0.2,1 0.6
+
+#		center		dir vect	diameter	height	color		specular	reflective
+cy		0,5,3		0,1,0		3			6		249,38,114	300			-1.0
+sp		0,5,3		0.08		255,0,0
+sp		0,8,3		0.08		255,0,0
+sp		0,2,3		0.08		255,0,0
+
+sp		1.5,2,3		0.08		255,0,0
+sp		-1.5,2,3	0.08		255,0,0
+sp		0,2,1.5		0.08		255,0,0
+sp		0,2,4.5		0.08		255,0,0
+
+
+sq		0,0,0		0,-1,0	20		150,150,150	200			0.4
