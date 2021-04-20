@@ -59,17 +59,4 @@ rs: fclean ${NAME} clean
 
 re: fclean all
 
-test:
-	./test.sh
-
-speed:
-	./speed.sh
-
-f:
-	make fclean
-	rm -rf libft.h.gch main.o
-	g++ -std=c++17 mainpp ${SRCS:=.c} libft.h
-
 .PHONY: all bonus clean fclean re
-
-

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kostya <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/25 12:07:16 by tlucanti          #+#    #+#              #
-#    Updated: 2021/03/21 18:28:20 by kostya           ###   ########.fr        #
+#    Updated: 2021/04/20 15:33:50 by tlucanti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ LIBFT	=	./libft/libft.a
 .c.o:
 	${CC} ${CFLAGS} ${COPTIONS} -c $<	-o	${<:.c=.o}
 
-$(NAME):	${DEPS} ${OBJS} ${LIBFT}
+$(NAME):	${DEPS} ${OBJS}
 	${MAKE} -C libft
 	${CC} -o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS} ${LIBRARY} ${LIBFT}
 
@@ -64,12 +64,15 @@ bonus:		fclean ${OBJS_BONUS}
 	${CC} -o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS_BONUS} ${LIBRARY} ${LIBFT}
 
 clean:
+	${MAKE} -C libft clean
 	${RM} ${OBJS}
 	${RM} ${OBJS_BONUS}
 	${RM} get_next_line.o get_next_line_utils.o test.o
 
 fclean: clean
+	${MAKE} -C libft fclean
 	${RM} ${NAME}
+	${MA}
 
 re:     fclean all
 
