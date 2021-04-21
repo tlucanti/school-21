@@ -37,13 +37,13 @@ DEPS_BONUS=	ray_traycer_bonus.h objects_bonus.h
 OBJS	=	${SRCS:=.o}
 OBJS_BONUS=	${SRCS_BONUS:=.o}
 LIBFT	=	./libft/libft.a
-MINILIBX=	./minilibx/libmlx.a
+MINILIBX=	./mlx/libmlx.a
 
 .c.o:
 	${CC} ${CFLAGS} ${COPTIONS} -c $< -o ${<:.c=.o}
 
 $(NAME):	${DEPS} ${OBJS}
-	${MAKE} -C minilibx
+	${MAKE} -C mlx
 	${MAKE} -C libft
 	${CC} -o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS} ${LIBRARY} ${LIBFT} ${MINILIBX}
 
