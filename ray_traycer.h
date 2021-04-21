@@ -277,6 +277,8 @@ int				key_switcher_4(int keycode, t_point *n);
 int				key_switcher_5(int keycode);
 
 int				do_screenshot(int argc, char **argv);
+int				check_extention(char *fname);
+void			set_angles(t_camera *new_camera, t_point *view_vector);
 t_color			*normalize_colors(t_color *intensity_rgb);
 
 #endif

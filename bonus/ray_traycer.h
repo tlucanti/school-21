@@ -6,7 +6,7 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/18 11:38:33 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/19 22:45:25 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:34:47 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #  define _GNU_SOURCE
 # endif
 
-# include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
+# include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 # include "objects.h"
 
 # include <mlx.h>
@@ -277,6 +277,8 @@ int				key_switcher_4(int keycode, t_point *n);
 int				key_switcher_5(int keycode);
 
 int				do_screenshot(int argc, char **argv);
+int				check_extention(char *fname);
+void			set_angles(t_camera *new_camera, t_point *view_vector);
 t_color			*normalize_colors(t_color *intensity_rgb);
 
 #endif
