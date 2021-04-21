@@ -48,6 +48,7 @@ $(NAME):	${DEPS} ${OBJS}
 all:		${NAME}
 
 f:
+	${MAKE} -C libft
 	${RM} test.c
 	${RM} ${NAME}
 	cat *.c > test.c
