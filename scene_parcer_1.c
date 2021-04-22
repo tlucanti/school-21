@@ -6,7 +6,7 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:44:35 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/20 15:34:50 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/22 12:26:43 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	init_scene(void)
 	g_scene = (t_scene *)malloc(sizeof(t_scene));
 	if (g_scene == NULL)
 		return (ft_exit_all("Malloc error"));
+	g_scene->res_x = -1;
+	g_scene->res_y = -1;
 	g_scene->cameras_num = 0;
 	g_scene->spheres_num = 0;
 	g_scene->planes_num = 0;

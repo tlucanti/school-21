@@ -6,13 +6,13 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 16:03:08 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/20 15:34:57 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/22 12:42:47 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ray_traycer.h"
 
-int	ft_add_square( char **line)
+int	ft_add_square(char **line)
 {
 	t_square_input	inp;
 	int				size;
@@ -40,18 +40,18 @@ int	ft_add_square( char **line)
 	return (0);
 }
 
-int	ft_add_cylinder( char **line)
+int	ft_add_cylinder(char **line)
 {
 	t_cylinder_input	inp;
 	int					size;
 
 	size = ft_array_size(line);
-	if (size < 5)
+	if (size < 6)
 		return (ft_exit_all("Incorrect cylinder configuration"));
 	inp.center = point_str(line[1]);
 	inp.vec = point_str(line[2]);
-	masf2(&inp.d, ft_atof(line[3]), &inp.h, ft_atof(line[4]));
-	inp.col = color_str(line[5]);
+	inp.col = color_str(line[3]);
+	masf2(&inp.d, ft_atof(line[4]), &inp.h, ft_atof(line[5]));
 	inp.specular = tern_atoi(size >= 7, 200, line[6]);
 	inp.reflective = tern_atof(size >= 8, -1.f, line[7]);
 	if (!inp.center || !inp.vec || inp.col == 0xffffffff

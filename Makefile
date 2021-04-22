@@ -63,6 +63,7 @@ f:
 	${RM} get_next_line.o get_next_line_utils.o test.o	
 
 bonus:		fclean ${OBJS_BONUS}
+	${MAKE} -C mlx
 	${MAKE} -C libft
 	${CC} -o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS_BONUS} ${LIBRARY} ${LIBFT} ${MINILIBX}
 

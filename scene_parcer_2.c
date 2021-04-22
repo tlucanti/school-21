@@ -37,7 +37,7 @@ int	ft_add_camera(char **line)
 	return (0);
 }
 
-int	ft_add_point( char **line)
+int	ft_add_point(char **line)
 {
 	t_light_input	inp;
 	size_t			size;

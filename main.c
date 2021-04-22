@@ -63,6 +63,8 @@ int	do_screenshot(int argc, char **argv)
 
 int	main_1(int argc, char **argv)
 {
+	if (g_scene->res_x < 0 || g_scene->res_y < 0)
+		return (0 * ft_exit_all("resolution not set"));
 	if (g_scene->cameras_num == 0)
 		return (0 * ft_exit_all("no cameras in scene"));
 	if (do_screenshot(argc, argv))

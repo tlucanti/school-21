@@ -6,7 +6,7 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 20:10:06 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/17 20:11:31 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:33:44 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (ft_exit_all("No input file"));
-	if (init_scene())
+	if (init_scene() || check_extention(argv[1]))
 		return (0);
 	g_scene->dist = 1.f + EPS;
 	fd = open(argv[1], O_RDONLY);
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("cannot open ", 1);
 		ft_putstr_fd(argv[1], 1);
 		ft_putstr_fd(" file\n", 1);
-		return (1);
+		return (0);
 	}
 	g_scene->mlx = mlx_init();
 	if (g_scene->mlx == NULL)
@@ -63,6 +63,8 @@ int	do_screenshot(int argc, char **argv)
 
 int	main_1(int argc, char **argv)
 {
+	if (g_scene->res_x < 0 || g_scene->res_y < 0)
+		return (0 * ft_exit_all("resolution not set"));
 	if (g_scene->cameras_num == 0)
 		return (0 * ft_exit_all("no cameras in scene"));
 	if (do_screenshot(argc, argv))
@@ -83,5 +85,20 @@ int	main_1(int argc, char **argv)
 	mlx_key_hook(g_scene->mlx_win, key_hook, NULL);
 	key_hook(0, NULL);
 	mlx_loop(g_scene->mlx);
+	return (0);
+}
+
+int	check_extention(char *fname)
+{
+	int	size;
+
+	size = ft_strlen(fname);
+	if (size < 3 || fname[size - 3] != '.' || fname[size - 2] != 'r'
+		|| fname[size - 1] != 't')
+	{
+		ft_putstr_fd(ERROR "Error" RESET, 1);
+		ft_putstr_fd("\nwrong file name/extention\n", 1);
+		return (1);
+	}
 	return (0);
 }

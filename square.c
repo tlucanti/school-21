@@ -6,7 +6,7 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/20 15:35:19 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/20 15:35:20 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/22 13:02:38 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,30 @@
 
 int	square(t_square_input *inp, t_square **dest)
 {
-	t_square	*new_square;
+	t_square	*sq;
 
 	*dest = NULL;
-	new_square = (t_square *)malloc(sizeof(t_square));
-	if (!new_square)
+	sq = (t_square *)malloc(sizeof(t_square));
+	if (!sq)
 		return (ft_free(inp->center) + ft_free(inp->normal) + 1);
-	*dest = new_square;
-	new_square->center = inp->center;
-	new_square->normal = inp->normal;
-	new_square->color = inp->col;
-	new_square->specular = inp->specular;
-	new_square->reflective = inp->reflective;
-	new_square->d = inp->d / 2;
-	new_square->v1 = point(inp->normal->y, -inp->normal->x, 0);
-	new_square->v2 = point_cross(inp->normal, new_square->v1);
-	if (!new_square->v1 || !new_square->v2)
+	*dest = sq;
+	sq->center = inp->center;
+	sq->normal = inp->normal;
+	sq->color = inp->col;
+	sq->specular = inp->specular;
+	sq->reflective = inp->reflective;
+	sq->d = inp->d / 2;
+	sq->v1 = point(inp->normal->y, -inp->normal->x, 0);
+	sq->v2 = point_cross(inp->normal, sq->v1);
+	normalize(sq->normal);
+	if (fabsf(sq->normal->z - 1.f) < EPS)
+	{
+		sq->v1 = point(0, 1, 0);
+		sq->v2 = point(1, 0, 0);
+	}
+	if (!sq->v1 || !sq->v2)
 		return (1);
-	normalize(new_square->normal);
-	normalize(new_square->v2);
-	normalize(new_square->v1);
+	(void)(normalize(sq->v2) && normalize(sq->v1));
 	return (0);
 }
 

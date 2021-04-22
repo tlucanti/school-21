@@ -6,7 +6,7 @@
 /*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 15:53:55 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/04/17 15:53:55 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/04/20 15:34:54 by tlucanti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_add_camera(char **line)
 	return (0);
 }
 
-int	ft_add_point( char **line)
+int	ft_add_point(char **line)
 {
 	t_light_input	inp;
 	size_t			size;
