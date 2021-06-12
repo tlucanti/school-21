@@ -1,3 +1,6 @@
+INC=/usr/include
+HT=Linux
+DOCP=do_cp
 ##
 ## Makefile for MiniLibX in /home/boulon/work/c/raytraceur/minilibx
 ##
@@ -10,9 +13,7 @@
 
 ## Please use configure script
 
-INC		=	/usr/include
-HT		=	Linux
-DOCP	=	do_cp
+
 
 CC		=	clang
 
@@ -44,12 +45,13 @@ SRC		=	mlx_init.c \
 			mlx_int_set_win_event_mask.c \
 			mlx_hook.c \
 			mlx_rgb.c \
-			mlx_destroy_image.c
+			mlx_destroy_image.c \
+			mlx_get_screen_size.c
 
 OBJ		=	$(SRC:.c=.o)
 CFLAGS	=	-O3 -I$(INC)
 
-DESTDIR = /usr/local
+DESTDIR	=	/usr/local
 
 all: $(NAME) $(DOCP)
 
@@ -60,9 +62,8 @@ $(NAME): $(OBJ)
 do_cp:
 	cp $(NAME) libmlx_$(HT).a
 
-
 clean:
-	rm -f $(OBJ) $(NAME) *~ core *.core
+	rm -f $(OBJ) $(NAME) *~ core *.core libmlx_$(HT).a
 
 install:
 	mkdir -p $(DESTDIR)/lib && cp $(NAME) $(DESTDIR)/lib

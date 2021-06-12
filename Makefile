@@ -59,7 +59,7 @@ f:
 	${CC} ${CFLAGS} ${COPTIONS} -c test.c
 	${CC} -o ${NAME} ${CFLAGS} ${COPTIONS} get_next_line.o get_next_line_utils.o test.o \
 		${LIBRARY} ${LIBFT}
-	${RM} test.c
+	# ${RM} test.c
 	${RM} get_next_line.o get_next_line_utils.o test.o	
 
 bonus:		fclean ${OBJS_BONUS}
