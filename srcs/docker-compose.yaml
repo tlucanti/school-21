@@ -1,0 +1,68 @@
+version: '3.7'
+
+volumes:
+  wp:
+    driver:         local
+    name:           wp
+    driver_opts:
+      type:         none
+      o:            bind
+      device:       /home/tlucanti/data/wp
+
+  db:
+    driver:         local
+    name:           db
+    driver_opts:
+      type:         none
+      o:            bind
+      device:       /home/tlucanti/data/db
+
+
+networks:
+  tlucanti_net:
+    name:           tlucanti_net
+    driver:         bridge
+
+
+services:
+  mariadb:
+    image:          mariadb
+    env_file:       .env
+    restart:        always
+    build:          req/db/
+    user:           root
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - tlucanti_net
+    container_name: mariadb
+  
+  nginx:
+    image:          nginx
+    env_file:       .env
+    restart:        always
+    build:          req/nginx/
+    user:           root
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - tlucanti_net
+    depends_on:
+      - wordpress
+    ports:
+      - "443:443"
+    container_name: nginx
+
+  wordpress:
+    image:          wordpress
+    env_file:       .env
+    restart:        always
+    build:          req/wp/
+    user:           root
+    volumes:
+      - wp:/var/www/html
+    networks:
+      - tlucanti_net
+    depends_on:
+       - mariadb
+    container_name: wordpress
