@@ -1,10 +1,10 @@
-start:
+all:
 	docker-compose -f srcs/docker-compose.yaml up
 
 stop:
 	docker-compose -f srcs/docker-compose.yaml down
 
-buid:
+build:
 	docker-compose -f srcs/docker-compose.yaml up --build
 
 re:

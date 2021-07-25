@@ -1,0 +1,8 @@
+
+docker exec -it mariadb bash
+
+mysql -u root -p
+connect wp
+
+show tables;
+select * from wp_smth

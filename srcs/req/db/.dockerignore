@@ -1,2 +1,3 @@
 .git
 conf/server.cnf.example
+conf/mysql-check.example
