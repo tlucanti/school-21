@@ -1,10 +1,10 @@
 version: '3.7'
 
-volumes:
-  # >> docker volume ls - to see list of volumes
-  # >> docker volume inspect {container} - to see information
-  # about volume
+# >> docker volume ls - to see list of volumes
+# >> docker volume inspect {container} - to see information
+# about volume
 
+volumes:
   wp:
     driver:         local
     name:           wp
@@ -22,10 +22,11 @@ volumes:
       device:       /home/tlucanti/data/db
 
 
+# >> docker network ls - to se list of networkss
+# >> docker network inspect {network} - to see information
+# about network
+
 networks:
-  # >> docker network ls - to se list of networkss
-  # >> docker network inspect {network} - to see information
-  # about network
 
   tlucanti_net:
     name:           tlucanti_net
