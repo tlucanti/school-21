@@ -6,13 +6,13 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/10/13 13:47:34 by kostya           ###   ########.fr        #
+#    Updated: 2021/10/13 20:35:03 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	gcc
 NAME		=	philo
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra
 COPTIONS	=	-O3
 RM			=	rm -f
 LIBRARY		=	

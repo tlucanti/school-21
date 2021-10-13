@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 21:23:16 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/13 15:27:52 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/13 22:57:14 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 typedef	struct s_data
 {
 	uint_fast32_t	phil_num;
-	uint_fast32_t	die_time;
+	uint_fast32_t	live_time;
 	uint_fast32_t	eat_time;
 	uint_fast32_t	sleep_time;
 	uint_fast32_t	eat_num;
 
+	pthread_t		*pthreads;
 	uint_fast64_t	pthread_start;
 	uint_fast64_t	*death_time;
 
