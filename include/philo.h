@@ -22,37 +22,35 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/time.h>
-# include <stdint.h>
 # include <sys/types.h>
+# include <string.h>
 
 typedef	struct s_data
 {
-	uint_fast32_t	phil_num;
-	uint_fast32_t	live_time;
-	uint_fast32_t	eat_time;
-	uint_fast32_t	sleep_time;
-	uint_fast32_t	eat_num;
+	uint						phil_num;
+	uint						live_time;
+	uint						eat_time;
+	uint						sleep_time;
+	uint						eat_num;
 
-	pthread_t		*pthreads;
-	uint_fast64_t	pthread_start;
-	uint_fast64_t	*death_time;
+	pthread_t				*pthreads;
+	uintmax_t				pthread_start;
+	uintmax_t				*death_time;
 
-	uint_fast8_t	stop;
-
+	unsigned char		stop;
 	pthread_mutex_t	stdout_mutex;
 } t_data;
 
-int				main(int argc, char *const *argv);
-uint_fast8_t	parse(t_data *restrict data, char *const *argv);
-uint_fast64_t	ft_time(void);
-void			start(t_data *restrict data);
-void			*phil_routine(void *philo_num_ptr);
-t_data			*data_storage(void);
-void			stop(t_data *restrict data);
-void			*death_monitor(__attribute__((unused)) void *_);
-void			take_forks(uint_fast32_t phil_num, uint_fast8_t action, uint_fast64_t pthread_start);
-void			mutex_print(uint_fast64_t time, uint_fast32_t phil_num, const char *restrict message);
+int						main(int argc, char *const *argv);
+unsigned char	parse(t_data *restrict data, char *const *argv);
+uintmax_t			ft_time(void);
+void					start(t_data *restrict data);
+void					*phil_routine(void *philo_num_ptr);
+void					stop(t_data *restrict data);
+void					*death_monitor(__attribute__((unused)) void *_);
+void					take_forks(uint phil_num, unsigned char action, uintmax_t pthread_start);
+void					mutex_print(uintmax_t time, uint phil_num, const char *restrict message);
 
-int				ft_atoi(const char *str);
+int						ft_atoi(const char *str);
 
 #endif // PHILO_H
