@@ -6,13 +6,13 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 12:41:54 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/10/13 13:46:00 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/17 13:48:12 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-static	long long	ft_atol(const char *str);
+static long long	ft_atol(const char *str);
 int					ft_isspace(int __c);
 int					ft_isdigit(int __c);
 
@@ -21,7 +21,7 @@ int	ft_atoi(const char *str)
 	return ((int)ft_atol(str));
 }
 
-static	long long	ft_atol(const char *str)
+static long long	ft_atol(const char *str)
 {
 	long long	ans;
 	long long	sign;

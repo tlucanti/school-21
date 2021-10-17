@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 21:23:16 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/17 13:15:55 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/17 18:50:24 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/types.h>
 # include <string.h>
 
-typedef	struct s_data
+typedef struct s_data
 {
 	uint			phil_num;
 	uint			live_time;
@@ -52,13 +52,22 @@ void				start(t_data *restrict data);
 void				*phil_routine(size_t philo_num_ptr);
 void				stop(t_data *restrict data);
 void				*death_monitor(t_data *data);
-void				take_forks(uint phil_num, unsigned char action, uintmax_t pthread_start);
-void				mutex_print(uintmax_t time, uint phil_num, const char *restrict message, unsigned char message_size);
-void				ft_putunbr(uint n, unsigned char last);
+void				take_forks(uint phil_num, unsigned char action,
+						uintmax_t pthread_start);
+void				mutex_print(uintmax_t time, uint philo_num,
+						const uintmax_t *restrict message);
+void				ft_putunbr(char *dest, uint n);
 
 int					ft_atoi(const char *str);
 
-# define __SIZE_T	(unsigned long long
-# define VOID_PTR	void *)__SIZE_T
+# define _MY_SIZE_T	(unsigned long long
+# define VOID_PTR	void *)_MY_SIZE_T
+
+# define LFORK_MESSAGE		(uintmax_t *)"has taken left fork     "
+# define RFORK_MESSAGE		(uintmax_t *)"has taken right fork    "
+# define EATING_MESSAGE		(uintmax_t *)"is eating               "
+# define SLEEP_MESSAGE		(uintmax_t *)"is sleeping             "
+# define THINK_MESSAGE		(uintmax_t *)"is thinking             "
+# define DEATH_MESSAGE		(uintmax_t *)"died                    "
 
 #endif // PHILO_H
