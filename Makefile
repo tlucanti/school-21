@@ -6,14 +6,14 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/10/13 20:35:03 by kostya           ###   ########.fr        #
+#    Updated: 2021/10/17 13:19:10 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
 NAME		=	philo
 CFLAGS		=	-Wall -Wextra -Werror
-COPTIONS	=	-O3
+COPTIONS	=	-O3 -ffast-math
 RM			=	rm -f
 LIBRARY		=	
 INCLUDE_DIR	=	include
@@ -27,19 +27,19 @@ HDRS		=	\
 				philo
 # ------------------------------------------------------------------------------
 OBJS		=	$(addprefix ${OBJS_DIR}/,${SRCS:=.o})
-DEPS		=	$(addprefix ${INCLUDE_DIR}/${HDRS:=.h})
+DEPS		=	$(addprefix ${INCLUDE_DIR}/,${HDRS:=.h})
 LIBRARY		=	-pthread
 LIBFT		=	
 
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: %.c
-	${CC}		${CFLAGS}  ${COPTIONS} -c -o $@ $< -I ${DEPTH}
+${OBJS_DIR}/%.o: %.c ${DEPS}
+	${CC}		${CFLAGS}  ${COPTIONS} -c -o $@ $< -I ${DEPS}
 
 # ------------------------------------------------------------------------------
-$(NAME):		install ${OBJS}
+$(NAME):		${OBJS_DIR} ${OBJS} ${DEPS}
 	${CC}		-o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS} ${LIBRARY} ${LIBFT}
 
-all:			install ${NAME}
+all:			${NAME}
 
 # ------------------------------------------------------------------------------
 clean:
@@ -50,11 +50,11 @@ fclean:			clean
 	${RM}		${NAME}
 
 # ------------------------------------------------------------------------------
-install:
+${OBJS_DIR}:
 	mkdir		-p ${OBJS_DIR}
 
 # ------------------------------------------------------------------------------
-re:			fclean all
+re:				fclean all
 
 # ------------------------------------------------------------------------------
-.PHONY:			all clean fclean re install
+.PHONY:			all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/13 23:45:29 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/17 13:17:32 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ unsigned char	parse(t_data *restrict data, char *const *argv)
 
 uintmax_t	ft_time(void)
 {
-	struct timeval	t_val;
+	static struct timeval	t_val;
 
 	gettimeofday(&t_val, NULL);
 	return (t_val.tv_sec * 1000000 + t_val.tv_usec);
@@ -68,33 +68,37 @@ void	start(t_data *restrict data)
 
 	data->death_time = (uintmax_t *)malloc(sizeof(uintmax_t) * data->phil_num);
 	data->pthreads = (pthread_t *)malloc(sizeof(pthread_t) * (data->phil_num + 1));
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_lock) * data->phil_num);
+	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->phil_num);
 	data->eaten = (uint *)malloc(sizeof(uint) * data->phil_num);
 	memset(data->death_time, 0xff, data->phil_num * sizeof(uintmax_t));
 	i = 0;
+	while (i < data->phil_num)
+	{
+		pthread_mutex_init(data->forks + i, NULL);
+		++i;
+	}
 	data->pthread_start = ft_time();
 	while (i < data->phil_num / 2)
 	{
-		pthread_create(data->pthreads + i * 2, NULL, phil_routine, (VOID_PTR)(i * 2));
+		pthread_create(data->pthreads + i * 2, NULL, (void *(*)(void *))phil_routine, (VOID_PTR)(i * 2));
 		++i;
 	}
 	i = 0;
 	while (i < data->phil_num / 2 + data->phil_num % 2)
 	{
-		pthread_create(data->pthreads + i * 2 + 1, NULL, phil_routine, (VOID_PTR)(i * 2 + 1));
+		pthread_create(data->pthreads + i * 2 + 1, NULL, (void *(*)(void *))phil_routine, (VOID_PTR)(i * 2 + 1));
 		++i;
 	}
-	pthread_create(data->pthreads + data->phil_num, NULL, death_monitor, NULL);
+	pthread_create(data->pthreads + data->phil_num, NULL, (void *(*)(void *))death_monitor, data);
 }
 
-void	*phil_routine(void *philo_num_ptr)
+void	*phil_routine(size_t philo_num_ptr)
 {
 	uintmax_t	time;
 	t_data		*data;
 	uint        philo_num;
 
-	philo_num = (uint)(size_t)philo_num_ptr;
-	mutex_print(0, philo_num, "created", 7);
+	philo_num = (uint)philo_num_ptr;
 	data = data_storage();
 	while (data->eaten[philo_num] < data->eat_num && !data->stop)
 	{
@@ -123,22 +127,25 @@ void	stop(t_data *restrict data)
 {
 	uint	i;
 
-	i = data->phil_num + 1;
-	while (i > 0)
-		pthread_join(data->pthreads[--i], NULL);
+	i = 0;
+	while (i < data->phil_num)
+	{
+		pthread_join(data->pthreads[i], NULL);
+		pthread_mutex_destroy(data->forks + i);
+		++i;
+	}
+	pthread_join(data->pthreads[data->phil_num], NULL);
 	free(data->death_time);
 	free(data->pthreads);
 	free(data->forks);
 	free(data->eaten);
 }
 
-void	*death_monitor(__attribute__((unused)) void *_)
+void	*death_monitor(t_data *data)
 {
-	t_data		*data;
-	uint		cnt;
 	uintmax_t	time;
+	uint		cnt;
 
-	data = data_storage();
 	while (!data->stop)
 	{
 		cnt = 0;
@@ -159,20 +166,21 @@ void	*death_monitor(__attribute__((unused)) void *_)
 
 void	take_forks(uint phil_num, unsigned char action, uintmax_t time)
 {
-	t_data  *restrict   data;
+	static t_data  *restrict   data = NULL;
 
-	data = data_storage();
+	if (!data)
+		data = data_storage();
 	if (action)
 	{
 		pthread_mutex_lock(data->forks + phil_num);
 		mutex_print(time, phil_num, "has taken left fork", 19);
-		pthread_mutex_lock(data->forks + phil_num + 1);
+		pthread_mutex_lock(data->forks + (phil_num + 1) % data->phil_num);
 		mutex_print(time, phil_num, "has taken right fork", 21);
 	}
 	else
 	{
-		pthread_mutex_lock(data->forks + phil_num);
-		pthread_mutex_lock(data->forks + phil_num + 1);
+		pthread_mutex_unlock(data->forks + phil_num);
+		pthread_mutex_unlock(data->forks + (phil_num + 1) % data->phil_num);
 	}
 }
 
@@ -182,13 +190,12 @@ void	mutex_print(uintmax_t time, uint philo_num, const char *restrict message, u
 	uint					_;
 
 	pthread_mutex_lock(&stdout_mutex);
-	printf("[%08ld]: %s %d\n", time, message, philo_num); (void)message_size;
-	// _ = write(1, "[", 1);
-	// ft_putunbr((uint)time, ']');
-	// _ = write(1, ": ", 2);
-	// ft_putunbr(philo_num + 1, ' ');
-	// _ = write(1, message, message_size);
-	// write(1, "\n", 1);
+	_ = write(1, "[", 1);
+	ft_putunbr((uint)time, ']');
+	_ = write(1, ": ", 2);
+	ft_putunbr(philo_num + 1, ' ');
+	_ = write(1, message, message_size);
+	write(1, "\n", 1);
 	pthread_mutex_unlock(&stdout_mutex);
 	(void)_;
 }

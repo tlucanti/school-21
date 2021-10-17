@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 21:23:16 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/13 22:57:14 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/17 13:15:55 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 # ifdef __linux__
 #  include <malloc.h>
+#  include <stdint.h>
 # else
 #  include <stdlib.h>
 # endif
@@ -43,15 +44,14 @@ typedef	struct s_data
 	pthread_mutex_t	stdout_mutex;
 }	t_data;
 
-
 int					main(int argc, char *const *argv);
 unsigned char		parse(t_data *restrict data, char *const *argv);
 uintmax_t			ft_time(void);
 t_data				*data_storage(void);
 void				start(t_data *restrict data);
-void				*phil_routine(void *philo_num_ptr);
+void				*phil_routine(size_t philo_num_ptr);
 void				stop(t_data *restrict data);
-void				*death_monitor(__attribute__((unused)) void *_);
+void				*death_monitor(t_data *data);
 void				take_forks(uint phil_num, unsigned char action, uintmax_t pthread_start);
 void				mutex_print(uintmax_t time, uint phil_num, const char *restrict message, unsigned char message_size);
 void				ft_putunbr(uint n, unsigned char last);
