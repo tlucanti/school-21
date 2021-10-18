@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:46:29 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/17 18:46:40 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:37:57 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	*death_monitor(t_data *data)
 		cnt = 0;
 		while (cnt < data->phil_num)
 		{
+			if (data->eaten[cnt] >= data->eat_num)
+			{
+				data->stop = 1;
+				return (NULL);
+			}
 			time = ft_time() - data->pthread_start;
 			if (time > data->death_time[cnt])
 			{

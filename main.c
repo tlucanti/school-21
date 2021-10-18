@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/17 18:31:30 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/18 18:05:05 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,13 @@ void	start(t_data *restrict data)
 	while (i < data->phil_num)
 		pthread_mutex_init(data->forks + i++, NULL);
 	data->pthread_start = ft_time();
-	while (i < data->phil_num / 2)
-	{
-		pthread_create(data->pthreads + i * 2, NULL, (void *(*)(void *))
-			phil_routine, (VOID_PTR)(i * 2));
-		++i;
-	}
+	while (i++ < data->phil_num / 2)
+		pthread_create(data->pthreads + (i - 1) * 2, NULL, (void *(*)(void *))
+			phil_routine, (VOID_PTR)((i - 1) * 2));
 	i = 0;
-	while (i < data->phil_num / 2 + data->phil_num % 2)
-	{
-		pthread_create(data->pthreads + i * 2 + 1, NULL,
-			(void *(*)(void *))phil_routine, (VOID_PTR)(i * 2 + 1));
-		++i;
-	}
+	while (i++ < data->phil_num / 2 + data->phil_num % 2)
+		pthread_create(data->pthreads + (i - 1) * 2 + 1, NULL,
+			(void *(*)(void *))phil_routine, (VOID_PTR)((i - 1) * 2 + 1));
 	pthread_create(data->pthreads + data->phil_num, NULL, (void *(*)(void *))
 		death_monitor, data);
 }
