@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 21:23:16 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/17 18:50:24 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/18 18:07:03 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ int					ft_atoi(const char *str);
 # define _MY_SIZE_T	(unsigned long long
 # define VOID_PTR	void *)_MY_SIZE_T
 
-# define LFORK_MESSAGE		(uintmax_t *)"has taken left fork     "
-# define RFORK_MESSAGE		(uintmax_t *)"has taken right fork    "
-# define EATING_MESSAGE		(uintmax_t *)"is eating               "
-# define SLEEP_MESSAGE		(uintmax_t *)"is sleeping             "
-# define THINK_MESSAGE		(uintmax_t *)"is thinking             "
-# define DEATH_MESSAGE		(uintmax_t *)"died                    "
+# define LFORK_MESSAGE		(unsigned long *)"has taken left fork     "
+# define RFORK_MESSAGE		(unsigned long *)"has taken right fork    "
+# define EATING_MESSAGE		(unsigned long *)"is eating               "
+# define SLEEP_MESSAGE		(unsigned long *)"is sleeping             "
+# define THINK_MESSAGE		(unsigned long *)"is thinking             "
+# define DEATH_MESSAGE		(unsigned long *)"died                    "
+# define PRINT_PATTERN		"[00000000]: 00000000 @@@@@@@@@@@@@@@@@@@@@@@@  \n"
 
 #endif // PHILO_H

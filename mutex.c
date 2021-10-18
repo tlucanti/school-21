@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:47:17 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/17 19:02:47 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/18 20:24:55 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,23 @@ void	mutex_print(uintmax_t time, uint philo_num,
 */
 {
 	static pthread_mutex_t	stdout_mutex = PTHREAD_MUTEX_INITIALIZER;
-	static char				pattern[] = "[00000000]: 00000000 @@@@@@@@@@@@@@@@@@@@@@@@  \n";
+	static char				pattern[] = PRINT_PATTERN;
 	uint					_;
 
+	pthread_mutex_lock(&stdout_mutex);
+	if (pattern[0] == 0)
+	{
+		pthread_mutex_unlock(&stdout_mutex);
+		return ;
+	}
 	ft_putunbr(pattern + 1, (uint)time);
 	ft_putunbr(pattern + 12, philo_num + 1);
 	*(unsigned long long *)(pattern + 0x15) = message[0];
 	*(unsigned long long *)(pattern + 0x1d) = message[1];
 	*(unsigned long long *)(pattern + 0x25) = message[2];
-	pthread_mutex_lock(&stdout_mutex);
-	// printf("[%08d]: %8d %s\n", (uint)time, philo_num, (char *)message);
 	_ = write(1, pattern, 0x30);
-	if (message == DEATH_MESSAGE)
-		return ;
+	if ((size_t)message == (size_t)DEATH_MESSAGE)
+		pattern[0] = 0;
 	pthread_mutex_unlock(&stdout_mutex);
 	(void)_;
 }
