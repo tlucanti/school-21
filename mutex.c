@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:47:17 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/18 20:24:55 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/18 22:50:56 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	mutex_print(uintmax_t time, uint philo_num,
 	*(unsigned long long *)(pattern + 0x1d) = message[1];
 	*(unsigned long long *)(pattern + 0x25) = message[2];
 	_ = write(1, pattern, 0x30);
-	if ((size_t)message == (size_t)DEATH_MESSAGE)
+	if (*message == *DEATH_MESSAGE)
 		pattern[0] = 0;
 	pthread_mutex_unlock(&stdout_mutex);
 	(void)_;
