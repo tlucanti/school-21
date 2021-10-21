@@ -1,0 +1,5 @@
+Credentials cache: API:6AEBA246-7502-4927-AE4E-AB00F8EF4863
+        Principal: tlucanti@MSK.21-SCHOOL.RU
+
+  Issued                Expires               Principal
+Aug 12 14:17:39 2020  Aug 13 00:17:39 2020  krbtgt/MSK.21-SCHOOL.RU@MSK.21-SCHOOL.RU
