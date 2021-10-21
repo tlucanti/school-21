@@ -1,2 +1,7 @@
+# ignored files and directories
 cmake-build-debug
-en.subject.pdf
+objects
+philo
+
+# unignored files and directories
+!.gitignore
