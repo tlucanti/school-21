@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/18 18:05:05 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 15:42:05 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,15 @@ void	start(t_data *restrict data)
 	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* data->phil_num);
 	data->eaten = (uint *)malloc(sizeof(uint) * data->phil_num);
+	data->pthread_start = (uintmax_t *)malloc(sizeof(uintmax_t)
+			* data->phil_num);
 	memset(data->death_time, 0xff, data->phil_num * sizeof(uintmax_t));
 	i = 0;
 	while (i < data->phil_num)
 		pthread_mutex_init(data->forks + i++, NULL);
-	data->pthread_start = ft_time();
-	while (i++ < data->phil_num / 2)
-		pthread_create(data->pthreads + (i - 1) * 2, NULL, (void *(*)(void *))
-			phil_routine, (VOID_PTR)((i - 1) * 2));
-	i = 0;
-	while (i++ < data->phil_num / 2 + data->phil_num % 2)
-		pthread_create(data->pthreads + (i - 1) * 2 + 1, NULL,
-			(void *(*)(void *))phil_routine, (VOID_PTR)((i - 1) * 2 + 1));
+	pthread_create_loop(0, data);
+	usleep(data->eat_time / 2);
+	pthread_create_loop(1, data);
 	pthread_create(data->pthreads + data->phil_num, NULL, (void *(*)(void *))
 		death_monitor, data);
 }
@@ -89,4 +86,15 @@ void	stop(t_data *restrict data)
 	free(data->pthreads);
 	free(data->forks);
 	free(data->eaten);
+}
+
+void	pthread_create_loop(uint start, const t_data *restrict data)
+{
+	while (start < data->phil_num)
+	{
+		pthread_create(data->pthreads + start, NULL, (void *(*)(void *))
+			phil_routine, (VOID_PTR)start);
+		usleep(50);
+		start += 2;
+	}
 }

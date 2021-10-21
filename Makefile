@@ -6,14 +6,14 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/10/18 17:53:16 by kostya           ###   ########.fr        #
+#    Updated: 2021/10/21 15:41:01 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
 NAME		=	philo
 CFLAGS		=	-Wall -Wextra
-COPTIONS	=	-O3 -ffast-math
+COPTIONS	=	-O3 -ffast-math -j parallel
 RM			=	rm -f
 LIBRARY		=	
 INCLUDE_DIR	=	include

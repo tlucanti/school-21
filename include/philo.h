@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 21:23:16 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/18 18:07:03 by kostya           ###   ########.fr       */
+/*   Created: 2021/10/21 15:59:18 by kostya            #+#    #+#             */
+/*   Updated: 2021/10/21 15:59:55 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <string.h>
+# include "color.h"
 
 typedef struct s_data
 {
@@ -35,7 +36,7 @@ typedef struct s_data
 	uint			eat_num;
 
 	pthread_t		*pthreads;
-	uintmax_t		pthread_start;
+	uintmax_t		*pthread_start;
 	uintmax_t		*death_time;
 	pthread_mutex_t	*forks;
 	uint			*eaten;
@@ -52,23 +53,23 @@ void				start(t_data *restrict data);
 void				*phil_routine(size_t philo_num_ptr);
 void				stop(t_data *restrict data);
 void				*death_monitor(t_data *data);
-void				take_forks(uint phil_num, unsigned char action,
-						uintmax_t pthread_start);
+uintmax_t			take_forks(uint phil_num, unsigned char action);
 void				mutex_print(uintmax_t time, uint philo_num,
 						const uintmax_t *restrict message);
 void				ft_putunbr(char *dest, uint n);
+void				pthread_create_loop(uint start,
+						const t_data *restrict data);
 
 int					ft_atoi(const char *str);
 
+# define LFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken L fork "
+# define RFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken R fork "
+# define EATING_MESSAG	(unsigned long *)"\e[1;92m is eating        "
+# define SLEEP_MESSAGE	(unsigned long *)"\e[1;96m is sleeping      "
+# define THINK_MESSAGE	(unsigned long *)"\e[1;94m is thinking      "
+# define DEATH_MESSAGE	(unsigned long *)"\e[1;91m died             "
+
 # define _MY_SIZE_T	(unsigned long long
 # define VOID_PTR	void *)_MY_SIZE_T
-
-# define LFORK_MESSAGE		(unsigned long *)"has taken left fork     "
-# define RFORK_MESSAGE		(unsigned long *)"has taken right fork    "
-# define EATING_MESSAGE		(unsigned long *)"is eating               "
-# define SLEEP_MESSAGE		(unsigned long *)"is sleeping             "
-# define THINK_MESSAGE		(unsigned long *)"is thinking             "
-# define DEATH_MESSAGE		(unsigned long *)"died                    "
-# define PRINT_PATTERN		"[00000000]: 00000000 @@@@@@@@@@@@@@@@@@@@@@@@  \n"
 
 #endif // PHILO_H

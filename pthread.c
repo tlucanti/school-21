@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:46:29 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/18 20:37:57 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 15:43:16 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,14 @@ void	*phil_routine(size_t philo_num)
 	t_data		*data;
 
 	data = data_storage();
+	data->pthread_start[philo_num] = ft_time();
 	while (data->eaten[philo_num] < data->eat_num && !data->stop)
 	{
-		time = ft_time() - data->pthread_start;
-		if (time > data->death_time[philo_num])
-			return (NULL);
+		time = take_forks(philo_num, 1);
 		data->death_time[philo_num] = time + data->live_time;
-		take_forks(philo_num, 1, time);
 		mutex_print(time, philo_num, EATING_MESSAGE);
 		usleep(data->eat_time);
-		time = ft_time() - data->pthread_start;
-		take_forks(philo_num, 0, time);
+		take_forks(philo_num, 0);
 		++data->eaten[philo_num];
 		if (data->stop)
 			return (NULL);
@@ -36,7 +33,8 @@ void	*phil_routine(size_t philo_num)
 		usleep(data->sleep_time);
 		if (data->stop)
 			return (NULL);
-		mutex_print(ft_time() - data->pthread_start, philo_num, THINK_MESSAGE);
+		mutex_print(ft_time() - data->pthread_start[philo_num], philo_num,
+			THINK_MESSAGE);
 	}
 	return (NULL);
 }
@@ -56,7 +54,7 @@ void	*death_monitor(t_data *data)
 				data->stop = 1;
 				return (NULL);
 			}
-			time = ft_time() - data->pthread_start;
+			time = ft_time() - data->pthread_start[cnt];
 			if (time > data->death_time[cnt])
 			{
 				data->stop = 1;

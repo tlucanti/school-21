@@ -6,29 +6,34 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:47:17 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/18 22:50:56 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 15:58:24 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/philo.h"
 
-void	take_forks(uint phil_num, unsigned char action, uintmax_t time)
+uintmax_t	take_forks(uint phil_num, unsigned char action)
 {
 	static t_data	*restrict	data = NULL;
+	uintmax_t					time;
 
 	if (!data)
 		data = data_storage();
 	if (action)
 	{
 		pthread_mutex_lock(data->forks + phil_num);
-		mutex_print(time, phil_num, LFORK_MESSAGE);
+		mutex_print(ft_time() - data->pthread_start[phil_num], phil_num,
+			LFORK_MESSAGE);
 		pthread_mutex_lock(data->forks + (phil_num + 1) % data->phil_num);
+		time = ft_time() - data->pthread_start[phil_num];
 		mutex_print(time, phil_num, RFORK_MESSAGE);
+		return (time);
 	}
 	else
 	{
 		pthread_mutex_unlock(data->forks + phil_num);
 		pthread_mutex_unlock(data->forks + (phil_num + 1) % data->phil_num);
+		return (0);
 	}
 }
 
@@ -44,7 +49,9 @@ void	mutex_print(uintmax_t time, uint philo_num,
 */
 {
 	static pthread_mutex_t	stdout_mutex = PTHREAD_MUTEX_INITIALIZER;
-	static char				pattern[] = PRINT_PATTERN;
+	static char				pattern[] = TERM_YELLOW "[00000.000]: " TERM_WHITE
+						"000000000 COLTKEN@@@@@@@@@@@@@@@@@" TERM_RESET "  \n"
+;
 	uint					_;
 
 	pthread_mutex_lock(&stdout_mutex);
@@ -53,12 +60,12 @@ void	mutex_print(uintmax_t time, uint philo_num,
 		pthread_mutex_unlock(&stdout_mutex);
 		return ;
 	}
-	ft_putunbr(pattern + 1, (uint)time);
-	ft_putunbr(pattern + 12, philo_num + 1);
-	*(unsigned long long *)(pattern + 0x15) = message[0];
-	*(unsigned long long *)(pattern + 0x1d) = message[1];
-	*(unsigned long long *)(pattern + 0x25) = message[2];
-	_ = write(1, pattern, 0x30);
+	ft_putunbr(pattern + 8, (uint)time);
+	ft_putunbr(pattern + 0x1b, philo_num + 1);
+	*(unsigned long long *)(pattern + 0x25) = message[0];
+	*(unsigned long long *)(pattern + 0x2d) = message[1];
+	*(unsigned long long *)(pattern + 0x35) = message[2];
+	_ = write(1, pattern, 0x48);
 	if (*message == *DEATH_MESSAGE)
 		pattern[0] = 0;
 	pthread_mutex_unlock(&stdout_mutex);
