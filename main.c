@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 17:53:58 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 19:49:44 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ void	stop(t_data *restrict data)
 		++i;
 	}
 	pthread_join(data->pthreads[data->phil_num], NULL);
-	free(data->death_time);
 	free(data->pthreads);
+	free(data->pthread_start);
+	free(data->death_time);
 	free(data->forks);
 	free(data->eaten);
 }
