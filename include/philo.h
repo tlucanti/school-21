@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:59:18 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 15:59:55 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 18:01:31 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void				pthread_create_loop(uint start,
 						const t_data *restrict data);
 
 int					ft_atoi(const char *str);
+void				ft_usleep(useconds_t usec);
 
 # define LFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken L fork "
 # define RFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken R fork "

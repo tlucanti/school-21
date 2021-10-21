@@ -6,14 +6,14 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/10/21 15:41:01 by kostya           ###   ########.fr        #
+#    Updated: 2021/10/21 18:04:05 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
 NAME		=	philo
 CFLAGS		=	-Wall -Wextra
-COPTIONS	=	-O3 -ffast-math -j parallel
+COPTIONS	=	-O3 -ffast-math
 RM			=	rm -f
 LIBRARY		=	
 INCLUDE_DIR	=	include
@@ -42,7 +42,8 @@ ${OBJS_DIR}/%.o: %.c ${DEPS}
 $(NAME):		${OBJS_DIR} ${OBJS} ${DEPS}
 	${CC}		-o ${NAME} ${CFLAGS} ${COPTIONS} ${OBJS} ${LIBRARY} ${LIBFT}
 
-all:			${NAME}
+all:
+	${MAKE}		${NAME}	-j
 
 # ------------------------------------------------------------------------------
 clean:

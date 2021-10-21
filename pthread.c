@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:46:29 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 15:43:16 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:55:05 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	*phil_routine(size_t philo_num)
 	{
 		time = take_forks(philo_num, 1);
 		data->death_time[philo_num] = time + data->live_time;
-		mutex_print(time, philo_num, EATING_MESSAGE);
-		usleep(data->eat_time);
+		mutex_print(time, philo_num, EATING_MESSAG);
+		ft_usleep(data->eat_time);
 		take_forks(philo_num, 0);
 		++data->eaten[philo_num];
 		if (data->stop)
 			return (NULL);
 		mutex_print(time, philo_num, SLEEP_MESSAGE);
-		usleep(data->sleep_time);
+		ft_usleep(data->sleep_time);
 		if (data->stop)
 			return (NULL);
 		mutex_print(ft_time() - data->pthread_start[philo_num], philo_num,

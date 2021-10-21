@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 15:42:05 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 17:53:58 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	start(t_data *restrict data)
 	while (i < data->phil_num)
 		pthread_mutex_init(data->forks + i++, NULL);
 	pthread_create_loop(0, data);
-	usleep(data->eat_time / 2);
+	ft_usleep(data->eat_time / 2);
 	pthread_create_loop(1, data);
 	pthread_create(data->pthreads + data->phil_num, NULL, (void *(*)(void *))
 		death_monitor, data);

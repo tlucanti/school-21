@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/17 13:45:27 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 14:20:30 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/21 18:01:28 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,39 @@ uintmax_t	ft_time(void)
 	gettimeofday(&t_val, NULL);
 	return (t_val.tv_sec * 1000000 + t_val.tv_usec);
 }
+
+# ifdef __APPLE__
+void	ft_usleep(useconds_t usec)
+{
+	useconds_t	xusec;
+
+	xusec = usec / (8 * 50);
+	while (xusec)
+	{
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		usleep(50);
+		--usec;
+	}
+	xusec = (usec / 50) % 8;
+	while (xusec)
+	{
+		usleep(50);
+		--xusec;
+	}
+	usleep(usec % 50);
+}
+# else
+void ft_usleep(useconds_t usec)
+{
+	usleep(usec);
+}
+#endif
 
 t_data	*data_storage(void)
 {
