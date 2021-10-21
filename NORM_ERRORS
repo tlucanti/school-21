@@ -1,8 +1,0 @@
-pthread_create(data->pthreads + i++ *2, NULL, (void *(*)(void *))
-	phil_routine, (VOID_PTR)(i * 2));
-
-///
-
-a = b & ++i;
-
-///
