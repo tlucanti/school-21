@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 19:49:44 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/22 14:55:12 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 int	main(int argc, char *const *argv)
 {
 	t_data	*restrict	data;
+	int					error;
 
 	data = data_storage();
 	if ((argc != 6 && argc != 5) || parse(data, argv))
 		return (printf("Bad arguments\n"));
-	start(data);
+	error = start(data);
+	if (error == -1)
+		return (write(1, ERROR"[FAIL] "WARNING "malloc error"RESET "\n", 0x26));
 	stop(data);
+	if (error)
+		return (write(1, ERROR"[FAIL] "WARNING "pthread or mutex cannot be "
+				"created" RESET "\n", 0x3c));
 }
 
 unsigned char	parse(t_data *restrict data, char *const *argv)
@@ -47,27 +53,24 @@ unsigned char	parse(t_data *restrict data, char *const *argv)
 	return (0);
 }
 
-void	start(t_data *restrict data)
+int	start(t_data *restrict data)
 {
 	uint	i;
+	int		pthread_error;
 
-	data->death_time = (uintmax_t *)malloc(sizeof(uintmax_t) * data->phil_num);
-	data->pthreads = (pthread_t *)malloc(sizeof(pthread_t) * (data->phil_num
-				+ 1));
-	data->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* data->phil_num);
-	data->eaten = (uint *)malloc(sizeof(uint) * data->phil_num);
-	data->pthread_start = (uintmax_t *)malloc(sizeof(uintmax_t)
-			* data->phil_num);
+	if (ft_malloc_(data))
+		return (-1);
 	memset(data->death_time, 0xff, data->phil_num * sizeof(uintmax_t));
 	i = 0;
+	pthread_error = 0;
 	while (i < data->phil_num)
-		pthread_mutex_init(data->forks + i++, NULL);
-	pthread_create_loop(0, data);
+		pthread_error |= pthread_mutex_init(data->forks + i++, NULL);
+	pthread_error |= pthread_create_loop(0, data);
 	ft_usleep(data->eat_time / 2);
-	pthread_create_loop(1, data);
-	pthread_create(data->pthreads + data->phil_num, NULL, (void *(*)(void *))
-		death_monitor, data);
+	pthread_error |= pthread_create_loop(1, data);
+	pthread_error |= pthread_create(data->pthreads + data->phil_num, NULL,
+			(void *(*)(void *))death_monitor, data);
+	return (pthread_error);
 }
 
 void	stop(t_data *restrict data)
@@ -82,20 +85,20 @@ void	stop(t_data *restrict data)
 		++i;
 	}
 	pthread_join(data->pthreads[data->phil_num], NULL);
-	free(data->pthreads);
-	free(data->pthread_start);
-	free(data->death_time);
-	free(data->forks);
-	free(data->eaten);
+	ft_free_(data);
 }
 
-void	pthread_create_loop(uint start, const t_data *restrict data)
+int	pthread_create_loop(uint start, const t_data *restrict data)
 {
+	int	pthread_error;
+
+	pthread_error = 0;
 	while (start < data->phil_num)
 	{
-		pthread_create(data->pthreads + start, NULL, (void *(*)(void *))
-			phil_routine, (VOID_PTR)start);
+		pthread_error |= pthread_create(data->pthreads + start, NULL,
+				(void *(*)(void *))phil_routine, (VOID_PTR)start);
 		usleep(50);
 		start += 2;
 	}
+	return (pthread_error);
 }

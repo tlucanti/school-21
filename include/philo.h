@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 15:59:18 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/21 18:01:31 by kostya           ###   ########.fr       */
+/*   Updated: 2021/10/22 14:36:36 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int					main(int argc, char *const *argv);
 unsigned char		parse(t_data *restrict data, char *const *argv);
 uintmax_t			ft_time(void);
 t_data				*data_storage(void);
-void				start(t_data *restrict data);
+int					start(t_data *restrict data);
 void				*phil_routine(size_t philo_num_ptr);
 void				stop(t_data *restrict data);
 void				*death_monitor(t_data *data);
@@ -57,11 +57,13 @@ uintmax_t			take_forks(uint phil_num, unsigned char action);
 void				mutex_print(uintmax_t time, uint philo_num,
 						const uintmax_t *restrict message);
 void				ft_putunbr(char *dest, uint n);
-void				pthread_create_loop(uint start,
+int					pthread_create_loop(uint start,
 						const t_data *restrict data);
 
 int					ft_atoi(const char *str);
 void				ft_usleep(useconds_t usec);
+int					ft_malloc_(t_data *restrict data);
+void				ft_free_(t_data *restrict data);
 
 # define LFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken L fork "
 # define RFORK_MESSAGE	(unsigned long *)"\e[1;95m has taken R fork "
