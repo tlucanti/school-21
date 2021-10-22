@@ -6,13 +6,13 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/10/22 14:19:37 by kostya           ###   ########.fr        #
+#    Updated: 2021/10/22 15:19:32 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			=	clang
 NAME		=	philo
-CFLAGS		=	-Wall -Wextra
+CFLAGS		=	-Wall -Wextra -Werror
 COPTIONS	=	-O3 -ffast-math
 RM			=	rm -f
 LIBRARY		=	
@@ -28,16 +28,18 @@ SRCS		=	\
 				utils1
 # ------------------------------------------------------------------------------
 HDRS		=	\
-				philo
+				philo	\
+				color
 # ------------------------------------------------------------------------------
 OBJS		=	$(addprefix ${OBJS_DIR}/,${SRCS:=.o})
 DEPS		=	$(addprefix ${INCLUDE_DIR}/,${HDRS:=.h})
+INCLUDE		=	$(addprefix -I ,${DEPS})
 LIBRARY		=	-pthread
 LIBFT		=	
 
 # ------------------------------------------------------------------------------
 ${OBJS_DIR}/%.o: %.c ${DEPS}
-	${CC}		${CFLAGS}  ${COPTIONS} -c -o $@ $< -I ${DEPS}
+	${CC}		${CFLAGS}  ${COPTIONS} -c -o $@ $< ${INCLUDE}
 
 # ------------------------------------------------------------------------------
 $(NAME):		${OBJS_DIR} ${OBJS} ${DEPS}
