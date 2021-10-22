@@ -3,4 +3,9 @@ project(minitalk C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(minitalk main.c)
+add_executable(minitalk
+        include/minitalk.h
+        include/color.h
+        server.c
+#        client.c
+)
