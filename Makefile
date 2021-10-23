@@ -12,7 +12,7 @@
 
 CC			=	clang
 NAME		=	philo
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra
 COPTIONS	=	-O3 -ffast-math
 RM			=	rm -f
 LIBRARY		=	

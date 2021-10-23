@@ -14,24 +14,25 @@
 
 void	*phil_routine(size_t philo_num)
 {
-	uintmax_t	time;
 	t_data		*data;
 
 	data = data_storage();
 	data->pthread_start[philo_num] = ft_time();
-	while (data->eaten[philo_num] < data->eat_num && !data->stop)
+	data->dt[philo_num] = data->live_time;
+	while (data->eaten[philo_num] < data->eat_num && !check_stop(data))
 	{
-		time = take_forks(philo_num, 1);
-		data->death_time[philo_num] = time + data->live_time;
-		mutex_print(time, philo_num, EATING_MESSAG);
+		data->dt[philo_num] = take_forks(philo_num, 1, data) + data->live_time;
+		mutex_print(data->dt[philo_num] - data->live_time, philo_num,
+			EATING_MESSAG);
 		ft_usleep(data->eat_time);
-		take_forks(philo_num, 0);
+		take_forks(philo_num, 0, data);
 		++data->eaten[philo_num];
-		if (data->stop)
+		if (check_stop(data))
 			return (NULL);
-		mutex_print(time, philo_num, SLEEP_MESSAGE);
+		mutex_print(ft_time() - data->pthread_start[philo_num], philo_num,
+			SLEEP_MESSAGE);
 		ft_usleep(data->sleep_time);
-		if (data->stop)
+		if (check_stop(data))
 			return (NULL);
 		mutex_print(ft_time() - data->pthread_start[philo_num], philo_num,
 			THINK_MESSAGE);
@@ -41,24 +42,25 @@ void	*phil_routine(size_t philo_num)
 
 void	*death_monitor(t_data *data)
 {
-	uintmax_t	time;
 	uint		cnt;
+	uint		all_eat;
 
-	while (!data->stop)
+	while (!check_stop(data) && all_eat < data->phil_num)
 	{
+		all_eat = 0;
 		cnt = 0;
 		while (cnt < data->phil_num)
 		{
-			if (data->eaten[cnt] >= data->eat_num)
+			all_eat += data->eaten[cnt] >= data->eat_num;
+			if (data->eaten[cnt] >= data->eat_num && ++cnt)
+				continue ;
+			if (ft_time() - data->pthread_start[cnt] > data->dt[cnt])
 			{
+				pthread_mutex_lock(&data->stop_mutex);
 				data->stop = 1;
-				return (NULL);
-			}
-			time = ft_time() - data->pthread_start[cnt];
-			if (time > data->death_time[cnt])
-			{
-				data->stop = 1;
-				mutex_print(time, cnt, DEATH_MESSAGE);
+				pthread_mutex_unlock(&data->stop_mutex);
+				mutex_print(ft_time() - data->pthread_start[cnt], cnt,
+					DEATH_MESSAGE);
 				return (NULL);
 			}
 			++cnt;

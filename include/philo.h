@@ -37,12 +37,12 @@ typedef struct s_data
 
 	pthread_t		*pthreads;
 	uintmax_t		*pthread_start;
-	uintmax_t		*death_time;
+	uintmax_t		*dt;
 	pthread_mutex_t	*forks;
 	uint			*eaten;
 
 	unsigned char	stop;
-	pthread_mutex_t	stdout_mutex;
+	pthread_mutex_t	stop_mutex;
 }	t_data;
 
 int					main(int argc, char *const *argv);
@@ -53,12 +53,14 @@ int					start(t_data *restrict data);
 void				*phil_routine(size_t philo_num_ptr);
 void				stop(t_data *restrict data);
 void				*death_monitor(t_data *data);
-uintmax_t			take_forks(uint phil_num, unsigned char action);
+uintmax_t			take_forks(uint phil_num, unsigned char action,
+						t_data *restrict data);
 void				mutex_print(uintmax_t time, uint philo_num,
 						const uintmax_t *restrict message);
 void				ft_putunbr(char *dest, uint n);
 int					pthread_create_loop(uint start,
 						const t_data *restrict data);
+int					check_stop(t_data *restrict data);
 
 int					ft_atoi(const char *str);
 void				ft_usleep(useconds_t usec);

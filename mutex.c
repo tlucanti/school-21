@@ -12,16 +12,19 @@
 
 #include "include/philo.h"
 
-uintmax_t	take_forks(uint phil_num, unsigned char action)
+uintmax_t	take_forks(uint phil_num, unsigned char action,
+				t_data *restrict data)
 {
-	static t_data	*restrict	data = NULL;
 	uintmax_t					time;
 
-	if (!data)
-		data = data_storage();
 	if (action)
 	{
 		pthread_mutex_lock(data->forks + phil_num);
+		if (data->phil_num == 1)
+		{
+			ft_usleep(data->live_time + 100);
+			return (0);
+		}
 		mutex_print(ft_time() - data->pthread_start[phil_num], phil_num,
 			LFORK_MESSAGE);
 		pthread_mutex_lock(data->forks + (phil_num + 1) % data->phil_num);

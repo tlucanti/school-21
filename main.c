@@ -60,9 +60,10 @@ int	start(t_data *restrict data)
 
 	if (ft_malloc_(data))
 		return (-1);
-	memset(data->death_time, 0xff, data->phil_num * sizeof(uintmax_t));
+	memset(data->dt, 0xff, data->phil_num * sizeof(uintmax_t));
+	memset(data->eaten, 0x00, data->phil_num * sizeof(uint));
 	i = 0;
-	pthread_error = 0;
+	pthread_error = pthread_mutex_init(&data->stop_mutex, NULL);
 	while (i < data->phil_num)
 		pthread_error |= pthread_mutex_init(data->forks + i++, NULL);
 	pthread_error |= pthread_create_loop(0, data);
@@ -85,6 +86,7 @@ void	stop(t_data *restrict data)
 		++i;
 	}
 	pthread_join(data->pthreads[data->phil_num], NULL);
+	pthread_mutex_destroy(&data->stop_mutex);
 	ft_free_(data);
 }
 
@@ -97,7 +99,7 @@ int	pthread_create_loop(uint start, const t_data *restrict data)
 	{
 		pthread_error |= pthread_create(data->pthreads + start, NULL,
 				(void *(*)(void *))phil_routine, (VOID_PTR)start);
-		usleep(50);
+		ft_usleep(50);
 		start += 2;
 	}
 	return (pthread_error);

@@ -41,30 +41,20 @@ uintmax_t	ft_time(void)
 
 #ifdef __APPLE__
 
-void	ft_usleep(useconds_t usec)
+void	ft_usleep(useconds_t n)
 {
-	useconds_t	xusec;
+	struct timeval	start;
+	struct timeval	step;
 
-	xusec = usec / (8 * 50);
-	while (xusec)
+	gettimeofday(&start, NULL);
+	while (1)
 	{
 		usleep(50);
-		usleep(50);
-		usleep(50);
-		usleep(50);
-		usleep(50);
-		usleep(50);
-		usleep(50);
-		usleep(50);
-		--usec;
+		gettimeofday(&step, NULL);
+		if ((size_t)(((size_t)(step.tv_sec - start.tv_sec)) * 1000000 +
+((size_t)(step.tv_usec - start.tv_usec))) > n)
+			break ;
 	}
-	xusec = (usec / 50) % 8;
-	while (xusec)
-	{
-		usleep(50);
-		--xusec;
-	}
-	usleep(usec % 50);
 }
 
 #else
