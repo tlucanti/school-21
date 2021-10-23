@@ -15,11 +15,11 @@
 
 static pid_t	ft_atoi(const char *str);
 static int		send_message(const char *message, pid_t pid);
-static void 	done(__attribute__((unused)) int signum);
+static void 	done(int signum);
 static void		ft_info(void);
 static void		next(__attribute__((unused))int signum);
 
-volatile sig_atomic_t	do_wait = 1;
+volatile sig_atomic_t	response = 1;
 
 int	main(int argc, char *const *argv)
 {
@@ -67,11 +67,14 @@ static int	send_message(const char *message, pid_t pid)
 		cnt = 0;
 		while (cnt < 8)
 		{
-			do_wait = 1;
+			response = 0;
 			if (kill(pid, (int)((byte >> cnt) & 0x1u) * dsig + SIGUSR2))
 				return (1);
-			if (do_wait)
+			if (!response)
 				pause();
+			else if (response == SIGUSR2)
+				write(1, OK "[ OK ]" TERM_WHITE " message sent" OK"successfully"
+					RESET "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x38);
 			++cnt;
 		}
 		if (!*message++)
@@ -80,20 +83,12 @@ static int	send_message(const char *message, pid_t pid)
 	usleep(1000);
 	return (0);
 }
-static void done(__attribute__((unused)) int signum)
+static void done(int signum)
 {
-	do_wait = 0;
-	printf("message sent successfully\n");
-	// write(1, OK "[ OK ]" TERM_WHITE " message sent" OK
-			// "successfully" RESET "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x38);
+	response = signum;
 }
 
-static	void next(__attribute__((unused))int signum)
-{
-	do_wait = 0;
-}
-
-static void	ft_info(void)
+østatic void	ft_info(void)
 {
 	write(1, INFO "[INFO]" TERM_WHITE " usage: " OK "./client" TERM_CYAN
 		" [SERVER_PID] [MESSAGE]" RESET "\n", 0x4e);

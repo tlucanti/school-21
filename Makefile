@@ -11,7 +11,6 @@
 # **************************************************************************** #
 
 CC			=	clang
-NAME		=	minitalk
 NAME_SERVER	=	server
 NAME_CLIENT	=	client
 CFLAGS		=	-Wall -Wextra 
@@ -20,6 +19,8 @@ RM			=	rm -f
 LIBRARY		=	
 INCLUDE_DIR	=	include
 OBJS_DIR	=	objects
+LIBFT		=	
+MAKE_OPTS	=	-j
 # ------------------------------------------------------------------------------
 SRCS_SERVER	=	\
 				server
@@ -39,32 +40,35 @@ LIBFT		=
 SCRIPT_ST	=	script --flush --quiet --command '
 SCRIPT_END	=	' #>/dev/null 2>&1'
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: %.c ${DEPS}
+${OBJS_DIR}/%.o: %.c ${DEPS} Makefile
 	${CC}		${CFLAGS}  ${COPTIONS} -c -o $@ $< ${INCLUDE}
 
 # ------------------------------------------------------------------------------
-$(NAME):		${OBJS_DIR} ${OBJS_SERVER} ${OBJS_CLIENT} ${DEPS}
-	${CC}		-o ${NAME_SERVER} ${CFLAGS} ${COPTIONS} ${OBJS_SERVER} \
-					${LIBRARY} ${LIBFT}
-	${CC}		-o ${NAME_CLIENT} ${CFLAGS} ${COPTIONS} ${OBJS_CLIENT} \
-					${LIBRARY} ${LIBFT}
+all:
+	$(MAKE)		${NAME_CLIENT} ${MAKE_OPTS}
+	$(MAKE)		${NAME_SERVER} ${MAKE_OPTS}
 
 # ------------------------------------------------------------------------------
-all:
-	$(MAKE)		${NAME}	-j
+$(NAME_SERVER):	${OBJS_DIR} ${OBJS_SERVER} ${DEPS}
+	${CC}		-o ${NAME_SERVER} ${CFLAGS} ${COPTIONS} ${OBJS_SERVER} ${LIBRARY} ${LIBFT}
+
+$(NAME_CLIENT):	${OBJS_DIR} ${OBJS_CLIENT} ${DEPS}
+	${CC}		-o ${NAME_CLIENT} ${CFLAGS} ${COPTIONS} ${OBJS_CLIENT} ${LIBRARY} ${LIBFT}
 
 # ------------------------------------------------------------------------------
 less:
 	@script --flush --quiet --command "$(MAKE)" > /dev/null
 	@less typescript
 	@${RM} typescript
+
 # ------------------------------------------------------------------------------
 clean:
 	${RM}		${OBJS}
 
 # ------------------------------------------------------------------------------
 fclean:			clean
-	${RM}		${NAME}
+	${RM}		${NAME_SERVER}
+	${RM}		${NAME_CLIENT}
 
 # ------------------------------------------------------------------------------
 ${OBJS_DIR}:
@@ -74,4 +78,4 @@ ${OBJS_DIR}:
 re:				fclean all
 
 # ------------------------------------------------------------------------------
-.PHONY:			all clean fclean re
+.PHONY:			all clean fclean re ${SERVER} ${CLIENT}
