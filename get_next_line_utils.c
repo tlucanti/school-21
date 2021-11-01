@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlucanti <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: kostya <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:55:48 by tlucanti          #+#    #+#             */
-/*   Updated: 2021/01/19 16:55:55 by tlucanti         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:48:47 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memcpy_gnl(void *dst, const void *src, size_t len)
 {
-	unsigned char *src_ptr;
-	unsigned char *dst_ptr;
+	unsigned char	*src_ptr;
+	unsigned char	*dst_ptr;
 
 	if (dst == src)
 		return (dst);
@@ -73,7 +73,23 @@ void	*ft_calloc1(size_t nmeb)
 	char	*arr;
 
 	arr = (char *)malloc(nmeb);
+	if (arr == NULL)
+		return (NULL);
 	while (nmeb--)
 		arr[nmeb] = 0;
 	return (arr);
+}
+
+size_t	ft_find_end(char *str, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while (i++ < size)
+	{
+		if (*str == 0 || *str == 0xa)
+			return (i);
+		str++;
+	}
+	return (-1);
 }
