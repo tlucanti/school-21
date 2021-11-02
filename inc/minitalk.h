@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 20:22:19 by kostya            #+#    #+#             */
-/*   Updated: 2021/10/22 23:08:40 by kostya           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:13:44 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdint.h>
-#include <stdio.h>
+# include <stdio.h>
 
 # define PRINT_SPEED	1000
 
