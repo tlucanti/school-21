@@ -6,12 +6,12 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 20:37:48 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/02 16:19:02 by kostya           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:45:29 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minitalk.h"
-#include "include/color.h"
+#include "../inc/minitalk.h"
+#include "../inc/color.h"
 
 static pid_t	ft_atoi(const char *str);
 static int		send_message(const char *message, pid_t pid);

@@ -6,7 +6,7 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/08 23:21:10 by kostya            #+#    #+#              #
-#    Updated: 2021/11/02 16:35:24 by kostya           ###   ########.fr        #
+#    Updated: 2021/11/02 16:52:46 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,8 @@ ${OBJS_DIR}/%.o: ${SCRS_DIR}/%.c ${DEPS} Makefile
 $(NAME_SERVER):	${OBJS_SERVER} ${DEPS} 
 	${CC}		-o ${NAME_SERVER} ${CFLAGS} ${COPTIONS} ${OBJS_SERVER}
 
-$(NAME_CLIENT):	${OBJS_SERVER} ${DEPS} 
-	${CC}		-o ${NAME_SERVER} ${CFLAGS} ${COPTIONS} ${OBJS_SERVER}
+$(NAME_CLIENT):	${OBJS_CLIENT} ${DEPS} 
+	${CC}		-o ${NAME_CLIENT} ${CFLAGS} ${COPTIONS} ${OBJS_CLIENT}
 
 # ------------------------------------------------------------------------------
 clean:

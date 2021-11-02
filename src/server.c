@@ -6,31 +6,31 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 20:20:53 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/02 16:20:16 by kostya           ###   ########.fr       */
+/*   Updated: 2021/11/02 16:53:59 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minitalk.h"
-#include "include/color.h"
+#include "../inc/minitalk.h"
+#include "../inc/color.h"
 
 #define BUFF_SIZE	0x40
 
-ssize_t		write(int fd, const void *buf, size_t count)
-			__attribute__((__nothrow__));
-int			main(int argc, __attribute__((unused)) char *const *argv)
-			__attribute__((noreturn)) __attribute__((__nothrow__));
-static void	ft_sa_sigaction(int sig, siginfo_t *info,
-				__attribute__((unused)) void *context)
-			__attribute__((__nothrow__));
-static void	ft_putunbr(unsigned char *start, pid_t pid)
-			__attribute__((__nothrow__));
-static void	print_prompt(pid_t pid)
-			__attribute__((__nothrow__));
-void		print_ok(void)
-			__attribute__((__nothrow__));
-int			server(void)
-			__attribute__((warn_unused_result)) __attribute__((
-					__nothrow__));
+ssize_t				write(int fd, const void *buf, size_t count)
+					__attribute__((__nothrow__));
+int					main(int argc, __attribute__((unused)) char *const *argv)
+					__attribute__((noreturn)) __attribute__((__nothrow__));
+static void			ft_sa_sigaction(int sig, siginfo_t *info,
+						__attribute__((unused)) void *context)
+					__attribute__((__nothrow__));
+static uint_fast8_t	server(void)
+					__attribute__((warn_unused_result)) __attribute__((
+							__nothrow__));
+static void			ft_memset64(uintmax_t *buff_ptr)
+					__attribute__((__nothrow__));
+void				print_prompt(pid_t pid)
+					__attribute__((__nothrow__));
+void				print_ok(void)
+					__attribute__((__nothrow__));
 
 volatile sig_atomic_t	g_pid_sig[2] = {};
 
@@ -92,30 +92,11 @@ static uint_fast8_t	server(void)
 	if (ret || sym == 32)
 	{
 		write(1, buff, sym);
-		ft_memset64((uintmax_t *)buff)
+		ft_memset64((uintmax_t *)buff);
 		sym = 0;
 		return (ret);
 	}
 	return (0);
-}
-
-static void	ft_putunbr(unsigned char *start, pid_t pid)
-{
-	start[7] = pid % 10 + 48;
-	pid /= 10;
-	start[6] = pid % 10 + 48;
-	pid /= 10;
-	start[5] = pid % 10 + 48;
-	pid /= 10;
-	start[4] = pid % 10 + 48;
-	pid /= 10;
-	start[3] = pid % 10 + 48;
-	pid /= 10;
-	start[2] = pid % 10 + 48;
-	pid /= 10;
-	start[1] = pid % 10 + 48;
-	pid /= 10;
-	start[0] = pid % 10 + 48;
 }
 
 static void	ft_memset64(uintmax_t *buff_ptr)
