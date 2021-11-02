@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 20:37:48 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/02 16:45:29 by kostya           ###   ########.fr       */
+/*   Updated: 2021/11/02 17:06:15 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	send_message(const char *message, pid_t pid)
 			}
 			if (g_response == SIGUSR2)
 				write(1, OK "[ OK ]" TERM_WHITE " message sent "OK"successfully"
-					RESET "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", 0x38);
+					RESET "\n", 0x3a);
 			++cnt;
 		}
 		if (!*message++)
