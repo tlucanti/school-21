@@ -24,6 +24,8 @@ void for_each(_ForwardIter __first, _ForwardIter __last, _Func __f)
 
 }
 
+#ifndef ROFLAN_OLD98
+
 int main(int, char **argv)
 {
 	++argv;
@@ -42,3 +44,30 @@ int main(int, char **argv)
 	std::cout << std::endl;
 	return (0);
 }
+
+#else
+
+char roflan_lambda(char c)
+{
+	return std::toupper(c);
+}
+
+int main(int, char **argv)
+{
+	++argv;
+	if (*argv == nullptr)
+	{
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+		return (0);
+	}
+	for (; *argv != nullptr; ++argv)
+	{
+		std::string argst = *argv;
+		tlucanti::for_each(argst.begin(), argst.end(), roflan_lambda);
+		std::cout << argst << ' ';
+	}
+	std::cout << std::endl;
+	return (0);
+}
+
+#endif

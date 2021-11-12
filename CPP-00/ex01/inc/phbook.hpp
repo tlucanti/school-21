@@ -15,21 +15,22 @@
 
 #include <iostream>
 #include <iomanip>
-#include "color.hpp"
+
+#include "../inc/color.hpp"
 
 namespace tlucanti
 {
+	class color;
+	std::string to_string(const std::string &str)
+	{
+		return str;
+	}
 
-std::string to_string(const std::string &str)
-{
-	return str;
-}
-
-template <typename type_t>
-std::string to_string(type_t &val)
-{
-	return std::to_string(val);
-}
+	template <typename type_t>
+	std::string to_string(type_t &val)
+	{
+		return std::to_string(val);
+	}
 
 template<std::size_t _Nm>
 class phbook
@@ -43,10 +44,11 @@ class phbook
 */
 {
 public:
+#ifndef ROFLAN_OLD98
 	~phbook() = default;
 	phbook(const phbook &) = delete;
 	phbook &operator=(const phbook &) = delete;
-
+#endif
 	phbook()
 		: last(0),  fullness(0)
 		{}
@@ -56,8 +58,13 @@ public:
 		unsigned long long number, std::string &secret)
 	{
 		std::cout << "adding " << last << "\n";
+#ifndef ROFLAN_OLD98
 		storage[last] = std::move(contact(fname, lname, nickname, number,
 			secret));
+#else
+		storage[last] = contact(fname, lname, nickname, number,
+			secret);
+#endif
 		last = (last + 1) % _Nm;
 		fullness = std::min((std::size_t)fullness + 1, _Nm);
 	}
@@ -76,8 +83,13 @@ public:
 			return 1;
 		if (i != -1)
 		{
+#ifndef ROFLAN_OLD98
 			std::cout << tlucanti::color::white
-				<< "index " << i << " information:"_reset << std::endl;
+				<< "index " << i << " information:" << tlucanti::color::reset << std::endl;
+#else
+			std::cout << tlucanti::color::white
+				<< "index " << i << " information:" << tlucanti::color::reset << std::endl;
+#endif
 			long _idx = (fullness + last - i) % fullness;
 			std::cout << "  first name: " << storage[_idx].fname << std::endl;
 			std::cout << "  last name : " << storage[_idx].lname << std::endl;
@@ -90,6 +102,7 @@ public:
 	class contact
 	{
 	public:
+#ifndef ROFLAN_OLD98
 		contact() = default;
 		~contact() = default;
 		contact(const contact &) = delete;
@@ -112,14 +125,35 @@ public:
 			secret = std::move(_mv.secret);
 			return (*this);
 		}
+#else
+		contact()
+		{}
+		contact(std::string &_fname, std::string &_lname,
+			std::string &_nickname, unsigned long long _number,
+			std::string &_secret)
+				: fname(_fname), lname(_lname),
+			nickname(_nickname), number(_number),
+			secret(_secret)
+			{}
+
+		contact &operator =(contact _mv)
+		{
+			fname = _mv.fname;
+			lname = _mv.lname;
+			nickname = _mv.nickname;
+			number = _mv.number;
+			secret = _mv.secret;
+			return (*this);
+		}
+#endif
+
 
 		std::string str(long idx) const
 		{
-			std::stringstream ss("", std::ios_base::app | std::ios_base::out);
-
-			ss << "│" << truncate(idx) << "│"  << truncate(fname) << "│"
-				<< truncate(lname) << "│" << truncate(nickname) << "│";
-			return (ss.str());
+			std::string ss = "";
+			ss += "│" + truncate(idx) + "│"  + truncate(fname) + "│"
+				+ truncate(lname) + "│" + truncate(nickname) + "│";
+			return (ss);
 		}
 
 		template <typename type_t>
@@ -135,17 +169,21 @@ public:
 		std::string fname;
 		std::string lname;
 		std::string nickname;
+#ifndef ROFLAN_OLD98
 		unsigned long long number = 0;
+#else
+		unsigned long long number;
+#endif
+		private:
+			std::string secret;
+		};
+
 	private:
-		std::string secret;
+		long last;
+		long fullness;
+
+		phbook::contact storage[_Nm];
 	};
-
-private:
-	long last;
-	long fullness;
-
-	phbook::contact storage[_Nm];
-};
 
 } // namespace::tlucanti
 

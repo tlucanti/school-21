@@ -12,7 +12,9 @@
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	megaphone
-CXX			=	clang++
+CXX			=	clang++ ${CHEL_TI}
+# CHEL_TI		=	-std=c++17
+CHEL_TI		=	-std=c++98 -D ROFLAN_OLD98
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2 -ffast-math
 # ------------------------------- linker options -------------------------------

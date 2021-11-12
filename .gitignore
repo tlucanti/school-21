@@ -1,2 +1,7 @@
-ex00/megaphone
-ex01/pb
+CPP-00/ex00/megaphone
+CPP-00/ex01/pb
+*.o
+*.out
+*.gdb_history
+*.gch
+*.d

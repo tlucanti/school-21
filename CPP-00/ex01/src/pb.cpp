@@ -12,11 +12,13 @@
 
 #include <string>
 #include <sstream>
-#include "phbook.hpp"
-#include "color.hpp"
+#include "../inc/phbook.hpp"
+#include "../inc/color.hpp"
 
 namespace tlucanti
 {
+	class color;
+
 	bool isdigit(const std::string &str)
 	{
 		if (str.empty())
@@ -34,7 +36,11 @@ namespace tlucanti
 				return false;
 		return true;
 	}
+}
 
+#ifndef ROFLAN_OLD98
+namespace tlucanti
+{
 	template <typename T>
 	struct reversion_wrapper { T& iterable; };
 
@@ -171,3 +177,97 @@ int main()
 		}
 	}
 }
+
+#else
+
+int main()
+{
+	tlucanti::phbook<8> pb;
+	std::cout
+		<< tlucanti::color::green << "Portable Phone Book v1.0 " << tlucanti::color::reset
+		<< tlucanti::color::tlucanti << "[Tlucanti (C)]\n" << tlucanti::color::reset
+		<< tlucanti::color::white << "Usage:\n" << tlucanti::color::reset
+		<< tlucanti::color::blue << "  EXIT/exit/E/e" << tlucanti::color::white << ": to quit program\n" << tlucanti::color::reset
+		<< tlucanti::color::blue << "  ADD/add/A/a " << tlucanti::color::reset
+		<< tlucanti::color::purple << "[name] [last name] [nickname] [phone] [secret]" << tlucanti::color::reset
+		<< tlucanti::color::white << ":\n"
+		<< "    to add number to phone book (stores only "
+		<< tlucanti::color::yellow << "last 8\n"
+		<< tlucanti::color::white << "    contacts)\n"
+		<< tlucanti::color::green << "  SEARCH/search/S/s " << tlucanti::color::purple << "[index]" << tlucanti::color::white
+		<< ": to search contact by index\n"
+		<< "    also print all availible contacts\n"
+		<< "-----------------------------------------------------------" << tlucanti::color::reset
+		<< std::endl;
+
+	while (true)
+	{
+		std::cout << tlucanti::color::white << " >> " << tlucanti::color::reset;
+		std::string line;
+		getline(std::cin, line, '\n');
+		std::stringstream ss;
+		ss << line;
+		std::string input;
+		ss >> input;
+		{
+			if (input == "EXIT" ||
+				input == ("exit") ||
+				input == ("E") ||
+				input == ("e"))
+			{
+				std::cout << tlucanti::color::green << "[ OK ]" << tlucanti::color::white << " exit " << tlucanti::color::yellow
+					<< "successful" << tlucanti::color::reset << std::endl;
+				return 0;
+			}
+			else if (input == ("ADD") ||
+				input == ("add") ||
+				input == ("A") ||
+				input == ("a"))
+			{
+				std::string fname;
+				std::string lname;
+				std::string nickname;
+				unsigned long long phone = 0;
+				std::string secret;
+				ss >> fname >> lname >> nickname >> phone;
+				if (fname.empty() or lname.empty() or nickname.empty() or phone == 0)
+				{
+					std::cout << tlucanti::color::red << "[FAIL] " << tlucanti::color::yellow << "wrong command format\n" << tlucanti::color::reset;
+					continue;
+				}
+				ss >> secret;
+				pb.add(fname, lname, nickname, phone, secret);
+				std::cout << tlucanti::color::green << "[ OK ]" << tlucanti::color::white << " contact added " << tlucanti::color::yellow
+					<< "successfully\n" << tlucanti::color::reset;
+			}
+			else if (input == ("SEARCH") ||
+				input == ("search") ||
+				input == ("S") ||
+				input == ("s"))
+			{
+				std::string idx;
+				ss >> idx;
+				if (idx.empty())
+					pb.search(-1);
+				else if (not tlucanti::isdigit(idx))
+					std::cout << tlucanti::color::red << "[FAIL] " << tlucanti::color::yellow << "wrong index format\n" << tlucanti::color::reset;
+				else
+				{
+					if (pb.search(std::stoi(idx)))
+						std::cout << tlucanti::color::yellow << "[WARN] " << tlucanti::color::white
+							<< "index out of phone book range\n" << tlucanti::color::reset;
+				}
+			}
+			else if (input == (""))
+				continue;
+			else
+			{
+				std::cout << tlucanti::color::yellow << "[WARN]" << tlucanti::color::white
+					<< " unexpected command (ignored)\n" << tlucanti::color::reset;
+				continue;
+			}
+		}
+	}
+}
+
+#endif

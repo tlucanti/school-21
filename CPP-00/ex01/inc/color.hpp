@@ -16,11 +16,12 @@
 # include <ostream>
 # include <string>
 
+
 namespace tlucanti {
 	class color {
 	public:
 		static char *black;		// k
-		static char *red;		// r
+		static char *red;			// r
 		static char *green;		// g
 		static char *yellow;	// y
 		static char *blue;		// b
@@ -44,52 +45,53 @@ namespace tlucanti {
 	char *color::reset		= (char *) "\033[0m";   
 
 	char *color::tlucanti	= (char *) "\033[19;1;96;21;6m";
-
 }
 
-	std::string operator ""_black(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::black + str + tlucanti::color::reset;
-	}
+#ifndef ROFLAN_OLD98
 
-	std::string operator ""_red(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::red + str + tlucanti::color::reset;
-	}
+std::string operator ""_black(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::black + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_green(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::green + str + tlucanti::color::reset;
-	}
+std::string operator ""_red(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::red + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_yellow(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::yellow + str + tlucanti::color::reset;
-	}
+std::string operator ""_green(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::green + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_blue(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::blue + str + tlucanti::color::reset;
-	}
+std::string operator ""_yellow(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::yellow + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_purple(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::purple + str + tlucanti::color::reset;
-	}
+std::string operator ""_blue(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::blue + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_cyan(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::cyan + str + tlucanti::color::reset;
-	}
+std::string operator ""_purple(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::purple + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_white(const char *str, std::size_t)
-	{
-		return std::string() + tlucanti::color::white + str + tlucanti::color::reset;
-	}
+std::string operator ""_cyan(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::cyan + str + tlucanti::color::reset;
+}
 
-	std::string operator ""_reset(const char *str, std::size_t)
-	{
-		return std::string() + str + tlucanti::color::reset;
-	}
+std::string operator ""_white(const char *str, std::size_t)
+{
+	return std::string() + tlucanti::color::white + str + tlucanti::color::reset;
+}
 
+std::string operator ""_reset(const char *str, std::size_t)
+{
+	return std::string() + str + tlucanti::color::reset;
+}
+# endif
 #endif

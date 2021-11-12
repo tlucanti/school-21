@@ -12,18 +12,20 @@
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	pb
-CXX			=	clang++
+CXX			=	clang++ ${CHEL_TI}
+# CHEL_TI		=	-std=c++17
+CHEL_TI		=	-std=c++98 -D ROFLAN_OLD98
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2 -ffast-math
 # ------------------------------- linker options -------------------------------
 LIBRARY		=	
 OBJS_DIR	=	../obj
-INCLUDE_DIR	=	.
-SCRS_DIR	=	.
+INCLUDE_DIR	=	inc
+SCRS_DIR	=	src
+DEPS_DIR	=	deps
 # ------------------------------- project sorces -------------------------------
 SRCS		=	\
-				pb			\
-				phbook
+				pb			
 # ------------------------------------------------------------------------------
 HDRS		=	phbook		\
 				color
@@ -32,24 +34,20 @@ HDRS		=	phbook		\
 # ------------------------------------------------------------------------------
 RM			=	rm -f
 OBJS		=	$(addprefix ${OBJS_DIR}/,${SRCS:=.o})
-GCH			=	$(addprefix ${OBJS_DIR}/,${HDRS:=.gch})
-DEPS		=	$(addprefix ${INCLUDE_DIR}/,${HDRS:=.hpp})
+DEPS		=	$(addprefix ${DEPS_DIR}/,${SRCS:=.d})
 INCLUDE		=	-I ${INCLUDE_DIR}
 
 # ------------------------------------------------------------------------------
-all:			${OBJS_DIR}
-	@$(MAKE)	$(NAME) -j
+all:			${OBJS_DIR} ${DEPS_DIR}
+	@$(MAKE)	$(NAME) 
 
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp ${DEPS} Makefile
-	${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -o $@ $< ${INCLUDE}
-
-${OBJS_DIR}/%.gch:${INCLUDE_DIR}/%.hpp ${DEPS} Makefile
-	${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -o $@ $< ${INCLUDE}
+${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp Makefile
+	${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -o $@ -MMD -MT $@ $< ${INCLUDE}
 
 # ------------------------------------------------------------------------------
-$(NAME):		${OBJS} ${GCH} ${DEPS}
-	${CXX}		-o ${NAME} ${CXXFLAGS} ${CXXOPTIONS} ${OBJS} ${GCH} ${LIBRARY}
+$(NAME):		${OBJS}
+	${CXX}		-o ${NAME} ${CXXFLAGS} ${CXXOPTIONS} ${OBJS} ${LIBRARY} ${INCLUDE} -include ${DEPS}
 
 # ------------------------------------------------------------------------------
 clean:
@@ -65,6 +63,9 @@ re:				fclean all
 # ------------------------------------------------------------------------------
 ${OBJS_DIR}:
 	mkdir		-p ${OBJS_DIR}
+
+${DEPS_DIR}:
+	mkdir		-p ${DEPS_DIR}
 
 # ------------------------------------------------------------------------------
 .PHONY:			all clean fclean re
