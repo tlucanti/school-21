@@ -12,6 +12,8 @@
 #ifndef __ACCOUNT_H__
 #define __ACCOUNT_H__
 
+#include <iostream>
+
 // ************************************************************************** //
 //                               Account Class                                //
 // ************************************************************************** //
@@ -51,6 +53,17 @@ private:
 	int				_amount;
 	int				_nbDeposits;
 	int				_nbWithdrawals;
+
+	static std::string index() const;
+	static std::string amount() const;
+	static std::string total() const;
+	static std::string deposits() const;
+	static std::string withdrawals() const;
+	static std::string p_amount() const;
+	static std::string nb_deposits() const;
+	static std::string nb_withdrawals() const;
+
+	static std::string
 
 	Account( void );
 
