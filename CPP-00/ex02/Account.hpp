@@ -1,6 +1,6 @@
 // ************************************************************************** //
 //                                                                            //
-//                Account.hpp for GlobalBanksters United                //
+//                Account.hpp for GlobalBanksters United                      //
 //                Created on  : Thu Nov 20 19:43:15 1989                      //
 //                Last update : Wed Jan 04 14:54:06 1992                      //
 //                Made by : Brad "Buddy" McLane <bm@gbu.com>                  //
@@ -10,9 +10,17 @@
 
 #pragma once
 #ifndef __ACCOUNT_H__
-#define __ACCOUNT_H__
-
+# define __ACCOUNT_H__
+#if __cplusplus <= 199711L
+#  define __UNUSED __attribute_used__
+#  define __DECLARE
+# else
+#  define __UNUSED [[maybe_unused]]
+#  define __DECLARE {}
+# endif
 #include <iostream>
+#include <string>
+#include <sstream>
 
 // ************************************************************************** //
 //                               Account Class                                //
@@ -25,19 +33,19 @@ public:
 
 	typedef Account		t;
 
-	static int	getNbAccounts( void );
-	static int	getTotalAmount( void );
-	static int	getNbDeposits( void );
-	static int	getNbWithdrawals( void );
-	static void	displayAccountsInfos( void );
+	__UNUSED static int	getNbAccounts();
+	__UNUSED static int	getTotalAmount();
+	__UNUSED static int	getNbDeposits();
+	__UNUSED static int	getNbWithdrawals();
+	__UNUSED static void	displayAccountsInfos();
 
-	Account( int initial_deposit );
-	~Account( void );
+	explicit Account(int initial_deposit);
+	~Account();
 
-	void	makeDeposit( int deposit );
-	bool	makeWithdrawal( int withdrawal );
-	int		checkAmount( void ) const;
-	void	displayStatus( void ) const;
+	void	makeDeposit(int deposit);
+	bool	makeWithdrawal(int withdrawal);
+	__UNUSED _GLIBCXX_NODISCARD int		checkAmount() const;
+	void	displayStatus() const;
 
 
 private:
@@ -47,26 +55,32 @@ private:
 	static int	_totalNbDeposits;
 	static int	_totalNbWithdrawals;
 
-	static void	_displayTimestamp( void );
+	__UNUSED static void	_displayTimestamp();
 
-	int				_accountIndex;
-	int				_amount;
-	int				_nbDeposits;
-	int				_nbWithdrawals;
+	int				_accountIndex __DECLARE;
+	int				_amount __DECLARE;
+	int				_nbDeposits __DECLARE;
+	int				_nbWithdrawals __DECLARE;
 
-	static std::string index() const;
-	static std::string amount() const;
-	static std::string total() const;
-	static std::string deposits() const;
-	static std::string withdrawals() const;
-	static std::string p_amount() const;
-	static std::string nb_deposits() const;
-	static std::string nb_withdrawals() const;
+	_GLIBCXX_NODISCARD static std::string time();
+	_GLIBCXX_NODISCARD std::string index() const;
+	_GLIBCXX_NODISCARD std::string amount() const;
+	_GLIBCXX_NODISCARD static std::string total();
+	_GLIBCXX_NODISCARD std::string deposits() const;
+	_GLIBCXX_NODISCARD static std::string withdrawals();
+	_GLIBCXX_NODISCARD static std::string total_deposits();
+	_GLIBCXX_NODISCARD static std::string total_withdrawals();
+	_GLIBCXX_NODISCARD std::string p_amount() const;
+	_GLIBCXX_NODISCARD std::string nb_deposits() const;
+	_GLIBCXX_NODISCARD std::string nb_withdrawals() const;
+	_GLIBCXX_NODISCARD static std::string accounts();
+	_GLIBCXX_NODISCARD std::string deposit() const;
+	_GLIBCXX_NODISCARD std::string withdrawal() const;
 
-	static std::string
+	int _last_deposit __DECLARE;
+	int _last_withdrawal __DECLARE;
 
-	Account( void );
-
+	Account();
 };
 
 

@@ -5,3 +5,4 @@ CPP-00/ex01/pb
 *.gdb_history
 *.gch
 *.d
+cmake-build-debug

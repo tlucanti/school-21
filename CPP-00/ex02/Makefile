@@ -6,17 +6,14 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2021/11/08 19:41:42 by kostya           ###   ########.fr        #
+#    Updated: 2021/11/22 23:33:42 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	accounts
-CXX			=	clang++ ${CHEL_TЫ}
-# CHEL_TЫ		=	-std=c++17
-CHEL_TЫ		=	-std=c++98 -D ROFLAN_OLD98
-CXXFLAGS	=	-Wall -Wextra
-# -Werror
+CXX			=	clang++ -std=c++2a
+CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2 -ffast-math
 # ------------------------------- linker options -------------------------------
 LIBRARY		=	
