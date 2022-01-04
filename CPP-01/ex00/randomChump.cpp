@@ -1,9 +1,8 @@
-#include "Zombie.cpp"
+#include "Zombie.hpp"
 
 namespace tlucanti
 {
-    inline
-    void randomChump(const std::string name) noexcept
+    void randomChump(const std::string &name) noexcept
     {
         Zombie(name).announce();
     }

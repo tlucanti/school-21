@@ -5,6 +5,9 @@ int main()
 	tlucanti::Zombie z("zomba");
 	z.announce();
 
-	tlucanti::Zombie *grave = tlucanti::newZombie("flowy");
+	tlucanti::randomChump("another");
+
+	tlucanti::Zombie *grave = tlucanti::newZombie("rottenman");
 	grave->announce();
+	delete grave;
 }

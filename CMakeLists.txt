@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(school_21)
 
-#set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
 
 add_executable(CPP-00-00
@@ -19,4 +19,13 @@ add_executable(CPP-00-02
 	CPP-00/ex02/Account.cpp
 	CPP-00/ex02/Account.hpp
 	CPP-00/ex02/tests.cpp
+)
+
+add_executable(CPP-01-00
+	CPP-01/ex00/main.cpp
+	CPP-01/ex00/Makefile
+	CPP-01/ex00/newZombie.cpp
+	CPP-01/ex00/randomChump.cpp
+	CPP-01/ex00/Zombie.cpp
+	CPP-01/ex00/Zombie.hpp
 )
