@@ -7,20 +7,21 @@
 //                                                                            //
 // ************************************************************************** //
 
-
-#pragma once
 #ifndef __ACCOUNT_H__
 # define __ACCOUNT_H__
-#if __cplusplus <= 199711L
-#  define __UNUSED __attribute_used__
+# if __cplusplus <= 199711L
+#  define __UNUSED __attribute__((unused))
 #  define __DECLARE
+#  define __WUR __attribute__((warn_unused_result))
 # else
 #  define __UNUSED [[maybe_unused]]
 #  define __DECLARE {}
+#  define __WUR [[nodiscard]]
 # endif
-#include <iostream>
-#include <string>
-#include <sstream>
+
+# include <iostream>
+# include <string>
+# include <sstream>
 
 // ************************************************************************** //
 //                               Account Class                                //
@@ -33,27 +34,27 @@ public:
 
 	typedef Account		t;
 
-	__UNUSED static int	getNbAccounts();
-	__UNUSED static int	getTotalAmount();
-	__UNUSED static int	getNbDeposits();
-	__UNUSED static int	getNbWithdrawals();
-	__UNUSED static void	displayAccountsInfos();
+	__UNUSED static	int		getNbAccounts();
+	__UNUSED static	int		getTotalAmount();
+	__UNUSED static	int		getNbDeposits();
+	__UNUSED static	int		getNbWithdrawals();
+	__UNUSED static	void	displayAccountsInfos();
 
 	explicit Account(int initial_deposit);
 	~Account();
 
 	void	makeDeposit(int deposit);
 	bool	makeWithdrawal(int withdrawal);
-	__UNUSED _GLIBCXX_NODISCARD int		checkAmount() const;
+	__UNUSED __WUR int		checkAmount() const;
 	void	displayStatus() const;
 
 
 private:
 
-	static int	_nbAccounts;
-	static int	_totalAmount;
-	static int	_totalNbDeposits;
-	static int	_totalNbWithdrawals;
+	static	int	_nbAccounts;
+	static	int	_totalAmount;
+	static	int	_totalNbDeposits;
+	static	int	_totalNbWithdrawals;
 
 	__UNUSED static void	_displayTimestamp();
 
@@ -62,28 +63,28 @@ private:
 	int				_nbDeposits __DECLARE;
 	int				_nbWithdrawals __DECLARE;
 
-	_GLIBCXX_NODISCARD static std::string time();
-	_GLIBCXX_NODISCARD std::string index() const;
-	_GLIBCXX_NODISCARD std::string amount() const;
-	_GLIBCXX_NODISCARD static std::string total();
-	_GLIBCXX_NODISCARD std::string deposits() const;
-	_GLIBCXX_NODISCARD static std::string withdrawals();
-	_GLIBCXX_NODISCARD static std::string total_deposits();
-	_GLIBCXX_NODISCARD static std::string total_withdrawals();
-	_GLIBCXX_NODISCARD std::string p_amount() const;
-	_GLIBCXX_NODISCARD std::string nb_deposits() const;
-	_GLIBCXX_NODISCARD std::string nb_withdrawals() const;
-	_GLIBCXX_NODISCARD static std::string accounts();
-	_GLIBCXX_NODISCARD std::string deposit() const;
-	_GLIBCXX_NODISCARD std::string withdrawal() const;
+	__WUR			std::string	index() const;
+	__WUR			std::string	amount() const;
+	__WUR			std::string	deposits() const;
+	__WUR			std::string	withdrawals() const;
+	__WUR			std::string	p_amount() const;
+	__WUR			std::string	nb_deposits() const;
+	__WUR 			std::string	nb_withdrawals() const;
+	__WUR			std::string	deposit() const;
+	__WUR			std::string	withdrawal() const;
+	__WUR static	std::string	time();
+	__WUR static	std::string	total();
+	__WUR static	std::string	total_deposits();
+	__WUR static	std::string	total_withdrawals();
+	__WUR static	std::string	accounts();
 
-	int _last_deposit __DECLARE;
-	int _last_withdrawal __DECLARE;
+	static void flush(std::ostringstream &cout);
+
+	int	_last_deposit __DECLARE;
+	int	_last_withdrawal __DECLARE;
 
 	Account();
 };
-
-
 
 // ************************************************************************** //
 // vim: set ts=4 sw=4 tw=80 noexpandtab:                                      //
