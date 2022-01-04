@@ -6,15 +6,13 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2021/11/08 19:41:42 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/04 19:43:44 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	megaphone
-CXX			=	clang++ ${CHEL_TI}
-# CHEL_TI		=	-std=c++17
-CHEL_TI		=	-std=c++98 -D ROFLAN_OLD98
+CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2 -ffast-math
 # ------------------------------- linker options -------------------------------

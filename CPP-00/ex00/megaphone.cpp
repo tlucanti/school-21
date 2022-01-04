@@ -6,50 +6,31 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 14:10:59 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/08 15:25:49 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/04 19:50:00 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include <array>
+
 namespace tlucanti {
 
-template<typename _ForwardIter, typename _Func>
-void for_each(_ForwardIter __first, _ForwardIter __last, _Func __f)
-{
-	for (; __first != __last; ++__first)
-		*__first = __f(*__first);
-}
-
-}
-
-#ifndef ROFLAN_OLD98
-
-int main(int, char **argv)
-{
-	++argv;
-	if (*argv == nullptr)
+	template<typename ForwardIter_T, typename Func_T>
+	void for_each(ForwardIter_T _first, ForwardIter_T _last, Func_T _f)
 	{
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-		return (0);
+		for (; _first != _last; ++_first)
+			*_first = _f(*_first);
 	}
-	for (; *argv != nullptr; ++argv)
-	{
-		std::string argst = *argv;
-		tlucanti::for_each(argst.begin(), argst.end(),
-			[](char _c){return std::toupper(_c);});
-		std::cout << argst << ' ';
-	}
-	std::cout << std::endl;
-	return (0);
+
 }
 
-#else
+#if __cplusplus <= 199711L
+
+# define nullptr NULL
 
 char roflan_lambda(char c)
 {
-	return std::toupper(c);
+	return static_cast<char>(std::toupper(c));
 }
 
 int main(int, char **argv)
@@ -64,6 +45,27 @@ int main(int, char **argv)
 	{
 		std::string argst = *argv;
 		tlucanti::for_each(argst.begin(), argst.end(), roflan_lambda);
+		std::cout << argst << ' ';
+	}
+	std::cout << std::endl;
+	return (0);
+}
+
+#else
+
+int main(int, char **argv)
+{
+	++argv;
+	if (*argv == nullptr)
+	{
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+		return (0);
+	}
+	for (; *argv != nullptr; ++argv)
+	{
+		std::string argst = *argv;
+		tlucanti::for_each(argst.begin(), argst.end(),
+			[](char _c){return std::toupper(_c);});
 		std::cout << argst << ' ';
 	}
 	std::cout << std::endl;
