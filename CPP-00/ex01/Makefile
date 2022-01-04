@@ -6,15 +6,13 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 15:33:35 by kostya            #+#    #+#              #
-#    Updated: 2021/11/08 20:52:09 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/04 20:12:21 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	pb
-CXX			=	clang++ ${CHEL_TI}
-# CHEL_TI		=	-std=c++17
-CHEL_TI		=	-std=c++98 -D ROFLAN_OLD98
+CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2 -ffast-math
 # ------------------------------- linker options -------------------------------

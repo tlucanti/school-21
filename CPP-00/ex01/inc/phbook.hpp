@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 15:44:23 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/09 15:49:00 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/04 20:12:07 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,12 @@
 namespace tlucanti
 {
 	class color;
-	std::string to_string(const std::string &str)
-	{
-		return str;
-	}
 
 	template <typename type_t>
-	std::string to_string(type_t &val)
+	std::string to_string(const type_t &x)
 	{
-		return std::to_string(val);
+		return static_cast<std::ostringstream &>((
+			std::ostringstream() << std::dec << x)).str();
 	}
 
 template<std::size_t _Nm>
@@ -44,7 +41,7 @@ class phbook
 */
 {
 public:
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 	~phbook() = default;
 	phbook(const phbook &) = delete;
 	phbook &operator=(const phbook &) = delete;
@@ -57,8 +54,7 @@ public:
 	add(std::string &fname, std::string &lname, std::string &nickname,
 		unsigned long long number, std::string &secret)
 	{
-		std::cout << "adding " << last << "\n";
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 		storage[last] = std::move(contact(fname, lname, nickname, number,
 			secret));
 #else
@@ -83,7 +79,7 @@ public:
 			return 1;
 		if (i != -1)
 		{
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 			std::cout << tlucanti::color::white
 				<< "index " << i << " information:" << tlucanti::color::reset << std::endl;
 #else
@@ -102,7 +98,7 @@ public:
 	class contact
 	{
 	public:
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 		contact() = default;
 		~contact() = default;
 		contact(const contact &) = delete;
@@ -169,7 +165,7 @@ public:
 		std::string fname;
 		std::string lname;
 		std::string nickname;
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 		unsigned long long number = 0;
 #else
 		unsigned long long number;

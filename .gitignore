@@ -1,8 +1,3 @@
-CPP-00/ex00/megaphone
-CPP-00/ex01/pb
-*.o
-*.out
-*.gdb_history
-*.gch
-*.d
+.idea
 cmake-build-debug
+CPP-00/obj

@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 15:37:05 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/09 15:40:25 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/04 20:11:35 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ namespace tlucanti
 	}
 }
 
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
+
 namespace tlucanti
 {
 	template <typename T>
@@ -82,8 +83,8 @@ namespace tlucanti
 	}
 }
 
-#define SWITCH(__string) switch(tlucanti::hash(__string))
-#define CASE(__string) case (tlucanti::const_hash(__string))
+# define SWITCH(__string) switch(tlucanti::hash(__string))
+# define CASE(__string) case (tlucanti::const_hash(__string))
 
 int main()
 {
@@ -180,6 +181,8 @@ int main()
 
 #else
 
+# include <cstdlib>
+
 int main()
 {
 	tlucanti::phbook<8> pb;
@@ -253,7 +256,7 @@ int main()
 					std::cout << tlucanti::color::red << "[FAIL] " << tlucanti::color::yellow << "wrong index format\n" << tlucanti::color::reset;
 				else
 				{
-					if (pb.search(std::stoi(idx)))
+					if (pb.search(atoi(idx.c_str())))
 						std::cout << tlucanti::color::yellow << "[WARN] " << tlucanti::color::white
 							<< "index out of phone book range\n" << tlucanti::color::reset;
 				}

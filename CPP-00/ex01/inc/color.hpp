@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 20:31:34 by kostya            #+#    #+#             */
-/*   Updated: 2021/11/09 13:47:58 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/04 20:04:43 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace tlucanti {
 	class color {
 	public:
 		static char *black;		// k
-		static char *red;			// r
+		static char *red;		// r
 		static char *green;		// g
 		static char *yellow;	// y
 		static char *blue;		// b
@@ -47,7 +47,7 @@ namespace tlucanti {
 	char *color::tlucanti	= (char *) "\033[19;1;96;21;6m";
 }
 
-#ifndef ROFLAN_OLD98
+#if __cplusplus > 199711L
 
 std::string operator ""_black(const char *str, std::size_t)
 {
@@ -93,5 +93,6 @@ std::string operator ""_reset(const char *str, std::size_t)
 {
 	return std::string() + str + tlucanti::color::reset;
 }
+
 # endif
 #endif
