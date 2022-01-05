@@ -37,3 +37,7 @@ add_executable(CPP-01-01
 	CPP-01/ex01/zombieHorde.cpp
 	CPP-01/ex01/Zombie.hpp
 )
+
+add_executable(CPP-01-02
+	CPP-01/ex02/main.cpp
+)
