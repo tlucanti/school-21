@@ -29,3 +29,11 @@ add_executable(CPP-01-00
 	CPP-01/ex00/Zombie.cpp
 	CPP-01/ex00/Zombie.hpp
 )
+
+add_executable(CPP-01-01
+	CPP-01/ex01/main.cpp
+	CPP-01/ex01/random.cpp
+	CPP-01/ex01/Zombie.cpp
+	CPP-01/ex01/zombieHorde.cpp
+	CPP-01/ex01/Zombie.hpp
+)
