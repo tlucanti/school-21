@@ -61,3 +61,9 @@ add_executable(CPP-01-05
 	CPP-01/ex05/Karen.cpp
 	CPP-01/ex05/main.cpp
 )
+
+add_executable(CPP-01-06
+	CPP-01/ex06/Karen.hpp
+	CPP-01/ex06/Karen.cpp
+	CPP-01/ex06/main.cpp
+)

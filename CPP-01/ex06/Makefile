@@ -6,12 +6,12 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2022/01/06 21:14:56 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/07 00:05:01 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
-NAME		=	test
+NAME		=	karenFilter
 CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2
