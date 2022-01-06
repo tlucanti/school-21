@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(school_21)
 
-# set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD 98)
+ set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
 
 add_executable(CPP-00-00
@@ -50,4 +50,8 @@ add_executable(CPP-01-03
 	CPP-01/ex03/HumanA.hpp
 	CPP-01/ex03/HumanB.hpp
 	CPP-01/ex03/Weapon.hpp
+)
+
+add_executable(CPP-01-04
+	CPP-01/ex04/main.cpp
 )
