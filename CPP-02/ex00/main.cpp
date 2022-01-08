@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:11:07 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/07 14:20:01 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/08 15:47:19 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,20 @@ int main()
 		std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 		std::cout << "d is " << d.toInt() << " as integer" << std::endl;
 		(void)d;
+	}
+	{
+		std::cout << "-----------------\n";
+		std::cout << "42TEST EX02\n";
+		std::cout << "-----------------\n\n";
+		tlucanti::Fixed a;
+		tlucanti::Fixed const b(tlucanti::Fixed(5.05f) * tlucanti::Fixed(2));
+		std::cout << a << std::endl;
+		std::cout << ++a << std::endl;
+		std::cout << a << std::endl;
+		std::cout << a++ << std::endl;
+		std::cout << a << std::endl;
+		std::cout << b << std::endl;
+		std::cout << tlucanti::Fixed::max(a, b) << std::endl;
 	}
 	return 0;
 }

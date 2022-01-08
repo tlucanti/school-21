@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:11:07 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/07 16:07:29 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/08 15:45:34 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <cmath>
 
 #define __CONST const
-#define PRIVATE_CONSTRUCTOR 0
 #if __cplusplus > 199711L
 # define __WUR [[nodiscard]]
 #else
@@ -49,10 +48,10 @@ namespace tlucanti
 		__WUR Fixed	operator /(__CONST Fixed &other) __CONST;
 
 		__WUR Fixed	operator -() __CONST;	// -x
-		Fixed	&operator ++();			// ++x
-		Fixed operator ++(int);		// x++
-		Fixed	&operator --();			// --x
-		Fixed operator --(int);		// x--
+		Fixed	&operator ++();				// ++x
+		Fixed	operator ++(int);			// x++
+		Fixed	&operator --();				// --x
+		Fixed	operator --(int);			// x--
 
 		__WUR static __CONST Fixed	&min(__CONST Fixed &a, __CONST Fixed &b);
 		__WUR static Fixed	&min(Fixed &a, Fixed &b);

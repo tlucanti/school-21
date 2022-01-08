@@ -3,7 +3,7 @@ project(school_21)
 
 # set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD 98)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
 	CPP-00/ex00/megaphone.cpp
@@ -66,4 +66,10 @@ add_executable(CPP-01-06
 	CPP-01/ex06/Karen.hpp
 	CPP-01/ex06/Karen.cpp
 	CPP-01/ex06/main.cpp
+)
+
+add_executable(CPP-02-00
+	CPP-02/ex00/Fixed.hpp
+	CPP-02/ex00/Fixed.cpp
+	CPP-02/ex00/main.cpp
 )

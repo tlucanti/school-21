@@ -6,11 +6,17 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 00:11:07 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/08 00:23:21 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/08 16:49:27 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
+
+#if __cplusplus > 199711L
+# define FixedPrivateConstructor(raw) {raw, 0}
+#else
+# define FixedPrivateConstructor(raw) tlucanti::Fixed(raw, 0)
+#endif
 
 __CONST unsigned short tlucanti::Fixed::_frac = 8;
 
@@ -93,13 +99,13 @@ tlucanti::Fixed::operator !=(__CONST tlucanti::Fixed &other) __CONST
 __WUR tlucanti::Fixed
 tlucanti::Fixed::operator +(__CONST tlucanti::Fixed &other) __CONST
 {
-	return {_number + other._number, PRIVATE_CONSTRUCTOR};
+	return FixedPrivateConstructor(_number + other._number);
 }
 
 __WUR tlucanti::Fixed
 tlucanti::Fixed::operator -(__CONST tlucanti::Fixed &other) __CONST
 {
-	return {_number - other._number, PRIVATE_CONSTRUCTOR};
+	return FixedPrivateConstructor(_number - other._number);
 }
 
 __WUR tlucanti::Fixed
@@ -117,7 +123,7 @@ tlucanti::Fixed::operator /(__CONST tlucanti::Fixed &other) __CONST
 __WUR tlucanti::Fixed
 tlucanti::Fixed::operator -() __CONST
 {
-	return {-_number, PRIVATE_CONSTRUCTOR};
+	return FixedPrivateConstructor(-_number);
 }
 
 __WUR tlucanti::Fixed &
@@ -130,7 +136,7 @@ tlucanti::Fixed::operator ++()
 __WUR tlucanti::Fixed
 tlucanti::Fixed::operator ++(int)
 {
-	return {_number++, PRIVATE_CONSTRUCTOR};
+	return FixedPrivateConstructor(_number++);
 }
 
 __WUR tlucanti::Fixed &
@@ -143,7 +149,7 @@ tlucanti::Fixed::operator --()
 __WUR tlucanti::Fixed
 tlucanti::Fixed::operator --(int)
 {
-	return {_number--, PRIVATE_CONSTRUCTOR};
+	return FixedPrivateConstructor(_number--);
 }
 
 int
