@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(school_21)
 
-# set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
@@ -72,4 +72,14 @@ add_executable(CPP-02-00
 	CPP-02/ex00/Fixed.hpp
 	CPP-02/ex00/Fixed.cpp
 	CPP-02/ex00/main.cpp
+)
+
+add_executable(CPP-02-03
+	 CPP-02/ex03/bsp.cpp
+	CPP-02/ex03/Fixed.cpp
+	CPP-02/ex03/Fixed.hpp
+	CPP-02/ex03/main.cpp
+	CPP-02/ex03/Makefile
+	CPP-02/ex03/Point.cpp
+	CPP-02/ex03/Point.hpp
 )
