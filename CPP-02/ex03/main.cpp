@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:07:14 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/09 00:18:44 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/09 12:51:41 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ bool bsp(const tlucanti::Point<tlucanti::Fixed> &a,
 
 struct pair
 {
-	float x;
-	float y;
+	int x;
+	int y;
 };
+
 float sign(const pair &pt1, const pair &pt2, const pair &pt3) {
 // which side of plane cut by line (pt2, pt3) is pt1 on?
 	return (pt1.x - pt3.x) * (pt2.y - pt3.y) - (pt2.x - pt3.x) * (pt1.y - pt3.y);
@@ -80,14 +81,14 @@ int main()
 
         for (int i=0; i < 100000; ++i)
         {
-            float x1 = rand(e2);
-            float y1 = rand(e2);
-            float x2 = rand(e2);
-            float y2 = rand(e2);
-            float x3 = rand(e2);
-            float y3 = rand(e2);
-            float xp = rand(e2);
-            float yp = rand(e2);
+            int x1 = rand(e2);
+            int y1 = rand(e2);
+            int x2 = rand(e2);
+            int y2 = rand(e2);
+            int x3 = rand(e2);
+            int y3 = rand(e2);
+            int xp = rand(e2);
+            int yp = rand(e2);
 
             bool ans1 = iswithin({x1, y1}, {x2, y2}, {x3, y3}, {xp, yp});
             bool ans2 = bsp({x1, y1}, {x2, y2}, {x3, y3}, {xp, yp});
@@ -113,34 +114,38 @@ int main()
 int main()
 {
 	srand(time(NULL));
-    int borders[][2] = {
-        {0, 10}, {-10, 10}
-    };
 
     int all = 0;
     int ok = 0;
 
-    for (int b=0; b < sizeof(borders); ++b)
-    {
-        for (int i=0; i < 100000; ++i)
-        {
-            float x1 = rand();
-            float y1 = rand();
-            float x2 = rand();
-            float y2 = rand();
-            float x3 = rand();
-            float y3 = rand();
-            float xp = rand();
-            float yp = rand();
+	for (int i=0; i < 100000; ++i)
+	{
+		int x1 = rand() % 100;
+		int y1 = rand() % 100;
+		int x2 = rand() % 100;
+		int y2 = rand() % 100;
+		int x3 = rand() % 100;
+		int y3 = rand() % 100;
+		int xp = rand() % 100;
+		int yp = rand() % 100;
 
-            bool ans1 = iswithin({x1, y1}, {x2, y2}, {x3, y3}, {xp, yp});
-            bool ans2 = bsp({x1, y1}, {x2, y2}, {x3, y3}, {xp, yp});
+		const tlucanti::Point<tlucanti::Fixed> a(x1, y1);
+		const tlucanti::Point<tlucanti::Fixed> b(x2, y2);
+		const tlucanti::Point<tlucanti::Fixed> c(x3, y3);
+		const tlucanti::Point<tlucanti::Fixed> p(xp, yp);
 
-            ++all;
-            if (ans1 == ans2)
-                ++ok;
-        }
-    }
+		const pair pa = {x1, y1};
+		const pair pb = {x2, y2};
+		const pair pc = {x3, y3};
+		const pair pp = {xp, yp};
+
+		bool ans1 = iswithin(pa, pb, pc, pp);
+		bool ans2 = bsp(a, b, c, p);
+
+		++all;
+		if (ans1 == ans2)
+			++ok;
+	}
     if (all == ok)
         std::cout << "[ OK ] all tests passed\n";
     else
