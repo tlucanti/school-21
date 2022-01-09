@@ -98,3 +98,14 @@ add_executable(CPP-03-01
 	CPP-03/ex01/ScavTrap.cpp
 	CPP-03/ex01/ScavTrap.hpp
 )
+
+add_executable(CPP-03-02
+	CPP-03/ex02/ClapTrap.cpp
+	CPP-03/ex02/ClapTrap.hpp
+	CPP-03/ex02/FragTrap.cpp
+	CPP-03/ex02/FragTrap.hpp
+	CPP-03/ex02/main.cpp
+	CPP-03/ex02/Makefile
+	CPP-03/ex02/ScavTrap.cpp
+	CPP-03/ex02/ScavTrap.hpp
+)
