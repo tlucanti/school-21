@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:07:28 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/08 19:11:45 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:57:46 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ namespace tlucanti
 			: x(cpy.x), y(cpy.y) {}
 		Point(const float _x, const float _y)
 			: x(_x), y(_y) {}
+		Point(const int _x, const int _y)
+			: x((float)_x), y((float)_y) {}
 		Point(const Point_T &_x, const Point_T &_y)
 			: x(_x), y(_y) {}
 

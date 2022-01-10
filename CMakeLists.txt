@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 project(school_21)
 
-#set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD 98)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
+set (CMAKE_CXX_COMPILER "/usr/bin/g++")
+set (CMAKE_VERBOSE_MAKEFILE true)
+
+set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_CXX_STANDARD 98)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
 
 add_executable(CPP-00-00
 	CPP-00/ex00/megaphone.cpp
@@ -108,4 +111,16 @@ add_executable(CPP-03-02
 	CPP-03/ex02/Makefile
 	CPP-03/ex02/ScavTrap.cpp
 	CPP-03/ex02/ScavTrap.hpp
+)
+
+add_executable(CPP-03-03
+	CPP-03/ex03/ClapTrap.cpp
+	CPP-03/ex03/DiamondTrap.cpp
+	CPP-03/ex03/FragTrap.cpp
+	CPP-03/ex03/main.cpp
+	CPP-03/ex03/ScavTrap.cpp
+	CPP-03/ex03/ClapTrap.hpp
+	CPP-03/ex03/DiamondTrap.hpp
+	CPP-03/ex03/FragTrap.hpp
+	CPP-03/ex03/ScavTrap.hpp
 )

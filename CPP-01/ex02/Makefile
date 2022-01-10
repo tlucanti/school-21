@@ -6,9 +6,16 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/05 20:37:20 by kostya            #+#    #+#              #
-#    Updated: 2022/01/05 20:41:48 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/10 19:34:38 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all:
 	clang++ -Wall -Wextra -Werror main.cpp -o refs -O2 -std=c++2a
+
+clean:
+
+fclean:
+	rm refs
+
+re: fclean all

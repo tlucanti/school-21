@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 17:07:14 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/09 12:51:41 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:56:32 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int main()
                 ++ok;
             else
             {
-                printf("wrong: (%g, %g), (%g, %g), (%g, %g): (%g, %g)\n",
+                printf("wrong: (%d, %d), (%d, %d), (%d, %d): (%d, %d)\n",
                     x1, y1, x2, y2, x3, y3, xp, yp);
                 printf("expected %s, got %s\n", ans1 ? "true" : "false",
                     ans2 ? "true" : "false");

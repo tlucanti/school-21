@@ -6,7 +6,7 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2022/01/09 12:53:14 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/10 19:55:05 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,44 +15,49 @@ NAME		=	test
 CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2
+CC			=	CC
 # ------------------------------- linker options -------------------------------
 LIBRARY		=	
 OBJS_DIR	=	../obj
 INCLUDE_DIR	=	.
 SCRS_DIR	=	.
+DEPS_DIR	=	../dep
 # ------------------------------- project sorces -------------------------------
 SRCS		=	\
 				bsp		\
 				Fixed	\
 				main	\
 				Point
-# ------------------------------------------------------------------------------
-HDRS		=	\
-				Fixed	\
-				Point
 
 # ======================= UNCHANGEABLE PART OF MAKEFILE ========================
 # ------------------------------------------------------------------------------
 RM			=	rm -f
 OBJS		=	$(addprefix ${OBJS_DIR}/,${SRCS:=.o})
-DEPS		=	$(addprefix ${INCLUDE_DIR}/,${HDRS:=.hpp})
+DEPS		=	$(addprefix ${DEPS_DIR}/,${SRCS:=.d})
 INCLUDE		=	-I ${INCLUDE_DIR}
+_DEPS_MV	=	$(addprefix ${OBJS_DIR}/,${SRCS:=.d})
+
 
 # ------------------------------------------------------------------------------
-all:			${OBJS_DIR}
+all:			${OBJS_DIR} ${DEPS_DIR}
 	@$(MAKE)	$(NAME) -j
 
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp ${DEPS} Makefile
-	${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -o $@ $< ${INCLUDE}
+$(NAME):		${OBJS}
+	@echo [LD] Linking CXX Executable ${NAME}
+	@${CXX}		-o ${NAME} ${CXXFLAGS} ${CXXOPTIONS} ${OBJS} ${LIBRARY}
+
+-include ${DEPS}
 
 # ------------------------------------------------------------------------------
-$(NAME):		${OBJS} ${DEPS}
-	${CXX}		-o ${NAME} ${CXXFLAGS} ${CXXOPTIONS} ${OBJS} ${LIBRARY}
+${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp 
+	@echo [${CC}] Building CXX object $<
+	@${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -MMD -MT $@ -o $@ $< ${INCLUDE}
+	@mv			${@:.o=.d} ${DEPS_DIR}
 
 # ------------------------------------------------------------------------------
 clean:
-	${RM}		${OBJS}
+	${RM}		${OBJS} ${DEPS}
 
 # ------------------------------------------------------------------------------
 fclean:			clean
@@ -62,8 +67,40 @@ fclean:			clean
 re:				fclean all
 
 # ------------------------------------------------------------------------------
+__GXX_98_COMPILE: CXX = g++ -std=c++98
+__GXX_98_COMPILE: CC = G++
+__GXX_98_COMPILE: fclean $(NAME)
+__GXX_2a_COMPILE: CXX = g++ -std=c++2a
+__GXX_2a_COMPILE: CC = G++
+__GXX_2a_COMPILE: fclean $(NAME)
+__CLANG_98_COMPILE: CXX = clang++ -std=c++98
+__CLANG_98_COMPILE: CC = CLANG++
+__CLANG_98_COMPILE: fclean $(NAME)
+__CLANG_2a_COMPILE: CXX = clang++ -std=c++2a
+__CLANG_2a_COMPILE: CC = CLANG++
+__CLANG_2a_COMPILE: fclean $(NAME)
+__CXX_98_COMPILE: CXX = c++ -std=c++98
+__CXX_98_COMPILE: CC = C++
+__CXX_98_COMPILE: fclean $(NAME)
+__CXX_2a_COMPILE: CXX = c++ -std=c++2a
+__CXX_2a_COMPILE: CC = C++
+__CXX_2a_COMPILE: fclean $(NAME)
+
+compile:
+	$(MAKE) __GXX_98_COMPILE
+	$(MAKE) __CLANG_98_COMPILE
+	$(MAKE) __CXX_98_COMPILE
+	$(MAKE) __GXX_2a_COMPILE
+	$(MAKE) __CLANG_2a_COMPILE
+	$(MAKE) __CXX_2a_COMPILE
+
+# ------------------------------------------------------------------------------
 ${OBJS_DIR}:
 	mkdir		-p ${OBJS_DIR}
+
+# ------------------------------------------------------------------------------
+${DEPS_DIR}:
+	mkdir		-p ${DEPS_DIR}
 
 # ------------------------------------------------------------------------------
 .PHONY:			all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:56:26 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/06 23:45:20 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:53:07 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ int main(int argc, char **argv)
 	switch(tlucanti::Pearson64(argv[1]))
 	{
 		case DEBUG_HASH:  karen.complain("debug");
+			__FALLTHROUGH;
 		case INFO_HASH:   karen.complain("info");
+			__FALLTHROUGH;
 		case WARNING_HASH: karen.complain("warning");
+			__FALLTHROUGH;
 		case ERROR_HASH: karen.complain("error");
 			break;
 		default:

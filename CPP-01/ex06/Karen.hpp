@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:54:37 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/06 21:48:29 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:52:46 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # if __cplusplus <= 199711L
 #  define noexcept
+#  define __FALLTHROUGH __attribute__((fallthrough))
+# else
+#  define __FALLTHROUGH [[fallthrough]]
 # endif
 
 # include <string>

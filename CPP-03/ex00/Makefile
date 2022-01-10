@@ -6,15 +6,16 @@
 #    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2022/01/09 16:13:32 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/10 20:00:50 by kostya           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	test
-CXX			=	clang++ -std=c++98
+CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2
+CC			=	CC
 # ------------------------------- linker options -------------------------------
 LIBRARY		=	
 OBJS_DIR	=	../obj
@@ -47,14 +48,14 @@ $(NAME):		${OBJS}
 -include ${DEPS}
 
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp Makefile
-	@echo [CC] Building CXX object $<
+${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp 
+	@echo [${CC}] Building CXX object $<
 	@${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -MMD -MT $@ -o $@ $< ${INCLUDE}
 	@mv			${@:.o=.d} ${DEPS_DIR}
 
 # ------------------------------------------------------------------------------
 clean:
-	${RM}		${OBJS}
+	${RM}		${OBJS} ${DEPS}
 
 # ------------------------------------------------------------------------------
 fclean:			clean
@@ -62,6 +63,34 @@ fclean:			clean
 
 # ------------------------------------------------------------------------------
 re:				fclean all
+
+# ------------------------------------------------------------------------------
+__GXX_98_COMPILE: CXX = g++ -std=c++98
+__GXX_98_COMPILE: CC = G++
+__GXX_98_COMPILE: fclean $(NAME)
+__GXX_2a_COMPILE: CXX = g++ -std=c++2a
+__GXX_2a_COMPILE: CC = G++
+__GXX_2a_COMPILE: fclean $(NAME)
+__CLANG_98_COMPILE: CXX = clang++ -std=c++98
+__CLANG_98_COMPILE: CC = CLANG++
+__CLANG_98_COMPILE: fclean $(NAME)
+__CLANG_2a_COMPILE: CXX = clang++ -std=c++2a
+__CLANG_2a_COMPILE: CC = CLANG++
+__CLANG_2a_COMPILE: fclean $(NAME)
+__CXX_98_COMPILE: CXX = c++ -std=c++98
+__CXX_98_COMPILE: CC = C++
+__CXX_98_COMPILE: fclean $(NAME)
+__CXX_2a_COMPILE: CXX = c++ -std=c++2a
+__CXX_2a_COMPILE: CC = C++
+__CXX_2a_COMPILE: fclean $(NAME)
+
+compile:
+	$(MAKE) __GXX_98_COMPILE
+	$(MAKE) __CLANG_98_COMPILE
+	$(MAKE) __CXX_98_COMPILE
+	$(MAKE) __GXX_2a_COMPILE
+	$(MAKE) __CLANG_2a_COMPILE
+	$(MAKE) __CXX_2a_COMPILE
 
 # ------------------------------------------------------------------------------
 ${OBJS_DIR}:

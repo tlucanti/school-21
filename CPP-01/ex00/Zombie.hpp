@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 21:52:45 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/04 22:01:08 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 16:45:19 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #else
 # define __WUR __attribute__((warn_unused_result))
 # define noexcept
+# define nullptr NULL
 #endif
 
 namespace tlucanti
