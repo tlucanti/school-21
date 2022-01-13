@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(school_21)
 
 set (CMAKE_CXX_COMPILER "/usr/bin/g++")
-set (CMAKE_VERBOSE_MAKEFILE true)
+#set (CMAKE_VERBOSE_MAKEFILE true)
 
 set(CMAKE_CXX_STANDARD 23)
 #set(CMAKE_CXX_STANDARD 98)
@@ -123,4 +123,30 @@ add_executable(CPP-03-03
 	CPP-03/ex03/DiamondTrap.hpp
 	CPP-03/ex03/FragTrap.hpp
 	CPP-03/ex03/ScavTrap.hpp
+)
+
+add_executable(CPP-04-00
+	CPP-04/ex00/Animal.cpp
+	CPP-04/ex00/Animal.hpp
+	CPP-04/ex00/Cat.cpp
+	CPP-04/ex00/Cat.hpp
+	CPP-04/ex00/Dog.cpp
+	CPP-04/ex00/Dog.hpp
+	CPP-04/ex00/main.cpp
+	CPP-04/ex00/WrongAnimal.cpp
+	CPP-04/ex00/WrongAnimal.hpp
+	CPP-04/ex00/WrongCat.cpp
+	CPP-04/ex00/WrongCat.hpp
+)
+
+add_executable(CPP-04-01
+	CPP-04/ex01/Animal.cpp
+	CPP-04/ex01/Animal.hpp
+	CPP-04/ex01/Brain.cpp
+	CPP-04/ex01/Brain.hpp
+	CPP-04/ex01/Cat.cpp
+	CPP-04/ex01/Cat.hpp
+	CPP-04/ex01/Dog.cpp
+	CPP-04/ex01/Dog.hpp
+	CPP-04/ex01/main.cpp
 )
