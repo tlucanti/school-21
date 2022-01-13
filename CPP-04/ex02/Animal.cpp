@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Animal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 21:02:58 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/10 21:24:23 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 21:31:06 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Animal.hpp"
 
-tlucanti::Dog::Dog()
-	: Animal()
+tlucanti::Animal::Animal() {}
+
+tlucanti::Animal::~Animal() {}
+
+std::string
+tlucanti::Animal::getType() const
 {
-	type = "Dog";
-	std::cout << "Glad you're here " << type << std::endl;
+	return type;
 }
 
-tlucanti::Dog::~Dog()
+tlucanti::Animal::Animal(const Animal &cpy)
+	: type(cpy.type)
 {
-	std::cout << "the " << type << " thrown into outer space\n";
-}
-
-void
-tlucanti::Dog::makeSound() const
-{
-	std::cout << "<" << type << "> Bark\n";
+	std::cout << "<" << type << "> was cloned\n";
 }

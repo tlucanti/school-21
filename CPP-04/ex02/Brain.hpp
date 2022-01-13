@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 21:02:58 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/10 21:24:23 by kostya           ###   ########.fr       */
+/*   Created: 2022/01/12 13:11:07 by kostya            #+#    #+#             */
+/*   Updated: 2022/01/12 18:31:17 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#pragma once
 
-tlucanti::Dog::Dog()
-	: Animal()
-{
-	type = "Dog";
-	std::cout << "Glad you're here " << type << std::endl;
-}
+#include <string>
 
-tlucanti::Dog::~Dog()
+namespace tlucanti
 {
-	std::cout << "the " << type << " thrown into outer space\n";
-}
+	class Brain
+	{
+	public:
+		Brain();
 
-void
-tlucanti::Dog::makeSound() const
-{
-	std::cout << "<" << type << "> Bark\n";
+		std::string ideas[100];
+		~Brain();
+		Brain &operator =(const Brain &cpy);
+
+	private:
+		Brain(const Brain &cpy);
+	};
 }

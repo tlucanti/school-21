@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 21:02:58 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/10 21:24:23 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/12 18:25:36 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#pragma once
 
-tlucanti::Dog::Dog()
-	: Animal()
-{
-	type = "Dog";
-	std::cout << "Glad you're here " << type << std::endl;
-}
+#include <string>
+#include <iostream>
 
-tlucanti::Dog::~Dog()
-{
-	std::cout << "the " << type << " thrown into outer space\n";
-}
+#include "Brain.hpp"
 
-void
-tlucanti::Dog::makeSound() const
+namespace tlucanti
 {
-	std::cout << "<" << type << "> Bark\n";
+	class Animal
+	{
+	public:
+		Animal();
+		virtual ~Animal() = 0;
+		virtual std::string getType() const;
+		virtual void makeSound() const = 0;
+		Animal(const Animal &);
+
+	protected:
+		std::string type;
+	};
 }

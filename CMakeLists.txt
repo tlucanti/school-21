@@ -150,3 +150,16 @@ add_executable(CPP-04-01
 	CPP-04/ex01/Dog.hpp
 	CPP-04/ex01/main.cpp
 )
+
+add_executable(CPP-04-02
+	CPP-04/ex02/Animal.cpp
+	CPP-04/ex02/Animal.hpp
+	CPP-04/ex02/Brain.cpp
+	CPP-04/ex02/Brain.hpp
+	CPP-04/ex02/Cat.cpp
+	CPP-04/ex02/Cat.hpp
+	CPP-04/ex02/Dog.cpp
+	CPP-04/ex02/Dog.hpp
+	CPP-04/ex02/main.cpp
+)
+

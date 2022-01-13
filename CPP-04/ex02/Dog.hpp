@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 21:02:58 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/10 21:24:23 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/12 13:20:21 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#pragma once
 
-tlucanti::Dog::Dog()
-	: Animal()
-{
-	type = "Dog";
-	std::cout << "Glad you're here " << type << std::endl;
-}
+#include <string>
+#include <iostream>
 
-tlucanti::Dog::~Dog()
-{
-	std::cout << "the " << type << " thrown into outer space\n";
-}
+#include "Animal.hpp"
+#include "Brain.hpp"
 
-void
-tlucanti::Dog::makeSound() const
+#if __cplusplus <= 199711L
+# define override
+#endif
+
+namespace tlucanti
 {
-	std::cout << "<" << type << "> Bark\n";
+	class Dog : public Animal
+	{
+	public:
+		Dog();
+		~Dog() override;
+		Dog (const Dog &cpy);
+		void makeSound() const override;
+		std::string &operator [](unsigned short at);
+
+	protected:
+		Brain *brain;
+	};
 }

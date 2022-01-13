@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 21:02:58 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/10 21:24:23 by kostya           ###   ########.fr       */
+/*   Created: 2022/01/12 19:59:18 by kostya            #+#    #+#             */
+/*   Updated: 2022/01/12 19:59:22 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Brain.hpp"
 
-tlucanti::Dog::Dog()
-	: Animal()
-{
-	type = "Dog";
-	std::cout << "Glad you're here " << type << std::endl;
-}
+tlucanti::Brain::Brain() {}
 
-tlucanti::Dog::~Dog()
-{
-	std::cout << "the " << type << " thrown into outer space\n";
-}
+tlucanti::Brain::~Brain() {}
 
-void
-tlucanti::Dog::makeSound() const
+tlucanti::Brain &
+tlucanti::Brain::operator =(const Brain &cpy)
 {
-	std::cout << "<" << type << "> Bark\n";
+	if (&cpy == this)
+		return *this;
+	for (unsigned short i=0; i < (unsigned short)sizeof(ideas); ++i)
+		ideas[i] = cpy.ideas[i];
+	return *this;
 }
