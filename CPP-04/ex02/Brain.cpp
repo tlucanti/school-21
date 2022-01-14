@@ -21,7 +21,7 @@ tlucanti::Brain::operator =(const Brain &cpy)
 {
 	if (&cpy == this)
 		return *this;
-	for (unsigned short i=0; i < (unsigned short)sizeof(ideas); ++i)
+	for (unsigned short i=0; i < (unsigned short)sizeof(ideas) / sizeof(std::string); ++i)
 		ideas[i] = cpy.ideas[i];
 	return *this;
 }

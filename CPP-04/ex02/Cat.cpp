@@ -22,8 +22,8 @@ tlucanti::Cat::Cat()
 
 tlucanti::Cat::~Cat()
 {
-	delete brain;
 	std::cout << "the " << type << " was blown up\n";
+	delete brain;
 }
 
 tlucanti::Cat::Cat(const Cat &cpy)
@@ -31,7 +31,7 @@ tlucanti::Cat::Cat(const Cat &cpy)
 {
 	type = cpy.type;
 	brain = new Brain;
-	brain = cpy.brain;
+	*brain = *cpy.brain;
 }
 
 void

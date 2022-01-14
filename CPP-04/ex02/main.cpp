@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 18:22:22 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/12 19:59:56 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/14 14:44:09 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,18 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
+#if __cplusplus <= 199711L
+# include <cassert>
+#endif
+
 int main()
 {
 	const int	size = 10;
+#if __cplusplus <= 199711L
+    assert(size > 0 and !(size % 2));
+#else
 	static_assert(size > 0 and !(size % 2), "array size should be positive, even");
+#endif
 
     tlucanti::Animal **animals = new tlucanti::Animal *[size];
 
