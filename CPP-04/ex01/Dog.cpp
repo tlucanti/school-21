@@ -17,20 +17,22 @@ tlucanti::Dog::Dog()
 	: Animal()
 {
 	type = "Dog";
-	std::cout << "Glad you you're here, " << type << std::endl;
+	brain = new Brain;
+	std::cout << "Glad you're here, " << type << std::endl;
 }
 
 tlucanti::Dog::~Dog()
 {
-	delete brain;
 	std::cout << "the " << type << " thrown into outer space\n";
+	delete brain;
 }
 
 tlucanti::Dog::Dog(const Dog &cpy)
 	: Animal()
 {
 	type = cpy.type;
-	brain = cpy.brain;
+	brain = new Brain;
+	*brain = *cpy.brain;
 }
 
 void

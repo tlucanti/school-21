@@ -22,15 +22,16 @@ tlucanti::Cat::Cat()
 
 tlucanti::Cat::~Cat()
 {
-	delete brain;
 	std::cout << "the " << type << " was blown up\n";
+	delete brain;
 }
 
 tlucanti::Cat::Cat(const Cat &cpy)
 	: Animal()
 {
 	type = cpy.type;
-	brain = cpy.brain;
+	brain = new Brain;
+	*brain = *cpy.brain;
 }
 
 void

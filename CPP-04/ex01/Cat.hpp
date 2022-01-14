@@ -28,12 +28,12 @@ namespace tlucanti
 	{
 	public:
 		Cat();
-		~Cat();
+		~Cat() override;
 		Cat(const Cat &cpy);
 		void makeSound() const override;
 		std::string &operator [](unsigned short at);
 
-	private:
-		tlucanti::Brain *brain;
+	protected:
+		Brain *brain;
 	};
 }

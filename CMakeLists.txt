@@ -6,7 +6,7 @@ set (CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 set(CMAKE_CXX_STANDARD 23)
 #set(CMAKE_CXX_STANDARD 98)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
 	CPP-00/ex00/megaphone.cpp

@@ -28,12 +28,12 @@ namespace tlucanti
 	{
 	public:
 		Dog();
-		~Dog();
+		~Dog() override;
 		Dog (const Dog &cpy);
 		void makeSound() const override;
 		std::string &operator [](unsigned short at);
 
-	private:
-		tlucanti::Brain *brain;
+	protected:
+		Brain *brain;
 	};
 }
