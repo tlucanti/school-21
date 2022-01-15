@@ -163,3 +163,18 @@ add_executable(CPP-04-02
 	CPP-04/ex02/main.cpp
 )
 
+add_executable(CPP-04-03
+	CPP-04/ex03/AMateria.cpp
+	CPP-04/ex03/AMateria.hpp
+	CPP-04/ex03/Character.cpp
+	CPP-04/ex03/Character.hpp
+	CPP-04/ex03/Cure.cpp
+	CPP-04/ex03/Cure.hpp
+	CPP-04/ex03/Ice.cpp
+	CPP-04/ex03/Ice.hpp
+	CPP-04/ex03/ICharacter.hpp
+	CPP-04/ex03/IMateriaSource.hpp
+	CPP-04/ex03/main.cpp
+	CPP-04/ex03/MateriaSource.cpp
+	CPP-04/ex03/MateriaSource.hpp
+)
