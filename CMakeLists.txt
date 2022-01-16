@@ -5,7 +5,7 @@ set (CMAKE_CXX_COMPILER "/usr/bin/g++")
 #set (CMAKE_VERBOSE_MAKEFILE true)
 
 set(CMAKE_CXX_STANDARD 23)
-#set(CMAKE_CXX_STANDARD 98)
+# set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
@@ -177,4 +177,24 @@ add_executable(CPP-04-03
 	CPP-04/ex03/main.cpp
 	CPP-04/ex03/MateriaSource.cpp
 	CPP-04/ex03/MateriaSource.hpp
+)
+
+add_executable(CPP-05-00
+	CPP-05/ex00/Bureaucrat.cpp
+	CPP-05/ex00/Bureaucrat.hpp
+	CPP-05/ex00/Exception.cpp
+	CPP-05/ex00/Exception.hpp
+	CPP-05/ex00/main.cpp
+	CPP-05/ex00/defs.h
+)
+
+add_executable(CPP-05-01
+	CPP-05/ex01/Bureaucrat.cpp
+	CPP-05/ex01/Bureaucrat.hpp
+	CPP-05/ex01/defs.h
+	CPP-05/ex01/Exception.cpp
+	CPP-05/ex01/Exception.hpp
+	CPP-05/ex01/Form.cpp
+	CPP-05/ex01/Form.hpp
+	CPP-05/ex01/main.cpp
 )
