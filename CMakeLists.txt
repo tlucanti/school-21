@@ -4,8 +4,8 @@ project(school_21)
 set (CMAKE_CXX_COMPILER "/usr/bin/g++")
 #set (CMAKE_VERBOSE_MAKEFILE true)
 
-set(CMAKE_CXX_STANDARD 23)
-# set(CMAKE_CXX_STANDARD 98)
+#set(CMAKE_CXX_STANDARD 23)
+ set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
