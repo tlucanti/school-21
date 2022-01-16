@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 22:32:20 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/04 22:32:41 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/16 16:13:53 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 namespace tlucanti
 {
-    int random(int start, int stop)
+	int random(int start, int stop)
 	{
 		int ret;
 		do {

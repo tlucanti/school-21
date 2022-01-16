@@ -6,7 +6,7 @@
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 12:30:43 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/16 13:24:56 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/16 13:58:52 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ namespace tlucanti
 		Form(const std::string &name, unsigned short grade_to_sign,
 			unsigned short grade_to_execute);
 		Form(const Form &cpy);
+		~Form() __DEFAULT
 
 		__WUR const std::string &getName() const;
 		__WUR unsigned short getExecuteGrade() const;
