@@ -4,8 +4,8 @@ project(school_21)
 set (CMAKE_CXX_COMPILER "/usr/bin/g++")
 #set (CMAKE_VERBOSE_MAKEFILE true)
 
-set(CMAKE_CXX_STANDARD 23)
-# set(CMAKE_CXX_STANDARD 98)
+#set(CMAKE_CXX_STANDARD 23)
+ set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
 
 add_executable(CPP-00-00
@@ -215,4 +215,24 @@ add_executable(CPP-05-02
 	CPP-05/ex02/RobotomyRequestForm.hpp
 	CPP-05/ex02/ShrubberyCreationForm.cpp
 	CPP-05/ex02/ShrubberyCreationForm.hpp
+)
+
+add_executable(CPP-05-03
+	CPP-05/ex03/Bureaucrat.cpp
+	CPP-05/ex03/Bureaucrat.hpp
+	CPP-05/ex03/defs.h
+	CPP-05/ex03/Exception.cpp
+	CPP-05/ex03/Exception.hpp
+	CPP-05/ex03/Form.cpp
+	CPP-05/ex03/Form.hpp
+	CPP-05/ex03/home_shrubbery
+	CPP-05/ex03/Intern.cpp
+	CPP-05/ex03/Intern.hpp
+	CPP-05/ex03/main.cpp
+	CPP-05/ex03/PresidentialPardonForm.cpp
+	CPP-05/ex03/PresidentialPardonForm.hpp
+	CPP-05/ex03/RobotomyRequestForm.cpp
+	CPP-05/ex03/RobotomyRequestForm.hpp
+	CPP-05/ex03/ShrubberyCreationForm.cpp
+	CPP-05/ex03/ShrubberyCreationForm.hpp
 )
