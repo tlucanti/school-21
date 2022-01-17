@@ -7,6 +7,7 @@ set (CMAKE_CXX_COMPILER "/usr/bin/g++")
 #set(CMAKE_CXX_STANDARD 23)
  set(CMAKE_CXX_STANDARD 98)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O0")
+#set(CMAKE_CXX_FLAGS "-O0")
 
 add_executable(CPP-00-00
 	CPP-00/ex00/megaphone.cpp
@@ -235,4 +236,11 @@ add_executable(CPP-05-03
 	CPP-05/ex03/RobotomyRequestForm.hpp
 	CPP-05/ex03/ShrubberyCreationForm.cpp
 	CPP-05/ex03/ShrubberyCreationForm.hpp
+)
+
+add_executable(CPP-06-00
+	CPP-06/ex00/Converter.cpp
+	CPP-06/ex00/Converter.hpp
+	CPP-06/ex00/defs.h
+	CPP-06/ex00/main.cpp
 )
