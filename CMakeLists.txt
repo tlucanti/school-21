@@ -251,4 +251,10 @@ add_executable(CPP-06-01
 
 add_executable(CPP-06-02
 	CPP-06/ex02/main.cpp
+	CPP-06/ex02/defs.h
+)
+
+add_executable(CPP-07-00
+	CPP-07/ex00/main.cpp
+	CPP-07/ex00/whatever.hpp
 )
