@@ -258,3 +258,8 @@ add_executable(CPP-07-00
 	CPP-07/ex00/main.cpp
 	CPP-07/ex00/whatever.hpp
 )
+
+add_executable(CPP-07-01
+	CPP-07/ex01/iter.hpp
+	CPP-07/ex01/main.cpp
+)
