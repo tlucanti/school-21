@@ -16,7 +16,9 @@
 #  define __WUR __attribute__((warn_unused_result))
 #  define noexcept throw()
 #  define override
-#  define nullptr NULL
+#  ifndef nullptr
+#   define nullptr NULL
+#  endif
 #  define __CONST const
 #  define __DEFAULT {}
 #  define __DEFINE

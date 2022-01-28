@@ -21,7 +21,9 @@
 # define __WUR __attribute__((warn_unused_result))
 # define __DEFAULT {}
 # define __DEFINE
-# define nullptr NULL
+# ifndef nullptr
+#  define nullptr NULL
+# endif
 #else
 # define __WUR [[nodiscard]]
 # define __DEFAULT =default;

@@ -20,7 +20,9 @@
 #if __cplusplus <= 199711L
 # define __WUR __attribute__((warn_unused_result))
 # define __DEFAULT {}
-# define nullptr NULL
+# ifndef nullptr
+#  define nullptr NULL
+# endif
 # define override
 # define __DEFINE
 #else
