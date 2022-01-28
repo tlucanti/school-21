@@ -274,3 +274,10 @@ add_executable(CPP-08-00
 	CPP-08/ex00/easyfind.hpp
 	CPP-08/ex00/main.cpp
 )
+
+add_executable(CPP-08-01
+	CPP-08/ex01/Span.cpp
+	CPP-08/ex01/Span.hpp
+	CPP-08/ex01/defs.h
+	CPP-08/ex01/main.cpp
+)
