@@ -72,13 +72,6 @@ namespace tlucanti
 			type_T t = 0;
 
 			ss >> t;
-            {
-                std::stringstream fl_ss(str);
-                float fl;
-                ss >> fl;
-                if (fl == std::numeric_limits<float>::quiet_NaN())
-                    throw ConvertationError("impossible");
-            }
 			if (ss.fail() and t == std::numeric_limits<type_T>::max())
 				throw ConvertationError("overflow");
 			if (ss.fail() and t == std::numeric_limits<type_T>::min())

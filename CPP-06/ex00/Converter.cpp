@@ -25,6 +25,12 @@ tlucanti::Converter::Converter(const char *_str)
 
 tlucanti::Converter::operator char() const
 {
+	if (_float_special_check<float>() == std::numeric_limits<float>::infinity())
+		throw ConvertationError("overflow");
+	else if (_float_special_check<float>() == -std::numeric_limits<float>::infinity())
+		throw ConvertationError("underflow");
+	else if (_float_special_check<float>() != _float_special_check<float>())
+		throw ConvertationError("impossible");
 	try { return _char_ss_check<char>(); } catch(std::invalid_argument &exc) {}
 	try { return _char_ss_check<int>(); } catch(std::invalid_argument &exc) {}
 	try { return _char_ss_check<float>(); } catch(std::invalid_argument &exc) {}
@@ -34,6 +40,12 @@ tlucanti::Converter::operator char() const
 
 tlucanti::Converter::operator int() const
 {
+	if (_float_special_check<float>() == std::numeric_limits<float>::infinity())
+		throw ConvertationError("overflow");
+	else if (_float_special_check<float>() == -std::numeric_limits<float>::infinity())
+		throw ConvertationError("underflow");
+	else if (_float_special_check<float>() != _float_special_check<float>())
+		throw ConvertationError("impossible");
 	try { return _int_ss_check<int>(); } catch(std::invalid_argument &exc) {}
 	try { return _int_ss_check<float>(); } catch(std::invalid_argument &exc) {}
 	try { return _int_ss_check<double>(); } catch(std::invalid_argument &exc) {}
