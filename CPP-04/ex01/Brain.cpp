@@ -12,9 +12,15 @@
 
 #include "Brain.hpp"
 
-tlucanti::Brain::Brain() {}
+tlucanti::Brain::Brain()
+{
+	std::cout << "brain created\n";
+}
 
-tlucanti::Brain::~Brain() {}
+tlucanti::Brain::~Brain()
+{
+	std::cout << "brain deleted\n";
+}
 
 tlucanti::Brain &
 tlucanti::Brain::operator =(const Brain &cpy)
