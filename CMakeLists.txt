@@ -281,3 +281,9 @@ add_executable(CPP-08-01
 	CPP-08/ex01/defs.h
 	CPP-08/ex01/main.cpp
 )
+
+add_executable(CPP-08-02
+	CPP-08/ex02/MutantStack.hpp
+	CPP-08/ex02/defs.h
+	CPP-08/ex02/main.cpp
+)
