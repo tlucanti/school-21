@@ -14,7 +14,9 @@
 #include <cstdlib>
 #include <ctime>
 #if __cplusplus <= 199911L
-# include <typeinfo>
+typedef std::exception bad_cast;
+#else
+typedef std::bad_cast bad_cast;
 #endif
 
 #include "defs.h"
@@ -72,19 +74,19 @@ namespace tlucanti
 			__UNUSED A &a = dynamic_cast<A &>(p);
 			std::cout << "A ";
 			return ;
-		} catch (std::bad_cast &e) {}
+		} catch (bad_cast &e) {}
 		try
 		{
 			__UNUSED B &b = dynamic_cast<B &>(p);
 			std::cout << "B ";
 			return ;
-		} catch (std::bad_cast &e) {}
+		} catch (bad_cast &e) {}
 		try
 		{
 			__UNUSED C &c = dynamic_cast<C &>(p);
 			std::cout << "C ";
 			return ;
-		} catch (std::bad_cast &e) {}
+		} catch (bad_cast &e) {}
 	}
 }
 
