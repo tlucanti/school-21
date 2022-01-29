@@ -28,7 +28,7 @@ void
 tlucanti::Span::addNumber(int n)
 {
 	if ((int)set.size() >= size)
-		throw std::out_of_range("set is full");
+		throw std::length_error("set is full");
 	if (set.size() == 0)
 	{
 		set.insert(n);

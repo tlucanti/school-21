@@ -31,8 +31,8 @@ namespace tlucanti
 		__WUR int longestSpan() const;
 		void addNumber(int n);
 
-		template<class InputIterator>
-		void addNumber(InputIterator &start, InputIterator &stop)
+		template<typename InputIterator>
+		void addNumber(InputIterator start, InputIterator stop)
 		{
 			for (; start != stop; ++start)
 				addNumber(*start);

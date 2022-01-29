@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kostya <kostya@student.42.fr>              +#+  +:+       +#+         #
+#    By: tlucanti <tlucanti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:54:30 by kostya            #+#    #+#              #
-#    Updated: 2022/01/23 00:29:09 by kostya           ###   ########.fr        #
+#    Updated: 2022/01/29 09:28:46 by tlucanti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
 NAME		=	test
-CXX			=	clang++ -std=c++2a
+CXX			=	clang++ -std=c++98
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2
 CC			=	CC
@@ -24,7 +24,8 @@ SCRS_DIR	=	.
 DEPS_DIR	=	../dep
 # ------------------------------- project sorces -------------------------------
 SRCS		=	\
-				main
+				main	\
+				Span
 
 # ======================= UNCHANGEABLE PART OF MAKEFILE ========================
 # ------------------------------------------------------------------------------
