@@ -13,6 +13,8 @@ school 21 projects
 - MiniTalk
 - Philosophers
 - [Minishell][MINISHELL]
+- CPP Pascine
+- IRC
 
 [MINIRT]: https://github.com/antikostya/ray_tracer
 [MINISHELL]: https://github.com/antikostya/minishell
