@@ -8,7 +8,7 @@ school 21 projects
 - GetNextLine
 - Printf
 - FtServer
-- [MiniRT][MINIRT]
+- MiniRT
 - Inception
 - MiniTalk
 - Philosophers
@@ -16,5 +16,4 @@ school 21 projects
 - CPP Pascine
 - IRC
 
-[MINIRT]: https://github.com/antikostya/ray_tracer
 [MINISHELL]: https://github.com/antikostya/minishell
