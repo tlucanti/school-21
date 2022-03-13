@@ -1,2 +1,3 @@
 *.log
 push_swap_tester
+__pycache__
