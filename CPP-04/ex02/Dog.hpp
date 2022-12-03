@@ -33,7 +33,7 @@ namespace tlucanti
 		void makeSound() const override;
 		std::string &operator [](unsigned short at);
 
-	protected:
+	private:
 		Brain *brain;
 	};
 }
