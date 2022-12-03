@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 all:
-	clang++ -Wall -Wextra -Werror main.cpp -o refs -O2 -std=c++2a
+	clang++ -Wall -Wextra -Werror main.cpp -o refs -O2 -std=c++98
 
 clean:
 

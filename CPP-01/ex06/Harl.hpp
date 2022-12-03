@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Karen.hpp                                          :+:      :+:    :+:   */
+/*   Harl.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 18:54:37 by kostya            #+#    #+#             */
-/*   Updated: 2022/01/06 21:00:03 by kostya           ###   ########.fr       */
+/*   Updated: 2022/01/10 19:52:46 by kostya           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # if __cplusplus <= 199711L
 #  define noexcept
+#  define __FALLTHROUGH __attribute__((fallthrough))
+# else
+#  define __FALLTHROUGH [[fallthrough]]
 # endif
 
 # include <string>
@@ -22,11 +25,12 @@
 
 namespace tlucanti
 {
-	class Karen
+	class Harl
 	{
 	public:
-		Karen();
+		Harl();
 		void	complain(std::string level);
+		static unsigned char hash(const std::string &str);
 
 	private:
 		static void	debug();
@@ -36,8 +40,6 @@ namespace tlucanti
 		static void	invalid_level();
 
 		void (*funcs[255])();
-
-		static unsigned char hash(const std::string &str);
 	};
 }
 

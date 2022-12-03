@@ -11,13 +11,13 @@
 # **************************************************************************** #
 
 # ------------------------------ compiler options ------------------------------
-NAME		=	test
+NAME		=	harlFilter
 CXX			=	clang++ -std=c++2a
 CXXFLAGS	=	-Wall -Wextra -Werror
 CXXOPTIONS	=	-O2
 CC			=	CC
 # ------------------------------- linker options -------------------------------
-LIBRARY		=	
+LIBRARY		=
 OBJS_DIR	=	../obj
 INCLUDE_DIR	=	.
 SCRS_DIR	=	.
@@ -25,7 +25,7 @@ DEPS_DIR	=	../dep
 # ------------------------------- project sorces -------------------------------
 SRCS		=	\
 				main	\
-				Karen
+				Harl
 
 # ======================= UNCHANGEABLE PART OF MAKEFILE ========================
 # ------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ $(NAME):		${OBJS}
 -include ${DEPS}
 
 # ------------------------------------------------------------------------------
-${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp 
+${OBJS_DIR}/%.o: ${SCRS_DIR}/%.cpp
 	@echo [${CC}] Building CXX object $<
 	@${CXX}		${CXXFLAGS} ${CXXOPTIONS} -c -MMD -MT $@ -o $@ $< ${INCLUDE}
 	@mv			${@:.o=.d} ${DEPS_DIR}

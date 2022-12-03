@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Karen.hpp"
+#include "Harl.hpp"
 
 int main()
 {
-    tlucanti::Karen karen;
+    tlucanti::Harl karen;
 
     karen.complain("debug");
     karen.complain("DEBUG");

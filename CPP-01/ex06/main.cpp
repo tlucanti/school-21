@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Karen.hpp"
+#include "Harl.hpp"
 #include <string>
 #include <iostream>
 #include <stdint.h>
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	tlucanti::Karen karen;
+	tlucanti::Harl karen;
 	switch(tlucanti::Pearson64(argv[1]))
 	{
 		case DEBUG_HASH:  karen.complain("debug");

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Karen.cpp                                          :+:      :+:    :+:   */
+/*   Harl.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kostya <kostya@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Karen.hpp"
+#include "Harl.hpp"
 
-tlucanti::Karen::Karen()
+tlucanti::Harl::Harl()
 {
 #if __cplusplus > 199711L
 	for (auto &func : funcs)
@@ -32,33 +32,33 @@ tlucanti::Karen::Karen()
 }
 
 void
-tlucanti::Karen::complain(std::string level)
+tlucanti::Harl::complain(std::string level)
 {
 	(funcs[hash(level)])();
 }
 
 void
-tlucanti::Karen::debug()
+tlucanti::Harl::debug()
 {
 	std::cout << "I love to get extra bacon for my 7XL-double-cheese-triple-"
 		"pickle-special-ketchup burger. I just love it!\n";
 }
 
 void
-tlucanti::Karen::info()
+tlucanti::Harl::info()
 {
 	std::cout << "I cannot believe adding extra bacon cost more money. You "
 		"don’t put enough! If you did I would not have to ask for it!\n";
 }
 
 void
-tlucanti::Karen::invalid_level()
+tlucanti::Harl::invalid_level()
 {
 	std::cout << "Invalid level selected\n";
 }
 
 void
-tlucanti::Karen::warning()
+tlucanti::Harl::warning()
 {
 	std::cout << "I think I deserve to have some extra bacon for free. I’ve "
 		"been coming here for years and you just started working here last "
@@ -66,13 +66,13 @@ tlucanti::Karen::warning()
 }
 
 void
-tlucanti::Karen::error()
+tlucanti::Harl::error()
 {
 	std::cout << "This is unacceptable, I want to speak to the manager now.\n";
 }
 
 unsigned char
-tlucanti::Karen::hash(const std::string &str)
+tlucanti::Harl::hash(const std::string &str)
 {
 	static unsigned char perm_table[] = {
        164, 232,  46, 116, 224, 182, 133, 185,  74, 147, 219, 135,  78,
