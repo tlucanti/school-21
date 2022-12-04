@@ -1,0 +1,37 @@
+
+gdb getflag <<-"EOF"
+start
+set $pc=*main+685
+ni 12
+set $pc=*main+721
+ni 12
+set $pc=*main+757
+ni 12
+set $pc=*main+519
+ni 17
+set $pc=*main+829
+ni 12
+set $pc=*main+865
+ni 12
+set $pc=*main+901
+ni 12
+set $pc=*main+937
+ni 12
+set $pc=*main+973
+ni 12
+set $pc=*main+1009
+ni 12
+set $pc=*main+1045
+ni 12
+set $pc=*main+1081
+ni 12
+set $pc=*main+1117
+ni 12
+set $pc=*main+1150
+ni 12
+set $pc=*main+1183
+ni 12
+quit
+y
+EOF
+
