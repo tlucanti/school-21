@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <cmath>
+#include <complex>
 
 struct Parser {
     std::string inp;
@@ -46,9 +47,8 @@ struct Parser {
         }
     }
 
-    Pair parse_term(size_t &start)
-    {
-        bool was_coeff, was_variable, was_power, waiting_power;
+    Pair parse_term(size_t &start) {
+        bool was_coeff, was_variable, was_power, waiting_power, waiting_var;
         long double coeff = NAN;
         long long int power = -1;
         std::string variable;
@@ -57,6 +57,8 @@ struct Parser {
         was_variable = false;
         was_power = false;
         waiting_power = false;
+        waiting_var = false;
+
         skip_spaces(start);
         coeff = parse_float(start, was_coeff);
         std::cout << "parsed coef " << coeff << std::endl;;
@@ -64,25 +66,36 @@ struct Parser {
         if (was_coeff and start < inp.size() and inp.at(start) == '*') {
             ++start;
             skip_spaces(start);
+            waiting_var = true;
         }
         if (not was_coeff)
             coeff = 1.0L;
         variable = parse_string(start, was_variable);
         std::cout << "parsed var " << variable << std::endl;
-        if (not was_variable)
+        if (not was_variable and waiting_var)
             throw std::invalid_argument("expected variable name");
         skip_spaces(start);
         if (start < inp.size() and inp.at(start) == '^') {
-            ++start;
-            waiting_power = true;
+            if (was_variable) {
+                ++start;
+                waiting_power = true;
+            } else {
+                throw std::invalid_argument("cannot apply power without variable");
+            }
         }
-        power = parse_int(start, was_power);
-        std::cout << "parsed power " << power << std::endl;
-        skip_spaces(start);
-        if (waiting_power && not was_power)
-            throw std::invalid_argument("expected power value");
-        if (not was_power)
-            power = 1;
+        if (waiting_power) {
+            power = parse_int(start, was_power);
+            std::cout << "parsed power " << power << std::endl;
+            skip_spaces(start);
+            if (waiting_power && not was_power)
+                throw std::invalid_argument("expected power value");
+        }
+        if (not was_power) {
+            if (not was_variable)
+                power = 0;
+            else
+                power = 1;
+        }
         return {power, coeff};
     }
 
@@ -161,13 +174,77 @@ public:
     void check()
     {
         for (auto it = powers.rbegin(); it != powers.rend(); ++it) {
-            if (it->first >= 5 and std::abs(it->second) < 1e-10) {
-                throw std::invalid_argument("cannot solve equation of ");
+            if (it->first >= 3 and std::abs(it->second) < 1e-10) {
+                std::stringstream ss;
+                ss << "cannot solve equation of " << it->first << " order";
+                throw std::invalid_argument(ss.str());
             }
         }
     }
 
+    void solve() {
+        long double a, b, c;
+
+        a = powers.at(2);
+        b = powers.at(1);
+        c = powers.at(0);
+        std::complex<long double> disk;
+        disk = b * b - 4 * a * c;
+        ld_disk = disk.real();
+        disk = std::sqrt(disk);
+        first = (-b + disk) / (2 * a);
+        second = (-b - disk) / (2 * a);
+    }
+
     const std::map<long long int, long double> &powers;
+    std::complex<long double> first;
+    std::complex<long double> second;
+    long double ld_disk;
+};
+
+class Printer
+{
+    Printer(std::complex<long double> _x1, std::complex<long double> _x2, long double _disk)
+        : x1(_x1), x2(_x2), disk(_disk)
+    {
+        std::stringstream x1ss, x2ss, diskss;
+
+        if (std::abs(disk) < EPS) {
+            is_equal_roots = true;
+            is_complex_roots = false;
+        } else if (disk < 0) {
+            is_equal_roots = false;
+            is_complex_roots = true;
+        } else {
+            is_equal_roots = false;
+            is_complex_roots = false;
+        }
+
+        if (is_complex_roots) {
+            x1ss << ""
+        }
+
+    }
+
+    void print_disk()
+    {
+
+    }
+
+    void print_roots()
+    {
+
+    }
+
+    long double EPS = 1e-6;
+    std::string disk_str;
+    std::string x1_str;
+    std::string x2_str;
+    std::complex<long double> x1, x2;
+    long double disk;
+    bool is_complex_roots;
+    bool is_rational_roots;
+    bool is_equal_roots;
 };
 
 int main(int argc, char **argv)
@@ -184,9 +261,14 @@ int main(int argc, char **argv)
         for (const auto i : p.powers) {
             std::cout << i.second << "x^" << i.first << " + ";
         }
+        std::cout << std::endl;
         Solver s(p.powers);
         s.check();
         s.solve();
+        Printer pr(s.first, s.second, s.ld_disk);
+        pr.print_disk()
+        pr.print_roots();
+        std::cout << s.first << ' ' << s.second << std::endl;
     } catch (std::invalid_argument &e) {
         std::cout << e.what() << std::endl;
         return 1;
