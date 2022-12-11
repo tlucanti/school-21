@@ -3,10 +3,13 @@
 #include <map>
 #include <cmath>
 #include <complex>
+#include <numeric>
+#include <ranges>
 
 struct Parser {
     std::string inp;
     std::map<long long int, long double> powers;
+    std::string var;
 
     struct Pair {
         long long int power;
@@ -74,6 +77,7 @@ struct Parser {
         std::cout << "parsed var " << variable << std::endl;
         if (not was_variable and waiting_var)
             throw std::invalid_argument("expected variable name");
+        var = variable;
         skip_spaces(start);
         if (start < inp.size() and inp.at(start) == '^') {
             if (was_variable) {
@@ -192,27 +196,29 @@ public:
         disk = b * b - 4 * a * c;
         ld_disk = disk.real();
         disk = std::sqrt(disk);
-        first = (-b + disk) / (2 * a);
-        second = (-b - disk) / (2 * a);
+        first = -b + disk;
+        second = -b - disk;
+        denumenator = 2 * a;
     }
 
     const std::map<long long int, long double> &powers;
     std::complex<long double> first;
     std::complex<long double> second;
+    long double denumenator;
     long double ld_disk;
 };
 
 class Printer
 {
-    Printer(std::complex<long double> _x1, std::complex<long double> _x2, long double _disk)
-        : x1(_x1), x2(_x2), disk(_disk)
-    {
-        std::stringstream x1ss, x2ss, diskss;
+public:
 
-        if (std::abs(disk) < EPS) {
+    Printer(std::complex<long double> _x1, std::complex<long double> _x2, long double _disk, long double _den)
+    {
+
+        if (std::abs(_disk) < EPS) {
             is_equal_roots = true;
             is_complex_roots = false;
-        } else if (disk < 0) {
+        } else if (_disk < 0) {
             is_equal_roots = false;
             is_complex_roots = true;
         } else {
@@ -221,27 +227,78 @@ class Printer
         }
 
         if (is_complex_roots) {
-            x1ss << ""
+            x1_str = comp2str(_x1, _den);
+            x2_str = comp2str(_x2, _den);
+        } else if (is_equal_roots) {
+            x1_str = rational2str(_x1.real(), _den);
+        } else {
+            x1_str = real2str(_x1.real(), _den);
+            x2_str = real2str(_x2.real(), _den);
         }
-
     }
 
     void print_disk()
     {
-
+        std::cout << "Discriminant: " << disk_str << std::endl;
     }
 
     void print_roots()
     {
+        if (is_equal_roots) {
+            std::cout << "single root: " << x1_str << std::endl;
+        } else {
+            std::cout << "first root: " << x1_str << std::endl;
+            std::cout << "second root: " << x2_str << std::endl;
+        }
+    }
 
+    std::string comp2str(std::complex<long double> x, long double _den)
+    {
+        if (std::abs(x.imag()) > EPS and std::abs(x.real()) > EPS) {
+            return "(" + real2str(x.real(), _den) + " + " + real2str(x.imag(), _den) + "j)";
+        } else if (std::abs(x.real()) > EPS) {
+            return real2str(x.real(), _den);
+        } else if (std::abs(x.imag()) > EPS) {
+            return real2str(x.imag(), _den) + "j";
+        } else {
+            return "0";
+        }
+    }
+
+    std::string real2str(long double x, long double _den)
+    {
+        if (std::abs(x) < EPS)
+            return "0";
+        if (std::abs(std::round(x) - x) < EPS and
+            std::abs(std::round(_den) - _den) < EPS) {
+            return rational2str(x, _den);
+        } else {
+            std::stringstream ss;
+            ss << (x / _den);
+            return ss.str();
+        }
+    }
+
+    std::string rational2str(long double _x, long double _den)
+    {
+        auto x = static_cast<long long int>(std::round(_x));
+        auto den = static_cast<long long int>(std::round(_den));
+        long long int gcd = std::gcd(x, den);
+        std::stringstream ss;
+
+        x /= gcd;
+        den /= gcd;
+        if (den == 1 or x == 0)
+            ss << x;
+        else
+            ss << x << '/' << den;
+        return ss.str();
     }
 
     long double EPS = 1e-6;
     std::string disk_str;
     std::string x1_str;
     std::string x2_str;
-    std::complex<long double> x1, x2;
-    long double disk;
     bool is_complex_roots;
     bool is_rational_roots;
     bool is_equal_roots;
@@ -258,15 +315,25 @@ int main(int argc, char **argv)
     Parser p(argv[1]);
     try {
         p.parse();
+        if (p.powers.empty()) {
+            std::cout << "empty request";
+            return 0;
+        }
+        std::cout << p.powers.begin()->second << p.var << '^' << p.powers.begin()->first;
+        for (auto & power : std::ranges::reverse_view(p.powers)) {
+            cout << power.first;
+        }
         for (const auto i : p.powers) {
+            std::cout << ' ';
+            if (i.first)
             std::cout << i.second << "x^" << i.first << " + ";
         }
         std::cout << std::endl;
         Solver s(p.powers);
         s.check();
         s.solve();
-        Printer pr(s.first, s.second, s.ld_disk);
-        pr.print_disk()
+        Printer pr(s.first, s.second, s.ld_disk, s.denumenator);
+        pr.print_disk();
         pr.print_roots();
         std::cout << s.first << ' ' << s.second << std::endl;
     } catch (std::invalid_argument &e) {
