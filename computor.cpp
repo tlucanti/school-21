@@ -4,7 +4,9 @@
 #include <cmath>
 #include <complex>
 #include <numeric>
-#include <ranges>
+
+inline constexpr long double EPS = 1e-6;
+int VERBOSE = 0;
 
 struct Parser {
     std::string inp;
@@ -27,11 +29,12 @@ struct Parser {
 
         while (start < inp.size()) {
             skip_spaces(start);
-            if (start < inp.size() and inp.at(start) == '+')
-                ++start;
-            else if (start < inp.size() and inp.at(start) == '-') {
+            negative = false;
+            if (start < inp.size() and inp.at(start) == '-') {
                 ++start;
                 negative = true;
+            } else if (start < inp.size() and inp.at(start) == '+') {
+                ++start;
             }
             skip_spaces(start);
             Pair p = parse_term(start);
@@ -64,7 +67,9 @@ struct Parser {
 
         skip_spaces(start);
         coeff = parse_float(start, was_coeff);
-        std::cout << "parsed coef " << coeff << std::endl;;
+        if (VERBOSE) {
+            std::cout << "parsed coef " << coeff << std::endl;;
+        }
         skip_spaces(start);
         if (was_coeff and start < inp.size() and inp.at(start) == '*') {
             ++start;
@@ -74,10 +79,19 @@ struct Parser {
         if (not was_coeff)
             coeff = 1.0L;
         variable = parse_string(start, was_variable);
-        std::cout << "parsed var " << variable << std::endl;
+        if (VERBOSE) {
+            std::cout << "parsed var " << variable << std::endl;
+        }
         if (not was_variable and waiting_var)
             throw std::invalid_argument("expected variable name");
-        var = variable;
+        if (was_variable) {
+            if (var.empty()) {
+                var = variable;
+            } else if (var != variable) {
+                throw std::invalid_argument("expected variable name `" + var +
+                    "`, got `" + variable + "`");
+            }
+        }
         skip_spaces(start);
         if (start < inp.size() and inp.at(start) == '^') {
             if (was_variable) {
@@ -89,7 +103,9 @@ struct Parser {
         }
         if (waiting_power) {
             power = parse_int(start, was_power);
-            std::cout << "parsed power " << power << std::endl;
+            if (VERBOSE) {
+                std::cout << "parsed power " << power << std::endl;
+            }
             skip_spaces(start);
             if (waiting_power && not was_power)
                 throw std::invalid_argument("expected power value");
@@ -214,7 +230,6 @@ public:
 
     Printer(std::complex<long double> _x1, std::complex<long double> _x2, long double _disk, long double _den)
     {
-
         if (std::abs(_disk) < EPS) {
             is_equal_roots = true;
             is_complex_roots = false;
@@ -226,11 +241,12 @@ public:
             is_complex_roots = false;
         }
 
+        disk_str = real2str(_disk, 1);
         if (is_complex_roots) {
             x1_str = comp2str(_x1, _den);
             x2_str = comp2str(_x2, _den);
         } else if (is_equal_roots) {
-            x1_str = rational2str(_x1.real(), _den);
+            x1_str = real2str(_x1.real(), _den);
         } else {
             x1_str = real2str(_x1.real(), _den);
             x2_str = real2str(_x2.real(), _den);
@@ -252,7 +268,7 @@ public:
         }
     }
 
-    std::string comp2str(std::complex<long double> x, long double _den)
+    static std::string comp2str(std::complex<long double> x, long double _den)
     {
         if (std::abs(x.imag()) > EPS and std::abs(x.real()) > EPS) {
             return "(" + real2str(x.real(), _den) + " + " + real2str(x.imag(), _den) + "j)";
@@ -265,8 +281,12 @@ public:
         }
     }
 
-    std::string real2str(long double x, long double _den)
+    static std::string real2str(long double x, long double _den)
     {
+        if (_den < 0) {
+            x = -x;
+            _den = -_den;
+        }
         if (std::abs(x) < EPS)
             return "0";
         if (std::abs(std::round(x) - x) < EPS and
@@ -279,7 +299,7 @@ public:
         }
     }
 
-    std::string rational2str(long double _x, long double _den)
+    static std::string rational2str(long double _x, long double _den)
     {
         auto x = static_cast<long long int>(std::round(_x));
         auto den = static_cast<long long int>(std::round(_den));
@@ -295,7 +315,6 @@ public:
         return ss.str();
     }
 
-    long double EPS = 1e-6;
     std::string disk_str;
     std::string x1_str;
     std::string x2_str;
@@ -303,6 +322,45 @@ public:
     bool is_rational_roots;
     bool is_equal_roots;
 };
+
+void print_reduced_form(long double a, long double b, long double c, std::string var)
+{
+    if (var.empty()) {
+        var = "x";
+    }
+    std::cout << "Reduced form: ";
+    std::cout << Printer::real2str(a, 1) << '*' << var << "^2 ";
+    if (b < 0) {
+        std::cout << "- ";
+    } else {
+        std::cout << "+ ";
+    }
+    std::cout << Printer::real2str(std::abs(b), 1) << '*' << var << "^1 ";
+    if (c < 0) {
+        std::cout << "- ";
+    } else {
+        std::cout << "+ ";
+    }
+    std::cout << Printer::real2str(std::abs(c), 1) << '*' << var << "^0 = 0" << std::endl;
+}
+
+bool check_singular(long double a, long double b, long double c)
+{
+    if (std::abs(a) < EPS) {
+        if (std::abs(b) < EPS) {
+            if (std::abs(c) < EPS) {
+                std::cout << "any number is a sulution\n";
+            } else {
+                std::cout << "no solutions exists\n";
+            }
+        } else {
+            std::cout << "Linear equation\nsingle root: "
+                << Printer::real2str(-c, b) << std::endl;
+        }
+        return true;
+    }
+    return false;
+}
 
 int main(int argc, char **argv)
 {
@@ -316,26 +374,21 @@ int main(int argc, char **argv)
     try {
         p.parse();
         if (p.powers.empty()) {
-            std::cout << "empty request";
+            throw std::invalid_argument("empty request");
             return 0;
         }
-        std::cout << p.powers.begin()->second << p.var << '^' << p.powers.begin()->first;
-        for (auto & power : std::ranges::reverse_view(p.powers)) {
-            cout << power.first;
+        if (p.powers.rbegin()->first > 2 and std::abs(p.powers.rbegin()->second) > EPS) {
+            throw std::invalid_argument("only 2nd or lower degree equations are supported");
         }
-        for (const auto i : p.powers) {
-            std::cout << ' ';
-            if (i.first)
-            std::cout << i.second << "x^" << i.first << " + ";
-        }
-        std::cout << std::endl;
+        print_reduced_form(p.powers[2], p.powers[1], p.powers[0], p.var);
+        if (check_singular(p.powers[2], p.powers[1], p.powers[0]))
+            return 0;
         Solver s(p.powers);
         s.check();
         s.solve();
         Printer pr(s.first, s.second, s.ld_disk, s.denumenator);
         pr.print_disk();
         pr.print_roots();
-        std::cout << s.first << ' ' << s.second << std::endl;
     } catch (std::invalid_argument &e) {
         std::cout << e.what() << std::endl;
         return 1;
