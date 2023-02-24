@@ -13,45 +13,60 @@ class Astar():
         self.h = len(mat)
         self.complete_mat = []
         self.actions = []
+        self.mat = mat
         for y in range(self.h):
-            nxt = list(range(y * self.h, (y + 1) * self.h))
+            nxt = list(range(y * self.h + 1, (y + 1) * self.h + 1))
             self.complete_mat.append(nxt)
+        self.complete_mat[-1][-1] = 0
+
+    def find_start(self):
+        for y in range(self.h):
+            for x in range(self.h):
+                if self.mat[y][x] == 0:
+                    return x, y
+        raise NPuzzleError('board dont have empty (0) piece')
 
     def get_score(self, mat):
         score = 0
-        for y in range(h):
-            for x in range(h):
+        for y in range(self.h):
+            for x in range(self.h):
                 score += mat[y][x] != self.complete_mat[y][x]
         return score
 
-    def solve():
-        pass
+    def solve(self):
+        x, y = self.find_start()
+        if self.get_score(self.mat) == 0:
+            return []
+        self.dfs(x, y)
+        return self.actions
 
     def dfs(self, x, y):
+        print(x, y)
+        mat = self.mat
         if x > 0:
             mat[y][x], mat[y][x - 1] = mat[y][x - 1], mat[y][x]
-            left = self.score(mat)
+            left = self.get_score(mat)
             mat[y][x], mat[y][x - 1] = mat[y][x - 1], mat[y][x]
         else:
             left  = self.h ** 2
 
-        if x < h - 1:
+        if x < self.h - 1:
             mat[y][x], mat[y][x + 1] = mat[y][x + 1], mat[y][x]
-            right = self.score(mat)
+            right = self.get_score(mat)
             mat[y][x], mat[y][x + 1] = mat[y][x + 1], mat[y][x]
         else:
             right = self.h ** 2
 
         if y > 0:
             mat[y][x], mat[y - 1][x] = mat[y - 1][x], mat[y][x]
-            down = self.score(mat)
+            down = self.get_score(mat)
             mat[y][x], mat[y - 1][x] = mat[y - 1][x], mat[y][x]
         else:
             down = self.h ** 2
 
-        if y < h - 1:
+        if y < self.h - 1:
             mat[y][x], mat[y + 1][x] = mat[y + 1][x], mat[y][x]
-            up = self.score(mat)
+            up = self.get_score(mat)
             mat[y][x], mat[y + 1][x] = mat[y + 1][x], mat[y][x]
         else:
             up = self.h ** 2
@@ -87,20 +102,15 @@ def input_mat():
     mat.append(inp())
     for i in range(len(mat[0]) - 1):
         mat.append(inp())
-        if len(mat[-1]) != lem(mat[0]):
+        if len(mat[-1]) != len(mat[0]):
             raise NPuzzleError('invalid board')
     return mat
 
-def find_start(mat):
-    for y in range(len(mat)):
-        for x in range(len(mat)):
-            if mat[x][y] == 0:
-                return x, y
-    raise NPuzzleError('board dont have empty (0) piece')
-
 def main():
     mat = input_mat()
-    actions = astar(mat)
+    astar = Astar(mat)
+    actions = astar.solve()
+    print(actions)
 
 if __name__ == '__main__':
     main()
