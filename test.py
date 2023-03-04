@@ -7,7 +7,7 @@ for s in range(2, 10):
         mat = gen.make_matrix_puzzle(s, True, i)
         print(*mat, sep='\n')
         solver = npuzzle.Astar(mat)
-        ans = solver.solve()
+        ans = solver.solve(solver.Euristics.Type.INCORRECT, solver.Euristics.Scheduler.FIRST_FIT)
         print('total states checked:', solver.iterations)
         print('answer length:', len(ans))
         print(ans)
