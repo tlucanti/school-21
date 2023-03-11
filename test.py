@@ -1,19 +1,25 @@
 
 import npuzzle
 import gen
+import random
 
-for s in range(2, 10):
-    for i in range(100):
-        mat = gen.make_matrix_puzzle(s, True, i)
-        print(*mat, sep='\n')
-        solver = npuzzle.Astar(mat)
-        ans = solver.solve(solver.Euristics.Type.INCORRECT, solver.Euristics.Scheduler.FIRST_FIT)
-        print('total states checked:', solver.iterations)
-        print('answer length:', len(ans))
-        print(ans)
+def test():
+    for s in range(2, 10):
+        for i in range(100):
+            mat = gen.make_matrix_puzzle(s, True, i)
+            solver = npuzzle.Astar(mat)
+            print(*mat, sep='\n')
+            print('target state')
+            print(*solver.target, sep='\n')
+            ans = solver.solve(solver.Euristics.Type.MANHATTAN, solver.Euristics.Scheduler.ROUND_ROBIN)
+            print('total states checked:', solver.iterations)
+            print('answer length:', len(ans))
+            print(ans)
 
-        print()
-        print()
+            print()
+            print()
 
 
-
+if __name__ == '__main__':
+    random.seed(1)
+    test()

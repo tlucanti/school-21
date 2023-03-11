@@ -8,24 +8,38 @@ class Astar():
 
     class Euristics():
         class Type():
-            INCORRECT = 0x1
-            MANHATTAN = 0x2
-            EUCLEDUAN = 0x3
+            class INCORRECT(): pass
+            class MANHATTAN(): pass
+            class EUCLEDUAN(): pass
 
         class Scheduler():
-            FIRST_FIT = 0x1
-            RANDOM = 0x2
-            ROUND_ROBIN = 0x3
+            class FIRST_FIT(): pass
+            class RANDOM(): pass
+            class ROUND_ROBIN(): pass
 
-    LEFT = 0x1
-    RIGHT = 0x2
-    DOWN = 0x3
-    UP = 0x4
+    class Direction():
+        def __init__(self, value, name):
+            self.value = value
+            self.name = name
+
+        def __repr__(self):
+            return self.name
+
+        def __eq__(self, other):
+            return self.value == other.value
+
+        def __ne__(self, other):
+            return self.value != other.value
+
+    LEFT = Direction(0x1, 'left')
+    RIGHT = Direction(0x2, 'right')
+    UP = Direction(0x3, 'up')
+    DOWN = Direction(0x4, 'down')
 
     def __init__(self, mat):
         self.iterations = 0
         self.h = len(mat)
-        self.complete_mat = gen.make_matrix_goal(self.h)
+        self.target = gen.make_matrix_goal(self.h)
         self.actions = []
         self.mat = mat
         self.rr_counter = -1
@@ -43,25 +57,25 @@ class Astar():
         remap_table_y = [0] * (self.h * self.h)
         for y in range(self.h):
             for x in range(self.h):
-                expected_key = self.complete_mat[y][x]
+                expected_key = self.target[y][x]
                 remap_table_y[expected_key] = y
                 remap_table_x[expected_key] = x
         return remap_table_y, remap_table_x
 
     def init_score_incorrect(self, mat):
-        score_table = [[0] * self.h for _ in range(h)]
+        score_table = [[0] * self.h for _ in range(self.h)]
         score = 0
         for y in range(self.h):
             for x in range(self.h):
                 if mat[y][x] == 0:
                     continue
-                score_val = mat[y][x] != self.complete_mat[y][x]
+                score_val = mat[y][x] != self.target[y][x]
                 score_table[y][x] = score_val
                 score += score_val
         return score_table, score
 
     def init_score_manhattan(self, mat):
-        score_table = [[0] * self.h for _ in range(h)]
+        score_table = [[0] * self.h for _ in range(self.h)]
         score = 0
         remap_table_y, remap_table_x = self.remap_table
         for y in range(self.h):
@@ -93,25 +107,48 @@ class Astar():
         return score_table, score_val
 
     def score_diff_incorrect(self, x0, y0, x1, y1):
-        mat[y0][x0] != self.complete_map[y1][x1]
+        before = self.mat[y1][x1] != self.target[y1][x1]
+        after = self.mat[y1][x1] != self.target[y0][x0]
+
+        return after - before
 
     def score_diff_manhattan(self, x0, y0, x1, y1):
-        pass
+        remap_table_y, remap_table_x = self.remap_table
+        change_key = self.mat[y1][x1]
+        before_y = abs(remap_table_y[change_key] - y1)
+        before_x = abs(remap_table_x[change_key] - x1)
+        after_y = abs(remap_table_y[change_key] - y0)
+        after_x = abs(remap_table_x[change_key] - x0)
+
+        before = before_x + before_y
+        after = after_x + after_y
+        return after - before
 
     def score_diff_eucleduan(self, x0, y0, x1, y1):
-        pass
+        remap_table_y, remap_table_x = self.remap_table
+        change_key = self.mat[y1][x1]
+        before_y = abs(remap_table_y[change_key] - y1)
+        before_x = abs(remap_table_x[change_key] - x1)
+        after_y = abs(remap_table_y[change_key] - y0)
+        after_x = abs(remap_table_x[change_key] - x0)
 
-    def chose_score_first(self, arr):
+        before = before_x + before_y
+        adter = after_x + adter_y
+        return after - before
+
+    def choice_score_first(self, arr):
         return arr[0]
 
-    def chose_score_random(self, arr):
+    def choice_score_random(self, arr):
         return random.choice(arr)
 
-    def schose_score_rr(self, arr):
+    def choice_score_rr(self, arr):
         self.rr_counter += 1
         return arr[self.rr_counter % len(arr)]
 
     def solve(self, euristic_type, euristic_sceduler):
+        if not self.solvable():
+            raise self.NPuzzleError('unsolvable')
         self.euristic_type = euristic_type
         self.euristic_sceduler = euristic_sceduler
 
@@ -128,42 +165,43 @@ class Astar():
             raise NPuzzleError('unknown euristic type')
 
         if self.euristic_sceduler == self.Euristics.Scheduler.FIRST_FIT:
-            self.chose_score = self.chose_score_first
+            self.choice_score = self.choice_score_first
         elif self.euristic_sceduler == self.Euristics.Scheduler.RANDOM:
-            self.chose_score = self.chose_score_random
+            self.choice_score = self.choice_score_random
         elif self.euristic_sceduler == self.Euristics.Scheduler.ROUND_ROBIN:
-            self.chose_score = self.chose_score_rr
+            self.choice_score = self.choice_score_rr
         else:
             raise NPuzzleError('unknown euristic sceduler')
 
         x, y = self.find_start()
-        self.score_table, self.score = self.init_score_table()
-        if self.current == 0:
+        self.score_table, self.score = self.init_score_table(self.mat)
+        if self.score == 0:
             return []
         self.dfs(x, y)
         return self.actions
 
     def dfs(self, x, y):
-
         mat = self.mat
-        avaliable = []
-        while self.current_score != 0:
+        while self.score != 0:
+            print(self.score)
+            avaliable = []
             if x > 0:
-                diff = self.score_diff(self.LEFT)
+                diff = self.score_diff(x, y, x - 1, y)
                 avaliable.append((self.LEFT, diff))
             if x < self.h - 1:
-                diff = self.score_diff(self.RIGHT)
+                diff = self.score_diff(x, y, x + 1, y)
                 avaliable.append((self.RIGHT, diff))
             if y > 0:
-                diff = self.score_diff(self.DOWN)
+                diff = self.score_diff(x, y, x, y - 1)
                 avaliable.append((self.DOWN, diff))
             if y < self.h - 1:
-                diff = self.score_diff(self.UP)
+                diff = self.score_diff(x, y, x, y + 1)
                 avaliable.append((self.UP, diff))
 
             mn = min(avaliable, key=lambda x: x[1])
-            avaliable = list(filter(lambda x: x[1] == mn, avaliable))
-            step = self.chose_step(avaliable)
+            avaliable = list(filter(lambda x: x[1] == mn[1], avaliable))
+            step = self.choice_score(avaliable)
+            print(step)
             if step[0] == self.LEFT:
                 mat[y][x], mat[y][x - 1] = mat[y][x - 1], mat[y][x]
                 x = x - 1
@@ -179,8 +217,39 @@ class Astar():
             else:
                 raise RuntimeError()
             self.actions.append(step[0])
-            self.current_score += diff
+            self.score += step[1]
+            if len(self.actions) > 10:
+                raise RuntimeError()
 
+    def solvable(self):
+        ans = 0
+        remap_table = [0] * (self.h ** 2)
+        i = 0
+        for y in range(self.h):
+            for x in range(self.h):
+                i += 1
+                val = self.target[y][x] - 1
+                remap_table[val] = i
+        remap_table[self.target[-1][-1] - 1] = 0
+        mat = []
+        for y in range(self.h):
+            for x in range(self.h):
+                val = self.mat[y][x] - 1
+                mat.append(remap_table[val])
+                if remap_table[val] == 0:
+                    ans += y + 1
+        print(mat)
+        print(remap_table)
+        s = len(remap_table)
+        for i in range(s):
+            if mat[i] == 0:
+                continue
+            for j in range(i + 1, s):
+                if mat[j] == 0:
+                    continue
+                if mat[i] > mat[j]:
+                    ans += 1
+        return ans % 2 == 0
 
 def inp():
     return list(map(int, input().split()))
@@ -195,6 +264,7 @@ def input_mat():
     return mat
 
 def main():
+    print('>>>')
     mat = input_mat()
     astar = Astar(mat)
     actions = astar.solve()
