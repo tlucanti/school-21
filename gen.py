@@ -4,6 +4,17 @@ import sys
 import argparse
 import random
 
+
+def gen_target(h):
+    target = [[0] * h for i in range(h)]
+    i = 0
+    for y in range(h):
+        for x in range(h):
+            i += 1
+            target[y][x] = i
+    target[-1][-1] = 0
+    return target
+
 def make_puzzle(s, solvable, iterations):
 	def swap_empty(p):
 		idx = p.index(0)
@@ -20,7 +31,8 @@ def make_puzzle(s, solvable, iterations):
 		p[idx] = p[swi]
 		p[swi] = 0
 
-	p = make_goal(s)
+	#p = make_goal(s)
+	p = gen_target(s)
 	for i in range(iterations):
 		swap_empty(p)
 

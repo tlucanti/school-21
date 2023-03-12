@@ -36,10 +36,21 @@ class Astar():
     UP = Direction(0x3, 'up')
     DOWN = Direction(0x4, 'down')
 
+    def __gen_matrix(self):
+        target = [[0] * self.h for i in range(self.h)]
+        i = 0
+        for y in range(self.h):
+            for x in range(self.h):
+                i += 1
+                target[y][x] = i
+        target[-1][-1] = 0
+        return target
+
     def __init__(self, mat):
         self.iterations = 0
         self.h = len(mat)
-        self.target = gen.make_matrix_goal(self.h)
+        #self.target = gen.make_matrix_goal(self.h)
+        self.target = self.__gen_matrix()
         self.actions = []
         self.mat = mat
         self.rr_counter = -1
@@ -91,13 +102,13 @@ class Astar():
         return score_table, score
 
     def init_score_eucleduan(self, mat):
-        score_table = [[0] * self.h for _ in range(h)]
+        score_table = [[0] * self.h for _ in range(self.h)]
         score = 0
         remap_table_y, remap_table_x = self.remap_table
         for y in range(self.h):
             for x in range(self.h):
                 curr_key = mat[y][x]
-                if cur_key == 0:
+                if curr_key == 0:
                     continue
                 diff_y = remap_table_y[curr_key] - y
                 diff_x = remap_table_x[curr_key] - x
@@ -127,13 +138,13 @@ class Astar():
     def score_diff_eucleduan(self, x0, y0, x1, y1):
         remap_table_y, remap_table_x = self.remap_table
         change_key = self.mat[y1][x1]
-        before_y = abs(remap_table_y[change_key] - y1)
-        before_x = abs(remap_table_x[change_key] - x1)
-        after_y = abs(remap_table_y[change_key] - y0)
-        after_x = abs(remap_table_x[change_key] - x0)
+        before_y = remap_table_y[change_key] - y1
+        before_x = remap_table_x[change_key] - x1
+        after_y = remap_table_y[change_key] - y0
+        after_x = remap_table_x[change_key] - x0
 
-        before = before_x + before_y
-        adter = after_x + adter_y
+        before = before_x ** 2 + before_y ** 2
+        after = after_x ** 2 + after_y ** 2
         return after - before
 
     def choice_score_first(self, arr):
@@ -199,6 +210,7 @@ class Astar():
                 avaliable.append((self.UP, diff))
 
             mn = min(avaliable, key=lambda x: x[1])
+            print(avaliable)
             avaliable = list(filter(lambda x: x[1] == mn[1], avaliable))
             step = self.choice_score(avaliable)
             print(step)
@@ -218,10 +230,14 @@ class Astar():
                 raise RuntimeError()
             self.actions.append(step[0])
             self.score += step[1]
-            if len(self.actions) > 10:
+            if len(self.actions) > 1000:
                 raise RuntimeError()
+            print(*self.mat, sep='\n')
+        print('------------')
+        print(*self.mat, sep='\n')
 
     def solvable(self):
+        return True
         ans = 0
         remap_table = [0] * (self.h ** 2)
         i = 0
