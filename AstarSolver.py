@@ -22,6 +22,7 @@ class AstarSolver:
     RIGHT = Direction(0x2, 'right')
     UP = Direction(0x3, 'up')
     DOWN = Direction(0x4, 'down')
+    NULL = Direction(-1, '')
 
     def __init__(self, mat):
         self.iterations = 0
@@ -31,6 +32,18 @@ class AstarSolver:
         self.mat = mat
         self.rr_counter = -1
         self.remap_table = self.__get_remap_table()
+        if self.h == 1:
+            self.dfs_depth = 0
+        elif self.h == 2:
+            self.dfs_depth = 1
+        elif self.h == 3:
+            self.dfs_depth = 9
+        elif self.h == 4:
+            self.dfs_depth = 13
+        elif self.h == 5:
+            self.dfs_depth = 13
+        else:
+            self.dfs_depth = 13
 
     def __find_start(self):
         for y in range(self.h):
@@ -49,7 +62,7 @@ class AstarSolver:
                 remap_table_x[expected_key] = x
         return remap_table_y, remap_table_x
 
-    def _init_score_incorrect(self, mat):
+    def __init_score_incorrect(self, mat):
         score_table = [[0] * self.h for _ in range(self.h)]
         score = 0
         for y in range(self.h):
@@ -169,48 +182,81 @@ class AstarSolver:
         self.answer_length = len(self.actions)
         return self.actions
 
+    def __swap(self, x0, y0, x1, y1):
+        self.mat[y0][x0], self.mat[y1][x1] = self.mat[y1][x1], self.mat[y0][x0]
+
+    def __dfs(self, x, y, actions, depth, diff_orig):
+        if depth == 0 or self.score + diff_orig == 0:
+            self.acs.append((actions.copy(), diff_orig))
+            return
+        if x > 0 and actions[-1] != self.RIGHT:
+            diff = diff_orig + self._score_diff(x, y, x - 1, y)
+            actions.append(self.LEFT)
+            self.__swap(x, y, x - 1, y)
+            self.__dfs(x - 1, y, actions, depth - 1, diff)
+            self.__swap(x, y, x - 1, y)
+            actions.pop()
+        if x < self.h - 1 and actions[-1] != self.LEFT:
+            diff = diff_orig + self._score_diff(x, y, x + 1, y)
+            actions.append(self.RIGHT)
+            self.__swap(x, y, x + 1, y)
+            self.__dfs(x + 1, y, actions, depth - 1, diff)
+            self.__swap(x, y, x + 1, y)
+            actions.pop()
+        if y > 0 and actions[-1] != self.DOWN:
+            diff = diff_orig + self._score_diff(x, y, x, y - 1)
+            actions.append(self.UP)
+            self.__swap(x, y, x, y - 1)
+            self.__dfs(x, y - 1, actions, depth - 1, diff)
+            self.__swap(x, y, x, y - 1)
+            actions.pop()
+        if y < self.h - 1 and actions[-1] != self.UP:
+            diff = diff_orig + self._score_diff(x, y, x, y + 1)
+            actions.append(self.DOWN)
+            self.__swap(x, y, x, y + 1)
+            self.__dfs(x, y + 1, actions, depth - 1, diff)
+            self.__swap(x, y, x, y + 1)
+            actions.pop()
+
+    def __apply_steps(self, actions, x, y):
+        mat = self.mat
+        for step in actions:
+            if step == self.LEFT:
+                mat[y][x], mat[y][x - 1] = mat[y][x - 1], mat[y][x]
+                x = x - 1
+            elif step == self.RIGHT:
+                mat[y][x], mat[y][x + 1] = mat[y][x + 1], mat[y][x]
+                x = x + 1
+            elif step == self.UP:
+                mat[y][x], mat[y - 1][x] = mat[y - 1][x], mat[y][x]
+                y = y - 1
+            elif step == self.DOWN:
+                mat[y][x], mat[y + 1][x] = mat[y + 1][x], mat[y][x]
+                y = y + 1
+            elif step == self.NULL:
+                continue
+            else:
+                raise RuntimeError()
+        return x, y
+
     def _dfs(self, x, y):
         mat = self.mat
         while self.score != 0:
-            print(self.score)
-            avaliable = []
-            if x > 0:
-                diff = self._score_diff(x, y, x - 1, y)
-                avaliable.append((self.LEFT, diff))
-            if x < self.h - 1:
-                diff = self._score_diff(x, y, x + 1, y)
-                avaliable.append((self.RIGHT, diff))
-            if y > 0:
-                diff = self._score_diff(x, y, x, y - 1)
-                avaliable.append((self.DOWN, diff))
-            if y < self.h - 1:
-                diff = self._score_diff(x, y, x, y + 1)
-                avaliable.append((self.UP, diff))
+            print('===== score', self.score)
+            self.acs = []
+            self.__dfs(x, y, [self.NULL], self.dfs_depth, 0)
 
-            if random.randint(1, 3) != 1:
-                mn = min(avaliable, key=lambda x: x[1])
-                print(avaliable)
-                avaliable = list(filter(lambda x: x[1] == mn[1], avaliable))
+            avaliable = self.acs
+            mn = min(avaliable, key=lambda x: x[1])
+            #print(avaliable)
+            avaliable = list(filter(lambda x: x[1] == mn[1], avaliable))
             step = self._choice_score(avaliable)
             print(step)
-            if step[0] == self.LEFT:
-                mat[y][x], mat[y][x - 1] = mat[y][x - 1], mat[y][x]
-                x = x - 1
-            elif step[0] == self.RIGHT:
-                mat[y][x], mat[y][x + 1] = mat[y][x + 1], mat[y][x]
-                x = x + 1
-            elif step[0] == self.DOWN:
-                mat[y][x], mat[y - 1][x] = mat[y - 1][x], mat[y][x]
-                y = y - 1
-            elif step[0] == self.UP:
-                mat[y][x], mat[y + 1][x] = mat[y + 1][x], mat[y][x]
-                y = y + 1
-            else:
-                raise RuntimeError()
-            self.actions.append(step[0])
+            x, y = self.__apply_steps(step[0], x, y)
+            self.actions += step[0]
             self.score += step[1]
             assert self.score >= 0
-            if len(self.actions) > 100:
+            if len(self.actions) > 5000:
                 raise RuntimeError()
             print(*self.mat, sep='\n')
         print('--------------------------------------------------------------')

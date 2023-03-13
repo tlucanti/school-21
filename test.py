@@ -6,7 +6,7 @@ import random
 import numpy as np
 
 def test():
-    for s in range(2, 10):
+    for s in range(17, 100):
         for i in range(100):
             mat = gen.gen_target(s)
             gen.shuffle(mat, i)
@@ -15,7 +15,7 @@ def test():
             print('expected actions:', i)
             print('target state')
             print(np.array(solver.target()))
-            ans = solver.solve(Solver.Euristics.Type.EUCLEDUAN,
+            ans = solver.solve(Solver.Euristics.Type.MANHATTAN,
                                Solver.Euristics.Scheduler.RANDOM)
             print(solver.metrics())
             print(ans)
