@@ -1,12 +1,8 @@
-#!/usr/bin/env python
 
-import sys
-import argparse
 import random
 
-
-def gen_target(h):
-    target = [[0] * h for i in range(h)]
+def gen_target_default(h):
+    target = [[0] * h for _ in range(h)]
     i = 0
     for y in range(h):
         for x in range(h):
@@ -15,104 +11,90 @@ def gen_target(h):
     target[-1][-1] = 0
     return target
 
-def make_puzzle(s, solvable, iterations):
-	def swap_empty(p):
-		idx = p.index(0)
-		poss = []
-		if idx % s > 0:
-			poss.append(idx - 1)
-		if idx % s < s - 1:
-			poss.append(idx + 1)
-		if idx / s > 0 and idx - s >= 0:
-			poss.append(idx - s)
-		if idx / s < s - 1:
-			poss.append(idx + s)
-		swi = random.choice(poss)
-		p[idx] = p[swi]
-		p[swi] = 0
+def gen_target_spiral(h):
+    target = [[0] * h for _ in range(h)]
+    second = True
+    x = 0
+    y = 0
+    RIGHT = 0
+    DOWN = 1
+    LEFT = 2
+    UP = 3
+    step = h
+    stepped = 1
+    direction = RIGHT
+    i = 0
+    while i < h * h - 1:
+        i += 1
+        target[y][x] = i
+        if direction == RIGHT:
+            x += 1
+        elif direction == LEFT:
+            x -= 1
+        elif direction == UP:
+            y -= 1
+        else:
+            y += 1
+        stepped += 1
+        if stepped == step:
+            direction = (direction + 1) % 4
+            if second:
+                second = False
+                step -= 1
+            else:
+                second = 1
+            stepped = 0
+    return target
 
-	#p = make_goal(s)
-	p = gen_target(s)
-	for i in range(iterations):
-		swap_empty(p)
+def shuffle(mat, n):
+    def find_start(mat):
+        for y in range(len(mat)):
+            for x in range(len(mat)):
+                if mat[y][x] == 0:
+                    return y, x
 
-	if not solvable:
-		if p[0] == 0 or p[1] == 0:
-			p[-1], p[-2] = p[-2], p[-1]
-		else:
-			p[0], p[1] = p[1], p[0]
-	return p
+    def swap(mat, y0, x0, y1, x1):
+        mat[y0][x0], mat[y1][x1] = mat[y1][x1], mat[y0][x0]
 
-def make_matrix_puzzle(s, solvable, iterations):
-    cm = make_puzzle(s, solvable, iterations)
-    return [cm[i:i + s] for i in range(0, len(cm), s)]
-
-def make_goal(s):
-	ts = s*s
-	puzzle = [-1 for i in range(ts)]
-	cur = 1
-	x = 0
-	ix = 1
-	y = 0
-	iy = 0
-	while True:
-		puzzle[x + y*s] = cur
-		if cur == 0:
-			break
-		cur += 1
-		if x + ix == s or x + ix < 0 or (ix != 0 and puzzle[x + ix + y*s] != -1):
-			iy = ix
-			ix = 0
-		elif y + iy == s or y + iy < 0 or (iy != 0 and puzzle[x + (y+iy)*s] != -1):
-			ix = -iy
-			iy = 0
-		x += ix
-		y += iy
-		if cur == s*s:
-			cur = 0
-
-	return puzzle
-
-def make_matrix_goal(s):
-    cm = make_goal(s)
-    return [cm[i:i + s] for i in range(0, len(cm), s)]
+    h = len(mat)
+    y, x = find_start(mat)
+    LEFT = 0
+    RIGHT = 1
+    UP = 2
+    DOWN = 3
+    for i in range(n):
+        avaliable = []
+        if x > 0:
+            avaliable.append(LEFT)
+        if x < h - 1:
+            avaliable.append(RIGHT)
+        if y > 0:
+            avaliable.append(UP)
+        if y < h - 1:
+            avaliable.append(DOWN)
+        step = random.choice(avaliable)
+        if step == LEFT:
+            swap(mat, y, x, y, x - 1)
+            x = x - 1
+        elif step == RIGHT:
+            swap(mat, y, x, y, x + 1)
+            x = x + 1
+        elif step == UP:
+            swap(mat, y, x, y - 1, x)
+            y = y - 1
+        elif step == DOWN:
+            swap(mat, y, x, y + 1, x)
+            y = y + 1
+    return mat
 
 
-if __name__ == "__main__":
-	parser = argparse.ArgumentParser()
+def gen_target(h):
+    return gen_target_default(h)
 
-	parser.add_argument("size", type=int, help="Size of the puzzle's side. Must be >3.")
-	parser.add_argument("-s", "--solvable", action="store_true", default=False, help="Forces generation of a solvable puzzle. Overrides -u.")
-	parser.add_argument("-u", "--unsolvable", action="store_true", default=False, help="Forces generation of an unsolvable puzzle")
-	parser.add_argument("-i", "--iterations", type=int, default=10000, help="Number of passes")
 
-	args = parser.parse_args()
+if __name__ == '__main__':
+    import numpy as np
+    mat = gen_target_default(5)
+    shuffle(mat, 2)
+    print(np.array(mat))
 
-	random.seed()
-
-	if args.solvable and args.unsolvable:
-		print("Can't be both solvable AND unsolvable, dummy !")
-		sys.exit(1)
-
-	if args.size < 3:
-		print("Can't generate a puzzle with size lower than 2. It says so in the help. Dummy.")
-		sys.exit(1)
-
-	if not args.solvable and not args.unsolvable:
-		solv = random.choice([True, False])
-	elif args.solvable:
-		solv = True
-	elif args.unsolvable:
-		solv = False
-
-	s = args.size
-
-	puzzle = make_puzzle(s, solvable=solv, iterations=args.iterations)
-
-	w = len(str(s*s))
-	print("# This puzzle is %s" % ("solvable" if solv else "unsolvable"))
-	print("%d" % s)
-	for y in range(s):
-		for x in range(s):
-			print("%s" % (str(puzzle[x + y*s]).rjust(w)), end=' ')
-		print()
